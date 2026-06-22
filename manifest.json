@@ -1,0 +1,33 @@
+{
+  "name": "府中ものしりクイズ",
+  "short_name": "府中クイズ",
+  "description": "東京都府中市の歴史・名所・グルメをクイズで学ぼう！ケヤキの妖精けやぴと一緒に府中の魅力を発見できる、個人制作のミニアプリです。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5efe3",
+  "theme_color": "#3d2817",
+  "lang": "ja",
+  "categories": ["education", "entertainment", "games"],
+  "icons": [
+    {
+      "src": "./assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

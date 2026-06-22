@@ -1,0 +1,3714 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#3d2817">
+<meta name="description" content="東京都府中市の歴史・名所・グルメに関するクイズアプリ。ケヤキの妖精けやぴと一緒に府中の魅力を楽しく学ぼう！">
+<meta property="og:title" content="府中ものしりクイズ｜ケヤキの妖精けやぴと学ぶ府中市">
+<meta property="og:description" content="府中市の歴史・名所・グルメをクイズで学ぼう！全100問・3カテゴリー・3難易度">
+<meta property="og:type" content="website">
+<title>府中ものしりクイズ｜ケヤキの妖精けやぴと学ぶ府中市</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* ===== Reset & Base ===== */
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #f5efe3;
+    color: #3d2817;
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(184, 134, 100, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(139, 90, 60, 0.06) 0%, transparent 50%),
+      repeating-linear-gradient(45deg, transparent 0, transparent 2px, rgba(139, 90, 60, 0.015) 2px, rgba(139, 90, 60, 0.015) 4px);
+    background-attachment: fixed;
+  }
+
+  .app {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    position: relative;
+    padding: 20px 18px 40px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ===== 共通装飾 ===== */
+  .crest {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    background: radial-gradient(circle, #c41e3a 30%, #8b0a1f 70%);
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(196, 30, 58, 0.3);
+  }
+  .crest::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 2px solid #f5efe3;
+    border-radius: 50%;
+  }
+
+  h1, h2, h3 { font-family: 'Shippori Mincho', serif; font-weight: 700; }
+
+  /* ===== Screen 切り替え ===== */
+  .screen { display: none; flex: 1; flex-direction: column; animation: fadeIn 0.4s ease; }
+  .screen.active { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ===== Mascot ===== */
+  .mascot-img {
+    display: block;
+    margin: 0 auto;
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(61, 40, 23, 0.15));
+    animation: bounceIn 0.6s ease;
+  }
+  .mascot-img.small {
+    width: 80px;
+    height: 80px;
+  }
+  .mascot-img.tiny {
+    width: 56px;
+    height: 56px;
+  }
+  @keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.5) translateY(20px); }
+    60% { opacity: 1; transform: scale(1.08) translateY(-4px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  .mascot-float { animation: floaty 3s ease-in-out infinite; }
+
+  /* ===== Start Screen ===== */
+  .start-screen { justify-content: flex-start; align-items: center; text-align: center; padding: 20px 0; }
+  .start-screen .logo-wrap { margin-bottom: 16px; position: relative; }
+  .start-screen h1 {
+    font-size: 36px;
+    color: #3d2817;
+    letter-spacing: 0.05em;
+    margin: 12px 0 4px;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+  }
+  .start-screen .ruby { font-size: 13px; letter-spacing: 0.3em; color: #8b5a3c; display: block; margin-bottom: 8px; }
+  .start-screen .subtitle {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 15px;
+    color: #6b4226;
+    margin-bottom: 4px;
+  }
+  .start-screen .city {
+    font-size: 13px;
+    color: #8b5a3c;
+    margin-bottom: 24px;
+  }
+
+  /* 吹き出し */
+  .speech-bubble {
+    background: #fff;
+    border: 2px solid #d4b896;
+    border-radius: 18px;
+    padding: 12px 18px;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 14px;
+    color: #3d2817;
+    margin: 12px auto 20px;
+    max-width: 280px;
+    position: relative;
+    box-shadow: 0 3px 10px rgba(61, 40, 23, 0.08);
+  }
+  .speech-bubble::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #d4b896;
+  }
+  .speech-bubble::after {
+    content: '';
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #fff;
+  }
+
+  .ornament {
+    width: 80%;
+    max-width: 280px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #8b5a3c 50%, transparent);
+    margin: 16px auto;
+    position: relative;
+  }
+  .ornament::before {
+    content: '✦';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #8b5a3c;
+    background: #f5efe3;
+    padding: 0 12px;
+    font-size: 14px;
+  }
+
+  /* カテゴリー選択 */
+  .category-section { width: 100%; margin-bottom: 20px; }
+  .category-section .section-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 14px;
+    color: #6b4226;
+    margin-bottom: 12px;
+    letter-spacing: 0.15em;
+  }
+  .category-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+  }
+  .category-btn {
+    background: #fff;
+    border: 2px solid #d4b896;
+    border-radius: 12px;
+    padding: 14px 8px;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #3d2817;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(61, 40, 23, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .category-btn .icon { font-size: 24px; }
+  .category-btn .count { font-size: 10px; color: #8b5a3c; font-family: 'Noto Sans JP', sans-serif; font-weight: 400; }
+  .category-btn.active, .category-btn:active {
+    background: #3d2817;
+    border-color: #3d2817;
+    color: #f5efe3;
+    transform: translateY(1px);
+  }
+  .category-btn.active .count { color: #d4b896; }
+
+  /* 難易度選択 */
+  .difficulty-row {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    margin-top: 8px;
+  }
+  .diff-btn {
+    flex: 1;
+    background: #fff;
+    border: 1.5px solid #d4b896;
+    border-radius: 20px;
+    padding: 8px 4px;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #6b4226;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .diff-btn.active {
+    background: #8b5a3c;
+    border-color: #8b5a3c;
+    color: #fff;
+  }
+
+  /* メインボタン */
+  .btn-primary {
+    background: linear-gradient(to bottom, #8b1a2b 0%, #6b1322 100%);
+    color: #f5efe3;
+    border: none;
+    padding: 16px 40px;
+    font-size: 17px;
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 700;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(139, 26, 43, 0.35);
+    letter-spacing: 0.1em;
+    transition: all 0.2s ease;
+    width: 100%;
+    max-width: 280px;
+    margin-top: 12px;
+  }
+  .btn-primary:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 8px rgba(139, 26, 43, 0.35);
+  }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-secondary {
+    background: transparent;
+    color: #6b4226;
+    border: 2px solid #8b5a3c;
+    padding: 12px 32px;
+    font-size: 14px;
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 700;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 12px;
+  }
+  .btn-secondary:active { background: #8b5a3c; color: #f5efe3; }
+
+  /* ===== Quiz Screen ===== */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 4px 16px;
+    border-bottom: 1px solid rgba(139, 90, 60, 0.2);
+    margin-bottom: 16px;
+  }
+  .progress {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 13px;
+    color: #6b4226;
+  }
+  .progress .current { font-size: 22px; color: #8b1a2b; font-weight: 700; }
+  .score-display {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 13px;
+    color: #6b4226;
+  }
+  .score-display .score { font-size: 18px; color: #3d2817; font-weight: 700; }
+
+  .progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(139, 90, 60, 0.15);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(to right, #8b1a2b, #c41e3a);
+    transition: width 0.4s ease;
+    border-radius: 2px;
+  }
+
+  .tags-row { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .category-tag {
+    display: inline-block;
+    background: #3d2817;
+    color: #f5efe3;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-family: 'Shippori Mincho', serif;
+    letter-spacing: 0.1em;
+  }
+  .difficulty-tag {
+    display: inline-block;
+    background: #8b5a3c;
+    color: #f5efe3;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-family: 'Shippori Mincho', serif;
+    letter-spacing: 0.1em;
+  }
+  .difficulty-tag.lv2 { background: #b8860b; }
+  .difficulty-tag.lv3 { background: #8b1a2b; }
+
+  .question {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #3d2817;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    padding: 0 4px;
+  }
+
+  .choices {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .choice {
+    background: #fff;
+    border: 2px solid #d4b896;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #3d2817;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 6px rgba(61, 40, 23, 0.06);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Noto Sans JP', sans-serif;
+    line-height: 1.5;
+    width: 100%;
+  }
+  .choice .label {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #f5efe3;
+    border: 1.5px solid #8b5a3c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: #6b4226;
+    transition: all 0.25s ease;
+  }
+  .choice:active { transform: scale(0.98); }
+  .choice:not(:disabled):hover { border-color: #8b5a3c; }
+
+  .choice.correct {
+    background: #e8f0e0;
+    border-color: #4a7c2e;
+    color: #2d4d1c;
+  }
+  .choice.correct .label {
+    background: #4a7c2e;
+    border-color: #4a7c2e;
+    color: #fff;
+  }
+  .choice.incorrect {
+    background: #f5e5e5;
+    border-color: #8b1a2b;
+    color: #6b1322;
+  }
+  .choice.incorrect .label {
+    background: #8b1a2b;
+    border-color: #8b1a2b;
+    color: #fff;
+  }
+  .choice:disabled { cursor: not-allowed; opacity: 0.85; }
+
+  /* 解説 */
+  .explanation {
+    background: rgba(255, 255, 255, 0.85);
+    border-left: 4px solid #8b5a3c;
+    padding: 14px 16px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    animation: slideIn 0.4s ease;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .explanation .mascot-bubble {
+    flex-shrink: 0;
+  }
+  .explanation .content {
+    flex: 1;
+  }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+  .explanation .verdict {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .explanation .verdict.correct { color: #4a7c2e; }
+  .explanation .verdict.incorrect { color: #8b1a2b; }
+  .explanation .text {
+    font-size: 13.5px;
+    color: #3d2817;
+    line-height: 1.7;
+  }
+  .explanation .text strong { color: #8b1a2b; font-weight: 700; }
+  .explanation .keyapi-comment {
+    font-size: 12px;
+    color: #6b4226;
+    margin-top: 8px;
+    font-style: italic;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(139, 90, 60, 0.3);
+  }
+
+  .next-btn-wrap { margin-top: auto; padding-top: 12px; }
+
+  /* ===== Result Screen ===== */
+  .result-screen { justify-content: center; align-items: center; text-align: center; padding: 20px 0; }
+  .result-screen .result-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 14px;
+    color: #6b4226;
+    letter-spacing: 0.3em;
+    margin-bottom: 4px;
+  }
+  .result-screen .score-big {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 52px;
+    font-weight: 800;
+    color: #8b1a2b;
+    line-height: 1;
+    margin: 8px 0;
+  }
+  .result-screen .score-big .total { font-size: 26px; color: #6b4226; }
+  .result-screen .rank-card {
+    background: #fff;
+    border: 2px solid #d4b896;
+    border-radius: 16px;
+    padding: 20px 18px;
+    margin: 16px 0;
+    box-shadow: 0 4px 16px rgba(61, 40, 23, 0.08);
+    width: 100%;
+  }
+  .rank-icon { font-size: 40px; margin-bottom: 6px; }
+  .rank-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #3d2817;
+    margin-bottom: 6px;
+  }
+  .rank-comment { font-size: 13px; color: #6b4226; line-height: 1.6; white-space: pre-line; }
+
+  .stats-row {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    margin: 12px 0;
+  }
+  .stat-card {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    padding: 10px 6px;
+    text-align: center;
+  }
+  .stat-label {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 10px;
+    color: #6b4226;
+    letter-spacing: 0.1em;
+  }
+  .stat-value {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 18px;
+    color: #3d2817;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  .share-section {
+    margin-top: 8px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .share-section .share-label {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 13px;
+    color: #6b4226;
+    margin-bottom: 10px;
+  }
+  .share-btn {
+    background: #3d2817;
+    color: #f5efe3;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 24px;
+    font-size: 12px;
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 700;
+    cursor: pointer;
+    margin: 2px;
+  }
+  .share-btn:active { opacity: 0.8; }
+
+  /* フッター */
+  .footer {
+    text-align: center;
+    font-size: 10px;
+    color: #8b5a3c;
+    margin-top: 20px;
+    padding: 14px 0;
+    line-height: 1.7;
+  }
+  .footer a { color: #6b4226; text-decoration: underline; }
+  .footer .notice {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(139, 90, 60, 0.2);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-top: 8px;
+    font-size: 10px;
+    line-height: 1.7;
+    color: #5c3a20;
+  }
+
+  /* 桜の装飾 */
+  .sakura-deco {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .sakura {
+    position: absolute;
+    font-size: 16px;
+    color: rgba(196, 30, 58, 0.15);
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  }
+
+  .app > * { position: relative; z-index: 1; }
+
+  /* モーダル */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(61, 40, 23, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    padding: 20px;
+    animation: fadeIn 0.2s ease;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: #f5efe3;
+    border-radius: 16px;
+    padding: 24px 20px;
+    max-width: 360px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+  }
+  .modal h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 18px;
+    color: #3d2817;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  .modal .modal-content {
+    font-size: 12px;
+    color: #5c3a20;
+    line-height: 1.7;
+  }
+  .modal .modal-content h3 {
+    font-size: 13px;
+    color: #6b4226;
+    margin: 12px 0 4px;
+  }
+  .modal-close {
+    width: 100%;
+    margin-top: 16px;
+    background: #3d2817;
+    color: #f5efe3;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-family: 'Shippori Mincho', serif;
+    cursor: pointer;
+  }
+
+  .info-btn {
+    background: none;
+    border: 1px solid #8b5a3c;
+    color: #6b4226;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-family: 'Shippori Mincho', serif;
+    cursor: pointer;
+    margin-top: 6px;
+  }
+
+  /* ===== PWAインストール案内 ===== */
+  .install-banner {
+    width: 100%;
+    background: linear-gradient(135deg, #fff9ec 0%, #fdf3e0 100%);
+    border: 2px solid #d4b896;
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin: 16px 0;
+    box-shadow: 0 3px 10px rgba(61, 40, 23, 0.08);
+    display: none;
+    align-items: center;
+    gap: 12px;
+    animation: slideInUp 0.5s ease;
+    position: relative;
+  }
+  .install-banner.show { display: flex; }
+  @keyframes slideInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .install-banner .install-icon {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    background: #8b1a2b;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #fff;
+  }
+  .install-banner .install-text {
+    flex: 1;
+    text-align: left;
+  }
+  .install-banner .install-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #3d2817;
+    margin-bottom: 2px;
+  }
+  .install-banner .install-desc {
+    font-size: 11px;
+    color: #6b4226;
+    line-height: 1.4;
+  }
+  .install-banner .install-action {
+    background: #8b1a2b;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 700;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .install-banner .install-close {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    background: none;
+    border: none;
+    color: #8b5a3c;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px 8px;
+    line-height: 1;
+  }
+
+  /* iOS/Android手順ガイド */
+  .install-guide {
+    margin-bottom: 12px;
+  }
+  .install-guide .tab-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .install-guide .tab-btn {
+    flex: 1;
+    background: #fff;
+    border: 2px solid #d4b896;
+    border-radius: 20px;
+    padding: 8px;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #6b4226;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .install-guide .tab-btn.active {
+    background: #3d2817;
+    border-color: #3d2817;
+    color: #f5efe3;
+  }
+  .install-guide .tab-content { display: none; }
+  .install-guide .tab-content.active { display: block; }
+  .install-step {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+  }
+  .install-step .step-num {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    background: #8b1a2b;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 700;
+    font-size: 12px;
+  }
+  .install-step .step-body {
+    flex: 1;
+    font-size: 12px;
+    color: #3d2817;
+    line-height: 1.6;
+  }
+  .install-step .step-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: #f5efe3;
+    border: 1px solid #8b5a3c;
+    border-radius: 4px;
+    font-size: 12px;
+    margin: 0 2px;
+    vertical-align: middle;
+  }
+  .install-step strong { color: #8b1a2b; }
+
+  .install-benefit {
+    background: rgba(74, 124, 46, 0.08);
+    border-left: 3px solid #4a7c2e;
+    padding: 10px 12px;
+    border-radius: 6px;
+    margin-top: 12px;
+    font-size: 11px;
+    color: #2d4d1c;
+    line-height: 1.6;
+  }
+  .install-benefit strong { color: #4a7c2e; }
+
+  /* ===== 出典表示 ===== */
+  .source-badge {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(139, 90, 60, 0.25);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #6b4226;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .source-badge:active { opacity: 0.6; }
+  .source-badge .src-icon {
+    flex-shrink: 0;
+    font-size: 12px;
+  }
+  .source-badge .src-label {
+    font-family: 'Shippori Mincho', serif;
+    letter-spacing: 0.05em;
+  }
+  .source-badge .src-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 2px;
+  }
+  .source-badge .src-arrow {
+    flex-shrink: 0;
+    font-size: 10px;
+    color: #8b5a3c;
+  }
+
+  /* ===== スポット（お出かけ）関連 ===== */
+  /* 解説中のスポットリンク */
+  .spots-in-explanation {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(139, 90, 60, 0.25);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .spot-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #fff;
+    border: 1.5px solid #d4b896;
+    border-radius: 14px;
+    padding: 5px 10px 5px 8px;
+    font-size: 11px;
+    color: #6b4226;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+    transition: all 0.2s ease;
+  }
+  .spot-pill:active {
+    background: #8b1a2b;
+    border-color: #8b1a2b;
+    color: #fff;
+  }
+  .spot-pill .spot-pill-icon { font-size: 13px; }
+  .spot-pill .spot-pill-arrow {
+    font-size: 9px;
+    color: #8b5a3c;
+    margin-left: 2px;
+  }
+  .spot-pill:active .spot-pill-arrow { color: #fff; }
+
+  /* トップ画面の「お出かけマップ」ボタン */
+  .map-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #f7e9d0 0%, #f0dcb5 100%);
+    border: 2px solid #d4b896;
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin: 12px 0 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 3px 10px rgba(61, 40, 23, 0.08);
+    transition: all 0.2s ease;
+  }
+  .map-btn:active { transform: scale(0.98); }
+  .map-btn .map-btn-icon {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    background: #4a7c2e;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #fff;
+  }
+  .map-btn .map-btn-text {
+    flex: 1;
+    text-align: left;
+  }
+  .map-btn .map-btn-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #3d2817;
+    margin-bottom: 2px;
+  }
+  .map-btn .map-btn-progress {
+    font-size: 11px;
+    color: #6b4226;
+  }
+  .map-btn .map-btn-progress strong { color: #4a7c2e; }
+  .map-btn .map-btn-arrow {
+    color: #8b5a3c;
+    font-size: 14px;
+  }
+
+  /* お出かけマップ画面 */
+  .map-screen {
+    padding: 0;
+  }
+  .map-screen .map-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(139, 90, 60, 0.2);
+    margin-bottom: 16px;
+  }
+  .back-btn {
+    background: none;
+    border: 1.5px solid #8b5a3c;
+    color: #6b4226;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .back-btn:active { background: #8b5a3c; color: #fff; }
+  .map-screen .map-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #3d2817;
+    flex: 1;
+  }
+  .map-screen .map-title-sub {
+    font-size: 11px;
+    color: #8b5a3c;
+    margin-top: 2px;
+  }
+
+  /* 達成状況カード */
+  .progress-card {
+    background: linear-gradient(135deg, #fff 0%, #fdf9f0 100%);
+    border: 2px solid #d4b896;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 10px rgba(61, 40, 23, 0.08);
+  }
+  .progress-card .pc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .progress-card .pc-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 13px;
+    color: #6b4226;
+    letter-spacing: 0.1em;
+  }
+  .progress-card .pc-badge {
+    font-size: 24px;
+  }
+  .progress-card .pc-stats {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .progress-card .pc-count {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: #4a7c2e;
+    line-height: 1;
+  }
+  .progress-card .pc-total {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 16px;
+    color: #6b4226;
+  }
+  .progress-card .pc-comment {
+    font-size: 12px;
+    color: #5c3a20;
+    line-height: 1.6;
+  }
+  .progress-bar-large {
+    width: 100%;
+    height: 8px;
+    background: rgba(139, 90, 60, 0.15);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 8px 0;
+  }
+  .progress-bar-large-fill {
+    height: 100%;
+    background: linear-gradient(to right, #4a7c2e, #6ab442);
+    transition: width 0.5s ease;
+    border-radius: 4px;
+  }
+
+  /* スポットリスト */
+  .spot-category-section {
+    margin-bottom: 20px;
+  }
+  .spot-category-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #3d2817;
+    margin-bottom: 10px;
+    padding: 6px 10px;
+    background: rgba(139, 90, 60, 0.08);
+    border-left: 3px solid #8b5a3c;
+    border-radius: 0 6px 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .spot-category-title .scc-icon {
+    font-size: 18px;
+  }
+  .spot-category-title .scc-name {
+    font-weight: 700;
+  }
+  .spot-category-title .scc-line {
+    flex: 1;
+  }
+  .spot-category-title .scc-count {
+    font-size: 12px;
+    color: #8b5a3c;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  .spot-card {
+    background: #fff;
+    border: 2px solid #d4b896;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    transition: all 0.2s ease;
+  }
+  .spot-card.visited {
+    background: #e8f0e0;
+    border-color: #4a7c2e;
+  }
+  .spot-card .sc-icon {
+    flex-shrink: 0;
+    font-size: 28px;
+    width: 44px;
+    height: 44px;
+    background: #f5efe3;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .spot-card.visited .sc-icon { background: #d6e6c8; }
+  .spot-card .sc-body {
+    flex: 1;
+    min-width: 0;
+  }
+  .spot-card .sc-name {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #3d2817;
+    margin-bottom: 2px;
+  }
+  .spot-card .sc-desc {
+    font-size: 11px;
+    color: #5c3a20;
+    line-height: 1.5;
+    margin-bottom: 4px;
+  }
+  .spot-card .sc-station {
+    font-size: 10px;
+    color: #8b5a3c;
+    margin-bottom: 8px;
+  }
+  .spot-card .sc-actions {
+    display: flex;
+    gap: 6px;
+  }
+  .spot-card .sc-btn {
+    flex: 1;
+    background: #fff;
+    border: 1.5px solid #8b5a3c;
+    color: #6b4226;
+    padding: 6px 8px;
+    border-radius: 16px;
+    font-size: 11px;
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s ease;
+  }
+  .spot-card .sc-btn:active { opacity: 0.7; }
+  .spot-card .sc-btn.map { background: #8b1a2b; border-color: #8b1a2b; color: #fff; }
+  .spot-card .sc-btn.visit-check.checked {
+    background: #4a7c2e;
+    border-color: #4a7c2e;
+    color: #fff;
+  }
+
+  /* リセットテキストリンク */
+  .reset-link {
+    background: none;
+    border: none;
+    color: #8b5a3c;
+    font-size: 11px;
+    font-family: 'Noto Sans JP', sans-serif;
+    cursor: pointer;
+    padding: 6px 12px;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 3px;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+  }
+  .reset-link:hover, .reset-link:active { opacity: 1; }
+
+  /* フローティング「トップへ戻る」ボタン */
+  .back-to-top-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    background: rgba(61, 40, 23, 0.85);
+    color: #f5efe3;
+    border: none;
+    border-radius: 50%;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 50;
+    box-shadow: 0 4px 12px rgba(61, 40, 23, 0.3);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .back-to-top-btn.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .back-to-top-btn:active {
+    transform: scale(0.92);
+  }
+
+  /* 達成トースト通知 */
+  .achievement-toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: linear-gradient(135deg, #8b1a2b 0%, #6b1322 100%);
+    color: #f5efe3;
+    padding: 14px 24px;
+    border-radius: 30px;
+    box-shadow: 0 6px 24px rgba(139, 26, 43, 0.4);
+    font-family: 'Shippori Mincho', serif;
+    font-size: 14px;
+    font-weight: 700;
+    z-index: 200;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-width: 90%;
+    text-align: center;
+  }
+  .achievement-toast.show {
+    transform: translateX(-50%) translateY(0);
+  }
+  .achievement-toast .at-icon {
+    font-size: 18px;
+    margin-right: 6px;
+  }
+
+  /* 出典詳細モーダル */
+  .source-modal-content {
+    text-align: left;
+  }
+  .source-modal-content .src-detail-icon {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 8px;
+  }
+  .source-modal-content .src-detail-name {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #3d2817;
+    text-align: center;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .source-modal-content .src-detail-desc {
+    background: rgba(255, 255, 255, 0.6);
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #5c3a20;
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+  .source-modal-content .src-detail-link-btn {
+    display: block;
+    width: 100%;
+    background: #8b1a2b;
+    color: #f5efe3;
+    text-decoration: none;
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 8px;
+    transition: opacity 0.2s ease;
+  }
+  .source-modal-content .src-detail-link-btn:active { opacity: 0.8; }
+  .source-modal-content .src-detail-note {
+    font-size: 10px;
+    color: #8b5a3c;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  /* レスポンシブ微調整 */
+  @media (max-width: 360px) {
+    .start-screen h1 { font-size: 30px; }
+    .question { font-size: 16px; }
+    .choice { padding: 12px 12px; font-size: 14px; }
+    .mascot-img { width: 120px; height: 120px; }
+  }
+</style>
+
+<!-- PWA Support -->
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="./assets/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="./assets/icon-512.png">
+<link rel="apple-touch-icon" href="./assets/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="府中クイズ">
+<meta name="mobile-web-app-capable" content="yes">
+<!-- Open Graph -->
+<meta property="og:image" content="./assets/icon-512.png">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="府中ものしりクイズ">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="府中ものしりクイズ｜ケヤキの妖精けやぴと学ぶ府中市">
+<meta name="twitter:description" content="東京都府中市の歴史・名所・グルメをクイズで学ぼう！全100問・3カテゴリー・3難易度">
+<meta name="twitter:image" content="./assets/icon-512.png">
+
+</head>
+<body>
+
+<div class="sakura-deco" aria-hidden="true">
+  <span class="sakura" style="left:5%; animation-duration:18s; animation-delay:0s;">❀</span>
+  <span class="sakura" style="left:20%; animation-duration:22s; animation-delay:3s; font-size:12px;">❀</span>
+  <span class="sakura" style="left:40%; animation-duration:25s; animation-delay:7s;">❀</span>
+  <span class="sakura" style="left:65%; animation-duration:20s; animation-delay:2s; font-size:14px;">❀</span>
+  <span class="sakura" style="left:85%; animation-duration:24s; animation-delay:5s;">❀</span>
+  <span class="sakura" style="left:55%; animation-duration:19s; animation-delay:10s; font-size:18px;">❀</span>
+</div>
+
+<div class="app">
+
+  <!-- ===== Start Screen ===== -->
+  <section class="screen start-screen active" id="screen-start">
+    <div class="logo-wrap">
+      <span class="crest" aria-hidden="true"></span>
+      <span class="ruby">FUCHU QUIZ</span>
+      <h1>府中ものしり<br>クイズ</h1>
+      <p class="subtitle">〜 ケヤキの妖精と学ぼう 〜</p>
+      <p class="city">東京都府中市</p>
+    </div>
+
+    <img class="mascot-img mascot-float" id="mascot-start" alt="ケヤキの妖精けやぴ" src="" />
+    <div class="speech-bubble">こんにちは！けやぴだよ🌱<br>いっしょに府中のこと、たのしく学ぼう！</div>
+
+    <div class="category-section">
+      <p class="section-title">― ジャンルを選ぶ ―</p>
+      <div class="category-grid">
+        <button class="category-btn active" data-cat="all">
+          <span class="icon">🎴</span>
+          <span>全部</span>
+          <span class="count" id="cnt-all">100問</span>
+        </button>
+        <button class="category-btn" data-cat="history">
+          <span class="icon">📜</span>
+          <span>歴史</span>
+          <span class="count" id="cnt-history">問</span>
+        </button>
+        <button class="category-btn" data-cat="spot">
+          <span class="icon">⛩️</span>
+          <span>名所</span>
+          <span class="count" id="cnt-spot">問</span>
+        </button>
+        <button class="category-btn" data-cat="gourmet">
+          <span class="icon">🍡</span>
+          <span>グルメ・文化</span>
+          <span class="count" id="cnt-gourmet">問</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="category-section">
+      <p class="section-title">― 難易度を選ぶ ―</p>
+      <div class="difficulty-row">
+        <button class="diff-btn active" data-diff="all">すべて</button>
+        <button class="diff-btn" data-diff="1">初級</button>
+        <button class="diff-btn" data-diff="2">中級</button>
+        <button class="diff-btn" data-diff="3">上級</button>
+      </div>
+    </div>
+
+    <button class="btn-primary" id="btn-start">クイズをはじめる</button>
+
+    <!-- セクション間仕切り -->
+    <div style="width: 100%; margin: 18px 0 8px; display: flex; align-items: center; gap: 10px;">
+      <div style="flex:1; height:1px; background: rgba(139, 90, 60, 0.2);"></div>
+      <span style="font-family:'Shippori Mincho',serif; font-size:11px; color:#8b5a3c; letter-spacing:0.15em;">もっと府中を巡る</span>
+      <div style="flex:1; height:1px; background: rgba(139, 90, 60, 0.2);"></div>
+    </div>
+
+    <!-- お出かけマップボタン -->
+    <button class="map-btn" id="btn-open-map">
+      <div class="map-btn-icon">🗺️</div>
+      <div class="map-btn-text">
+        <div class="map-btn-title">府中お出かけマップ</div>
+        <div class="map-btn-progress">
+          全<strong>25</strong>ヶ所中、訪問済み <strong id="visited-count-top">0</strong>ヶ所
+        </div>
+      </div>
+      <div class="map-btn-arrow">▶</div>
+    </button>
+
+    <!-- PWA インストールバナー（条件により表示） -->
+    <div class="install-banner" id="install-banner">
+      <button class="install-close" id="install-banner-close" aria-label="閉じる">×</button>
+      <div class="install-icon">📲</div>
+      <div class="install-text">
+        <div class="install-title">ホーム画面に追加</div>
+        <div class="install-desc">いつでもサッと開けるよ〜🌳</div>
+      </div>
+      <button class="install-action" id="install-banner-action">追加方法</button>
+    </div>
+
+    <button class="info-btn" id="btn-install-help" style="margin-top:4px;">📲 ホーム画面に追加する方法</button>
+    <button class="info-btn" id="btn-info">このアプリについて</button>
+
+    <div class="footer">
+      <p>誰でも楽しめる、府中の魅力を知るミニアプリ</p>
+      <div class="notice">
+        ⚠️ 本アプリは個人制作の非公式ファンメイドアプリです。<br>
+        府中市・大國魂神社等の公式機関とは関係ありません。
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Quiz Screen ===== -->
+  <section class="screen" id="screen-quiz">
+    <div class="quiz-header">
+      <div class="progress">
+        第 <span class="current" id="q-current">1</span> 問 <span style="opacity:0.6;">／ <span id="q-total">10</span></span>
+      </div>
+      <div class="score-display">
+        正解 <span class="score" id="score-num">0</span>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="progress-fill" style="width:0%;"></div></div>
+
+    <div class="tags-row">
+      <span class="category-tag" id="cat-tag">― 歴史 ―</span>
+      <span class="difficulty-tag" id="diff-tag">初級</span>
+    </div>
+    <p class="question" id="question-text">問題文がここに表示されます。</p>
+
+    <div class="choices" id="choices"></div>
+
+    <div id="explanation-wrap"></div>
+
+    <div class="next-btn-wrap" id="next-wrap" style="display:none;">
+      <button class="btn-primary" id="btn-next">次の問題へ</button>
+    </div>
+  </section>
+
+  <!-- ===== お出かけマップ画面 ===== -->
+  <section class="screen map-screen" id="screen-map">
+    <div class="map-header">
+      <button class="back-btn" id="btn-map-back" aria-label="戻る">←</button>
+      <div>
+        <div class="map-title">🗺️ 府中お出かけマップ</div>
+        <div class="map-title-sub">クイズに出てきたスポットを実際に訪れてみよう！</div>
+      </div>
+    </div>
+
+    <!-- 達成状況カード -->
+    <div class="progress-card" id="progress-card">
+      <div class="pc-header">
+        <div class="pc-title">― 訪問達成状況 ―</div>
+        <div class="pc-badge" id="pc-badge">🌱</div>
+      </div>
+      <div class="pc-stats">
+        <span class="pc-count" id="pc-count">0</span>
+        <span class="pc-total">/ <span id="pc-total">25</span> ヶ所</span>
+      </div>
+      <div class="progress-bar-large">
+        <div class="progress-bar-large-fill" id="pc-bar" style="width:0%;"></div>
+      </div>
+      <div class="pc-comment" id="pc-comment">さあ、府中探検に出かけよう！</div>
+    </div>
+
+    <!-- スポットリスト（JSで動的生成） -->
+    <div id="spots-list"></div>
+
+    <!-- トップに戻るボタン（フローティング） -->
+    <button class="back-to-top-btn" id="btn-back-to-top" aria-label="トップへ戻る">↑</button>
+
+    <!-- リセットボタン（控えめなテキストリンク） -->
+    <div style="text-align:center; margin-top:24px; padding:12px;">
+      <button class="reset-link" id="btn-reset-visits">
+        ✕ 訪問記録をリセット
+      </button>
+    </div>
+
+    <div class="footer">
+      <p>※ 訪問記録はお使いのブラウザ内にのみ保存されます<br>
+      地図は Googleマップを新しいタブで開きます</p>
+    </div>
+  </section>
+
+  <!-- 達成トースト通知 -->
+  <div class="achievement-toast" id="achievement-toast">
+    <span class="at-icon">🏆</span><span id="achievement-text"></span>
+  </div>
+
+  <!-- ===== Result Screen ===== -->
+  <section class="screen result-screen" id="screen-result">
+    <p class="result-title">― 結果発表 ―</p>
+    <img class="mascot-img" id="mascot-result" alt="けやぴ" src="" />
+    <div class="score-big"><span id="final-score">0</span><span class="total"> / <span id="final-total">10</span></span></div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">正答率</div>
+        <div class="stat-value"><span id="stat-rate">0</span>%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">所要時間</div>
+        <div class="stat-value" id="stat-time">0秒</div>
+      </div>
+    </div>
+
+    <div class="rank-card">
+      <div class="rank-icon" id="rank-icon">🏆</div>
+      <h2 class="rank-title" id="rank-title">府中マスター</h2>
+      <p class="rank-comment" id="rank-comment">あなたは府中通です！</p>
+    </div>
+
+    <div class="share-section">
+      <p class="share-label">― 結果をシェア ―</p>
+      <button class="share-btn" id="btn-share-x">𝕏でシェア</button>
+      <button class="share-btn" id="btn-share-line">LINEで送る</button>
+      <button class="share-btn" id="btn-share-copy">リンクをコピー</button>
+    </div>
+
+    <button class="btn-primary" id="btn-retry" style="margin-top:18px;">もう一度挑戦</button>
+    <button class="btn-secondary" id="btn-home">トップに戻る</button>
+
+    <div class="footer">
+      <p>府中市の観光情報は <a href="https://www.kankou-fuchu.com/" target="_blank" rel="noopener">府中観光協会</a> へ</p>
+    </div>
+  </section>
+
+  <!-- ===== 出典詳細モーダル ===== -->
+  <div class="modal-overlay" id="modal-source">
+    <div class="modal">
+      <h2>📚 この問題の出典</h2>
+      <div class="modal-content source-modal-content" id="source-modal-body">
+        <!-- JSで動的に生成 -->
+      </div>
+      <button class="modal-close" id="modal-source-close">閉じる</button>
+    </div>
+  </div>
+
+  <!-- ===== PWA インストール手順モーダル ===== -->
+  <div class="modal-overlay" id="modal-install">
+    <div class="modal">
+      <h2>📲 ホーム画面に追加</h2>
+      <div class="modal-content">
+        <p style="text-align:center; margin-bottom:14px;">
+          スマホのホーム画面に追加すると、<br>
+          <strong style="color:#8b1a2b;">通常のアプリのようにワンタップで起動</strong>できます！
+        </p>
+
+        <div class="install-guide">
+          <div class="tab-row">
+            <button class="tab-btn" data-tab="ios">🍎 iPhone / iPad</button>
+            <button class="tab-btn" data-tab="android">🤖 Android</button>
+          </div>
+
+          <!-- iOS手順 -->
+          <div class="tab-content" id="tab-ios">
+            <div class="install-step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                画面下の<strong>共有ボタン</strong><span class="step-icon">⬆️</span>をタップ
+                <div style="font-size:10px;color:#8b5a3c;margin-top:2px;">※Safariブラウザで開いてください</div>
+              </div>
+            </div>
+            <div class="install-step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                メニューをスクロールして<br>
+                <strong>「ホーム画面に追加」</strong>をタップ
+              </div>
+            </div>
+            <div class="install-step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                右上の<strong>「追加」</strong>をタップして完了！<br>
+                <span style="font-size:11px;color:#6b4226;">ホーム画面に🌳けやぴアイコンが追加されます</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Android手順 -->
+          <div class="tab-content" id="tab-android">
+            <div class="install-step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                画面右上の<strong>メニューボタン</strong><span class="step-icon">⋮</span>をタップ
+                <div style="font-size:10px;color:#8b5a3c;margin-top:2px;">※Chrome等のブラウザで開いてください</div>
+              </div>
+            </div>
+            <div class="install-step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>「ホーム画面に追加」</strong>または<br>
+                <strong>「アプリをインストール」</strong>をタップ
+              </div>
+            </div>
+            <div class="install-step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>「追加」</strong>または<strong>「インストール」</strong>をタップして完了！<br>
+                <span style="font-size:11px;color:#6b4226;">ホーム画面に🌳けやぴアイコンが追加されます</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="install-benefit">
+          <strong>💡 追加するとこんないいことが！</strong><br>
+          ✓ ブラウザのアドレスバーが消えて全画面表示<br>
+          ✓ ホーム画面のアイコンからワンタップで起動<br>
+          ✓ オフラインでも遊べる<br>
+          ✓ 通常のアプリと同じ使い心地
+        </div>
+      </div>
+      <button class="modal-close" id="modal-install-close">閉じる</button>
+    </div>
+  </div>
+
+  <!-- ===== About Modal ===== -->
+  <div class="modal-overlay" id="modal-about">
+    <div class="modal">
+      <h2>このアプリについて</h2>
+      <div class="modal-content">
+        <p>「府中ものしりクイズ」は、東京都府中市の歴史・名所・グルメ・文化をクイズで楽しく学ぶ、個人制作のミニアプリです。</p>
+
+        <h3>🌱 キャラクター紹介</h3>
+        <p><b>けやぴ</b>：府中のシンボル「馬場大門のケヤキ並木」をモチーフにした、本アプリのオリジナル妖精キャラクター。AI画像生成で制作した個人著作物です。</p>
+
+        <h3>📚 情報の出典</h3>
+        <p>クイズの内容は、府中市オープンデータ（CC BY 4.0）、大國魂神社公式サイト、府中観光協会公式情報、Wikipedia等の公開情報を参考に作成しています。</p>
+
+        <h3>⚠️ 免責事項</h3>
+        <p>本アプリは個人が制作した非公式のファンメイドアプリであり、府中市・大國魂神社・JRA・東京競馬場等の公式機関とは一切関係ありません。情報の正確性は保証されません。最新・正確な情報は各公式サイトをご確認ください。</p>
+
+        <h3>🔒 プライバシー</h3>
+        <p>本アプリはユーザーの個人情報を一切収集しません。スコア等のデータはお使いの端末のブラウザ内にのみ保存されます。</p>
+
+        <h3>📅 バージョン</h3>
+        <p>v2.7.1 ／ 全100問・出典明示・お出かけマップ・UI磨き込み完了</p>
+      </div>
+      <button class="modal-close" id="modal-close">閉じる</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ============================================================
+   府中ものしりクイズ v2.5 - データ（全100問・ファクトチェック済）
+   出典：府中市オープンデータ・大國魂神社公式・府中観光協会・Wikipedia等
+   difficulty: 1=初級 2=中級 3=上級
+   ============================================================ */
+/* ============================================================
+   出典マスター（クリックで詳細表示）
+   ============================================================ */
+const SOURCES = {
+  "ookunitama": {
+    "name": "大國魂神社 公式サイト",
+    "url": "https://www.ookunitamajinja.or.jp/",
+    "description": "武蔵国の守り神として約1900年の歴史を持つ大國魂神社の公式サイト。神社の由緒や境内の文化財について詳しく紹介されています。"
+  },
+  "ookunitama_matsuri": {
+    "name": "大國魂神社 公式サイト（祭事）",
+    "url": "https://www.ookunitamajinja.or.jp/matsuri/",
+    "description": "くらやみ祭・すもも祭など、大國魂神社で執り行われる年間祭事の公式情報が掲載されています。"
+  },
+  "keyaki": {
+    "name": "府中観光協会（馬場大門のケヤキ並木）",
+    "url": "https://www.kankou-fuchu.com/?p=we-page-entry&spot=38209",
+    "description": "国指定天然記念物「馬場大門のケヤキ並木」の歴史・本数・特徴について、府中観光協会が紹介しています。"
+  },
+  "jra": {
+    "name": "東京競馬場（JRA公式）",
+    "url": "https://www.jra.go.jp/facilities/race/tokyo/",
+    "description": "1933年（昭和8年）開設、JRA最大級の競馬場。日本ダービー・ジャパンカップなど数々のG1レースの舞台となっています。"
+  },
+  "suntory": {
+    "name": "サントリー〈天然水のビール工場〉東京・武蔵野",
+    "url": "https://www.suntory.co.jp/factory/musashino/",
+    "description": "1963年（昭和38年）開設、サントリー初のビール工場。府中市矢崎町にあり、無料の工場見学が人気です。"
+  },
+  "rugby": {
+    "name": "ラグビーのまち府中（府中市公式）",
+    "url": "https://www.city.fuchu.tokyo.jp/bunka/sport/rugby/",
+    "description": "東芝ブレイブルーパス東京とサントリーサンゴリアスがホームタウンとする「ラグビーのまち」府中の公式情報。"
+  },
+  "fuchu_history": {
+    "name": "府中市（歴史・文化財）",
+    "url": "https://www.city.fuchu.tokyo.jp/gyosei/fuchusinogaiyo/bunka/",
+    "description": "武蔵国府跡、分倍河原の戦い、市内の文化財など、府中市の歴史を伝える公式情報です。"
+  },
+  "kanko_spot": {
+    "name": "府中観光協会（観光スポット）",
+    "url": "https://www.kankou-fuchu.com/",
+    "description": "府中市内の観光名所・公園・自然スポットを紹介する府中観光協会の公式サイトです。"
+  },
+  "kanko_product": {
+    "name": "府中観光協会（府中太鼓判・特産品）",
+    "url": "https://www.kankou-fuchu.com/?p=we-page-entry&spot=30593",
+    "description": "府中観光協会推奨品「府中太鼓判」をはじめ、府中ならではの特産品・グルメ情報が紹介されています。"
+  },
+  "fuchu_mascot": {
+    "name": "府中市（ふちゅこま公式）",
+    "url": "https://www.city.fuchu.tokyo.jp/gyosei/fuchusinogaiyo/fuchukoma/fuchukoma.html",
+    "description": "府中市公式マスコット「ふちゅこま」の誕生秘話・デザイン情報が掲載されています。"
+  },
+  "fuchu_official": {
+    "name": "府中市 公式サイト",
+    "url": "https://www.city.fuchu.tokyo.jp/",
+    "description": "東京都府中市の公式サイト。市の概要、人口・面積、市の象徴（鳥・花・木）、行政情報などを発信しています。"
+  },
+  "fuchu_people": {
+    "name": "府中市（市民栄誉賞・著名人）",
+    "url": "https://www.city.fuchu.tokyo.jp/bunka/sport/topteam/athlete/",
+    "description": "澤穂希選手をはじめ、府中市にゆかりのあるアスリート・著名人の情報が掲載されています。"
+  },
+  "transport": {
+    "name": "府中観光協会（府中へのアクセス）",
+    "url": "https://www.kankou-fuchu.com/?p=we-page-entry&spot=38232",
+    "description": "京王線・JR南武線・武蔵野線など、府中市の交通アクセス情報を府中観光協会が紹介しています。"
+  }
+};
+
+/* ============================================================
+   お出かけスポットマスター（25ヶ所）
+   ============================================================ */
+const SPOTS = {
+  "ookunitama_shrine": {
+    "name": "大國魂神社",
+    "category": "shrine",
+    "categoryLabel": "神社・寺",
+    "icon": "⛩️",
+    "description": "武蔵国の守り神として約1900年の歴史を持つ古社。府中の中心的存在。",
+    "address": "東京都府中市宮町3-1",
+    "mapsQuery": "大國魂神社 府中市",
+    "nearestStation": "京王線府中駅 徒歩5分"
+  },
+  "koanji_temple": {
+    "name": "高安寺",
+    "category": "shrine",
+    "categoryLabel": "神社・寺",
+    "icon": "🏯",
+    "description": "足利尊氏が再興した曹洞宗の禅寺。武蔵国の安国寺。",
+    "address": "東京都府中市片町2-4-1",
+    "mapsQuery": "高安寺 府中市",
+    "nearestStation": "JR分倍河原駅 徒歩10分"
+  },
+  "keyaki_namiki": {
+    "name": "馬場大門のケヤキ並木",
+    "category": "nature",
+    "categoryLabel": "自然・公園",
+    "icon": "🌳",
+    "description": "国指定天然記念物。約120本のケヤキが並ぶ約500〜600mの参道。",
+    "address": "東京都府中市宮町1丁目〜",
+    "mapsQuery": "馬場大門のケヤキ並木",
+    "nearestStation": "京王線府中駅 北口すぐ"
+  },
+  "fuchu_no_mori_park": {
+    "name": "府中の森公園",
+    "category": "nature",
+    "categoryLabel": "自然・公園",
+    "icon": "🌲",
+    "description": "芸術劇場や美術館を併設した文化エリア。広大な芝生広場が魅力。",
+    "address": "東京都府中市浅間町1-3",
+    "mapsQuery": "府中の森公園",
+    "nearestStation": "京王線東府中駅 徒歩10分"
+  },
+  "kyodo_no_mori_park": {
+    "name": "府中市郷土の森公園",
+    "category": "nature",
+    "categoryLabel": "自然・公園",
+    "icon": "🌿",
+    "description": "多摩川沿いの広大な公園。梅まつり・あじさいまつりで有名。",
+    "address": "東京都府中市南町6-32",
+    "mapsQuery": "府中市郷土の森公園",
+    "nearestStation": "JR府中本町駅 バス10分"
+  },
+  "tamagawa_shinsui_park": {
+    "name": "多摩川親水公園",
+    "category": "nature",
+    "categoryLabel": "自然・公園",
+    "icon": "💧",
+    "description": "多摩川の流れをミニチュア化したせせらぎがある親水公園。",
+    "address": "東京都府中市小柳町6-479-2",
+    "mapsQuery": "多摩川親水公園 府中",
+    "nearestStation": "西武多摩川線競艇場前駅 徒歩10分"
+  },
+  "sengen_yama_park": {
+    "name": "都立浅間山公園",
+    "category": "nature",
+    "categoryLabel": "自然・公園",
+    "icon": "🌸",
+    "description": "標高約80mの低山。ムサシノキスゲの世界唯一の自生地として有名。",
+    "address": "東京都府中市若松町5丁目",
+    "mapsQuery": "都立浅間山公園 府中",
+    "nearestStation": "京王線多磨霊園駅 徒歩15分"
+  },
+  "tamagawa_kaze_no_michi": {
+    "name": "府中多摩川かぜのみち",
+    "category": "nature",
+    "categoryLabel": "自然・公園",
+    "icon": "🚴",
+    "description": "多摩川沿いの東西約10kmにわたる歩行者・自転車専用道路。",
+    "address": "東京都府中市（多摩川沿い堤防）",
+    "mapsQuery": "府中多摩川かぜのみち",
+    "nearestStation": "JR府中本町駅 徒歩10分"
+  },
+  "musashi_kokufu_ato": {
+    "name": "国史跡 武蔵国府跡",
+    "category": "history",
+    "categoryLabel": "歴史・文化",
+    "icon": "🏛️",
+    "description": "古代武蔵国の役所跡。大國魂神社境内および東側に広がる。",
+    "address": "東京都府中市本町1-14",
+    "mapsQuery": "武蔵国府跡 府中市",
+    "nearestStation": "JR府中本町駅 徒歩1分"
+  },
+  "bubaigawara_battle_site": {
+    "name": "分倍河原古戦場碑",
+    "category": "history",
+    "categoryLabel": "歴史・文化",
+    "icon": "⚔️",
+    "description": "1333年、鎌倉幕府滅亡のきっかけとなった戦場跡。",
+    "address": "東京都府中市分梅町2-59-4",
+    "mapsQuery": "分倍河原古戦場碑",
+    "nearestStation": "JR・京王分倍河原駅 徒歩5分"
+  },
+  "kyodo_no_mori_museum": {
+    "name": "府中市郷土の森博物館",
+    "category": "history",
+    "categoryLabel": "歴史・文化",
+    "icon": "🏛️",
+    "description": "野外を含めた「森」全体が博物館。プラネタリウムも併設。",
+    "address": "東京都府中市南町6-32",
+    "mapsQuery": "府中市郷土の森博物館",
+    "nearestStation": "JR府中本町駅 バス10分"
+  },
+  "fuchu_art_museum": {
+    "name": "府中市美術館",
+    "category": "history",
+    "categoryLabel": "歴史・文化",
+    "icon": "🎨",
+    "description": "府中の森公園内にある美術館。企画展も充実。",
+    "address": "東京都府中市浅間町1-3",
+    "mapsQuery": "府中市美術館",
+    "nearestStation": "京王線東府中駅 徒歩17分"
+  },
+  "tokyo_racecourse": {
+    "name": "東京競馬場",
+    "category": "sports",
+    "categoryLabel": "競馬・スポーツ",
+    "icon": "🐎",
+    "description": "1933年開設のJRA最大級の競馬場。日本ダービー開催地。",
+    "address": "東京都府中市日吉町1-1",
+    "mapsQuery": "東京競馬場",
+    "nearestStation": "京王線府中競馬正門前駅すぐ"
+  },
+  "jra_racing_museum": {
+    "name": "JRA競馬博物館",
+    "category": "sports",
+    "categoryLabel": "競馬・スポーツ",
+    "icon": "🏇",
+    "description": "東京競馬場内にある競馬専門博物館。シミュレーター体験も。",
+    "address": "東京都府中市日吉町1-1（東京競馬場内）",
+    "mapsQuery": "JRA競馬博物館 府中",
+    "nearestStation": "京王線府中競馬正門前駅すぐ"
+  },
+  "suntory_sports_center": {
+    "name": "サントリー府中スポーツセンター",
+    "category": "sports",
+    "categoryLabel": "競馬・スポーツ",
+    "icon": "🏉",
+    "description": "サントリーサンゴリアスの本拠地。ラグビーのまち府中の中心。",
+    "address": "東京都府中市是政6-22",
+    "mapsQuery": "サントリー府中スポーツセンター",
+    "nearestStation": "西武多摩川線是政駅 徒歩10分"
+  },
+  "suntory_brewery": {
+    "name": "サントリー〈天然水のビール工場〉東京・武蔵野",
+    "category": "factory",
+    "categoryLabel": "工場見学",
+    "icon": "🍺",
+    "description": "1963年開設、サントリー初のビール工場。無料見学可（要予約）。",
+    "address": "東京都府中市矢崎町3-1",
+    "mapsQuery": "サントリー武蔵野ビール工場",
+    "nearestStation": "JR分倍河原駅 徒歩15分"
+  },
+  "kururu": {
+    "name": "くるる",
+    "category": "shop",
+    "categoryLabel": "商業・グルメ",
+    "icon": "🛍️",
+    "description": "京王線府中駅南口直結のショッピングセンター。映画館も併設。",
+    "address": "東京都府中市宮町1-100",
+    "mapsQuery": "くるる 府中",
+    "nearestStation": "京王線府中駅 南口直結"
+  },
+  "mitten_fuchu": {
+    "name": "ミッテン府中・フォーリス",
+    "category": "shop",
+    "categoryLabel": "商業・グルメ",
+    "icon": "🏬",
+    "description": "京王線府中駅南口のけやき並木通りに面した複合商業施設。",
+    "address": "東京都府中市宮町1-41-2",
+    "mapsQuery": "ミッテン府中",
+    "nearestStation": "京王線府中駅 徒歩2分"
+  },
+  "fan_zone_183": {
+    "name": "183 FUCHU FAN ZONE",
+    "category": "shop",
+    "categoryLabel": "商業・グルメ",
+    "icon": "🏉",
+    "description": "京王線府中駅北口のラグビーのまち府中の情報発信拠点。",
+    "address": "東京都府中市宮町1-1-10 京王府中ショッピングセンター2F",
+    "mapsQuery": "183 FUCHU FAN ZONE",
+    "nearestStation": "京王線府中駅 北口改札前"
+  },
+  "uomoto": {
+    "name": "うなぎ 日本料理 魚元",
+    "category": "shop",
+    "categoryLabel": "商業・グルメ",
+    "icon": "🍱",
+    "description": "府中駅近くの老舗うなぎ店。浜名湖産うなぎが名物。",
+    "address": "東京都府中市府中町2-14-14",
+    "mapsQuery": "うなぎ 魚元 府中",
+    "nearestStation": "京王線府中駅 北口徒歩5分"
+  },
+  "kamedaya": {
+    "name": "御菓子司 亀田屋",
+    "category": "shop",
+    "categoryLabel": "商業・グルメ",
+    "icon": "🍵",
+    "description": "府中の老舗和菓子店。府中太鼓判にも認定された名店。",
+    "address": "東京都府中市（市内）",
+    "mapsQuery": "御菓子司 亀田屋 府中",
+    "nearestStation": "京王線府中駅近辺"
+  },
+  "kyodo_no_mori_bussankan": {
+    "name": "郷土の森観光物産館",
+    "category": "shop",
+    "categoryLabel": "商業・グルメ",
+    "icon": "🛒",
+    "description": "地元野菜・特産品・観光情報の発信拠点。郷土の森博物館に隣接。",
+    "address": "東京都府中市是政6-32-10",
+    "mapsQuery": "郷土の森観光物産館",
+    "nearestStation": "西武多摩川線是政駅 徒歩18分"
+  },
+  "fuchu_station": {
+    "name": "京王線 府中駅",
+    "category": "station",
+    "categoryLabel": "駅",
+    "icon": "🚃",
+    "description": "府中市の中心駅。新宿駅まで特急で約22分。",
+    "address": "東京都府中市宮町1丁目",
+    "mapsQuery": "京王線 府中駅",
+    "nearestStation": "京王線"
+  },
+  "fuchu_honmachi_station": {
+    "name": "JR府中本町駅",
+    "category": "station",
+    "categoryLabel": "駅",
+    "icon": "🚉",
+    "description": "JR南武線・武蔵野線の駅。東京競馬場の最寄り駅。",
+    "address": "東京都府中市本町1丁目",
+    "mapsQuery": "JR府中本町駅",
+    "nearestStation": "JR南武線・武蔵野線"
+  },
+  "bubaigawara_station": {
+    "name": "分倍河原駅",
+    "category": "station",
+    "categoryLabel": "駅",
+    "icon": "🚆",
+    "description": "JR南武線・京王線の駅。新田義貞の騎馬像が立つ。",
+    "address": "東京都府中市片町2丁目",
+    "mapsQuery": "分倍河原駅",
+    "nearestStation": "JR南武線・京王線"
+  }
+};
+
+const QUIZ_DATA = [
+  // ============================================================
+  // === 歴史カテゴリー（30問）===
+  // ============================================================
+  {
+    category: 'history', catLabel: '歴史', difficulty: 1,
+    question: '府中市にある大國魂神社は、およそ何年の歴史を持つ神社でしょう？',
+    choices: ['約500年', '約1000年', '約1900年', '約2500年'],
+    answer: 2,
+    explanation: '大國魂神社は<strong>約1900年</strong>の歴史を持つ古社で、武蔵国の守り神として古くから祀られてきました。景行天皇41年（西暦111年）の創建と伝えられています。',
+    keyapi: 'ケヤキ並木よりも、ずっとずっと長い歴史なんだよ〜🌱',
+    source: 'ookunitama',
+    spots: ['ookunitama_shrine']
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 1,
+    question: '古代、府中市には現在の都道府県でいうと「武蔵国」の何が置かれていた？',
+    choices: ['天守閣', '国府（こくふ）', '関所', '宿場町'],
+    answer: 1,
+    explanation: '大化の改新後、武蔵国（現在の埼玉県・東京都・神奈川県の一部）の政治の中心地である<strong>国府（こくふ）</strong>が府中に置かれました。「府中」という地名の由来でもあります。',
+    keyapi: '「府中」という地名そのものが、この歴史から来てるんだよ！',
+    source: 'fuchu_official'
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 1,
+    question: '府中のシンボル「馬場大門のケヤキ並木」が国の天然記念物に指定されたのは何年？',
+    choices: ['1924年（大正13年）', '1955年（昭和30年）', '1980年（昭和55年）', '2000年（平成12年）'],
+    answer: 0,
+    explanation: '馬場大門のケヤキ並木は<strong>1924年（大正13年）</strong>に国の天然記念物に指定されました。けやき並木として唯一の国指定天然記念物です。2024年に指定100周年を迎えました。',
+    keyapi: '100周年だなんて、ぼくたちケヤキも長生きだね〜！',
+    source: 'keyaki',
+    spots: ['keyaki_namiki']
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 1,
+    question: '大國魂神社の例大祭「くらやみ祭」は何月に行われる？',
+    choices: ['3月', '5月（GW期間）', '7月', '10月'],
+    answer: 1,
+    explanation: 'くらやみ祭は毎年<strong>4月30日から5月6日</strong>にかけて行われる大國魂神社最大の例大祭で、ゴールデンウィークの風物詩。都指定無形民俗文化財に指定されています。',
+    keyapi: 'GWのお祭りといえばこれ！22台の山車が圧巻だよ〜',
+    source: 'ookunitama_matsuri',
+    spots: ['ookunitama_shrine']
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 1,
+    question: '「府中」という地名の由来は何でしょう？',
+    choices: ['府がたくさんあったから', '武蔵国の国府が置かれた中心地だから', '富士山が中央に見えるから', '武士が集まる中心地だったから'],
+    answer: 1,
+    explanation: '「府中」とは、古代に<strong>国府が置かれた中心地</strong>を指す言葉。武蔵国の国府がここに置かれたことから「府中」と呼ばれるようになりました。全国にも「府中」の地名がいくつかあります。',
+    keyapi: '広島にも「府中市」があるよ！同じ由来なんだ〜',
+    source: 'fuchu_official'
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 2,
+    question: '府中市が市制を施行（市になった）したのは何年？',
+    choices: ['1925年（大正14年）', '1954年（昭和29年）', '1970年（昭和45年）', '1989年（平成元年）'],
+    answer: 1,
+    explanation: '府中市は<strong>1954年（昭和29年）4月1日</strong>に、府中町・多磨村・西府村が合併して誕生しました。2024年に市制施行70周年を迎えました。',
+    keyapi: '昭和29年生まれの府中市は、ぼくたちより若いかも？',
+    source: 'fuchu_official'
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 2,
+    question: '大國魂神社の本殿が造営されたのは何時代？',
+    choices: ['鎌倉時代', '江戸時代（寛文年間）', '明治時代', '昭和時代'],
+    answer: 1,
+    explanation: '大國魂神社の本殿は<strong>江戸時代の寛文年間（1661〜73年）</strong>に造営されました。慶応・昭和年間に修復されています。境内には嘉永7年（1854年）再建の鼓楼など、貴重な建造物が並びます。',
+    keyapi: '江戸時代の建物が今も残ってるなんてすごいよね〜',
+    source: 'ookunitama',
+    spots: ['ookunitama_shrine']
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 2,
+    question: '府中市の姉妹都市はどこ？',
+    choices: ['長野県佐久穂町', '北海道函館市', '京都府宇治市', '沖縄県石垣市'],
+    answer: 0,
+    explanation: '府中市の姉妹都市は<strong>長野県佐久穂町</strong>。1979年に旧八千穂村と姉妹都市提携、合併後の2005年にあらためて佐久穂町と提携しました。海外友好都市はオーストリア・ウィーン市ヘルナルス区。',
+    keyapi: '長野と東京、自然の豊かさでつながってるよ〜🌳',
+    source: 'fuchu_official'
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 2,
+    question: '府中市の海外友好都市はどこの国の都市？',
+    choices: ['ドイツ', 'フランス', 'オーストリア', 'イタリア'],
+    answer: 2,
+    explanation: '府中市は<strong>オーストリア・ウィーン市ヘルナルス区</strong>と1992年に友好都市提携を結んでいます。文化・教育分野を中心とした交流が続いています。',
+    keyapi: 'ヨーロッパとも繋がっているんだ〜！意外でしょ？',
+    source: 'fuchu_official'
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 2,
+    question: 'くらやみ祭の起源と関係が深い、平安時代の武将は誰？',
+    choices: ['源頼朝', '源頼義・義家父子', '平清盛', '坂上田村麻呂'],
+    answer: 1,
+    explanation: 'くらやみ祭と並ぶ大國魂神社の祭事「すもも祭」は、<strong>源頼義・義家父子</strong>が奥州安倍氏平定（前九年の役）の戦勝祈願をしたことが起源と伝えられています。',
+    keyapi: '武将も訪れた歴史ある神社なんだ〜⚔️',
+    source: 'ookunitama_matsuri',
+    spots: ['ookunitama_shrine']
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 3,
+    question: '府中市内にある「武蔵国分寺跡」を建立したのはどの天皇？',
+    choices: ['天智天皇', '聖武天皇', '桓武天皇', '後醍醐天皇'],
+    answer: 1,
+    explanation: '<strong>聖武天皇</strong>が国分寺建立の詔（みことのり）（741年）を発し、全国に国分寺・国分尼寺が建てられました。武蔵国分寺跡は府中市の隣・国分寺市にありますが、武蔵国府との関係が深い遺跡です。',
+    keyapi: '聖武天皇は奈良の大仏も造った天皇さまだよ〜',
+    source: 'fuchu_history'
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 3,
+    question: 'ケヤキ並木の中で、最も古いケヤキの樹齢はおよそ何年？',
+    choices: ['約100年', '約200年', '約400年', '約600年'],
+    answer: 2,
+    explanation: 'ケヤキ並木最古の木は<strong>樹齢約400年</strong>と言われています。拝殿よりケヤキ並木に向かい旧甲州街道手前にあり、長い時代を見守ってきました。',
+    keyapi: '400年！江戸時代から見守ってきた大先輩のケヤキだね〜👴',
+    source: 'keyaki',
+    spots: ['keyaki_namiki']
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 3,
+    question: 'ケヤキ並木は、源頼義・義家父子が植えた苗木が始まりとされていますが、何の戦の際？',
+    choices: ['平将門の乱', '前九年の役・後三年の役', '承久の乱', '応仁の乱'],
+    answer: 1,
+    explanation: '<strong>前九年の役・後三年の役</strong>（11世紀）に戦勝祈願のため大國魂神社に参拝し、その勝利後に苗木1000本を寄進したと伝えられています。これがケヤキ並木の始まりとも言われています。',
+    keyapi: 'ぼくたちの先祖は、1000年近く前に植えられたんだ…！',
+    source: 'ookunitama',
+    spots: ['ookunitama_shrine', 'keyaki_namiki']
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 3,
+    question: '府中市の人口はおよそ何人？（2024年時点）',
+    choices: ['約13万人', '約26万人', '約40万人', '約60万人'],
+    answer: 1,
+    explanation: '府中市の人口は<strong>約26万人</strong>（2024年時点で約260,232人）。東京多摩地域の主要都市の一つです。面積は29.43平方キロメートル。',
+    keyapi: '東京都の市の中でもしっかり大きな街なんだよ〜',
+    source: 'fuchu_official'
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 3,
+    question: 'ケヤキ並木は、徳川家のどの将軍が補植したと伝えられている？',
+    choices: ['徳川家康', '徳川綱吉', '徳川吉宗', '徳川慶喜'],
+    answer: 0,
+    explanation: '<strong>徳川家康</strong>が関ヶ原の戦いの戦勝祈願に大國魂神社を訪れた際にケヤキ苗を寄進し、補植したと伝えられています。江戸時代を通じて街道筋として整備されました。',
+    keyapi: '家康公もぼくたちの先祖を見ていたかも〜👀',
+    source: 'ookunitama',
+    spots: ['ookunitama_shrine', 'keyaki_namiki']
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 2,
+    question: '府中市内にある古代の遺跡「国史跡武蔵国府跡」の中心エリアは？',
+    choices: ['国衙地区', '関所地区', '城下地区', '商家地区'],
+    answer: 0,
+    explanation: '<strong>国衙（こくが）地区</strong>は、武蔵国の役所が置かれた中心エリア。大國魂神社の境内および東側一帯に広がり、現在も発掘調査・整備が続けられています。',
+    keyapi: '神社の下に古代の役所が眠ってるなんてロマンだよね〜',
+    source: 'ookunitama',
+    spots: ['ookunitama_shrine', 'musashi_kokufu_ato']
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 1,
+    question: '大國魂神社で行われる「すもも祭」は何月に開催される？',
+    choices: ['5月', '7月', '9月', '11月'],
+    answer: 1,
+    explanation: 'すもも祭は毎年<strong>7月20日</strong>に行われる夏の風物詩。約120軒の露店が並び、約7万人の参拝客で賑わいます。この日のみ授与される「からす団扇・からす扇子」が有名です。',
+    keyapi: '夏のお祭り！からす団扇でひと夏を涼しく〜🍧',
+    source: 'ookunitama_matsuri',
+    spots: ['ookunitama_shrine']
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 3,
+    question: 'すもも祭で授与される「からす団扇・からす扇子」のご利益は？',
+    choices: ['縁結び', '学業成就', '五穀豊穣・悪疫防除', '勝負運'],
+    answer: 2,
+    explanation: 'からす団扇・からす扇子は<strong>五穀豊穣・悪疫防除（あくえきぼうじょ）</strong>を祈願するもの。源頼義が奥州安倍氏平定の戦勝祈願をした際、カラスが瑞兆として現れたことに由来します。',
+    keyapi: 'カラスが幸せを運ぶなんて、素敵な伝説だね〜🐦',
+    source: 'ookunitama_matsuri'
+  },
+
+  // ============================================================
+  // === 名所カテゴリー（35問）===
+  // ============================================================
+  {
+    category: 'spot', catLabel: '名所', difficulty: 1,
+    question: '府中市にある、日本でも有数の競馬場の正式名称は？',
+    choices: ['府中競馬場', '東京競馬場', '武蔵野競馬場', '関東中央競馬場'],
+    answer: 1,
+    explanation: '府中市にある競馬場の正式名称は<strong>「東京競馬場」</strong>です。JRA最大級の競馬場で、日本ダービーやジャパンカップなどG1レースが開催されます。「府中競馬場」と呼ばれることも多いですね。',
+    keyapi: '愛称は「府中競馬場」、正式には「東京競馬場」だよ〜🐎',
+    source: 'jra',
+    spots: ['tokyo_racecourse']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 1,
+    question: '馬場大門のケヤキ並木は、およそ何メートル続いている？',
+    choices: ['約150m', '約500m', '約1km', '約2km'],
+    answer: 1,
+    explanation: '馬場大門のケヤキ並木は、京王線府中駅西側を中心に南北に<strong>約500〜600m</strong>続き、約120本のケヤキが並んでいます。大國魂神社の参道としての役割も持っています。',
+    keyapi: 'ぼくたちの仲間が約120本！壮観でしょ〜🌳🌳🌳',
+    source: 'ookunitama',
+    spots: ['ookunitama_shrine', 'keyaki_namiki']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 1,
+    question: '府中市郷土の森博物館の特徴を表すのに最も近いものは？',
+    choices: ['屋内展示だけの近代的な博物館', '野外を含めた「森」全体が博物館', 'スポーツ専門博物館', '水族館を併設した博物館'],
+    answer: 1,
+    explanation: '府中市郷土の森博物館は、<strong>野外を含めた「森」全体を博物館</strong>とするフィールドミュージアム。府中の歴史や文化を体感でき、梅まつり・あじさいまつり・プラネタリウムなど四季折々の楽しみがあります。',
+    keyapi: '梅・あじさい・桜・紅葉、季節ごとに楽しいよ〜🌸',
+    source: 'kanko_spot',
+    spots: ['kyodo_no_mori_museum']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 1,
+    question: '府中市郷土の森公園に隣接する、自然豊かな川はどれ？',
+    choices: ['荒川', '多摩川', '隅田川', '江戸川'],
+    answer: 1,
+    explanation: '府中市郷土の森公園は<strong>多摩川</strong>沿いに広がっています。緑道や豊かな自然に囲まれ、市民の憩いの場として親しまれています。郷土の森観光物産館もここにあります。',
+    keyapi: '多摩川沿いはお散歩にもぴったり〜🚶',
+    source: 'kanko_spot',
+    spots: ['kyodo_no_mori_park', 'kyodo_no_mori_bussankan']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 1,
+    question: '府中市内にある、ビールの工場見学ができる人気スポットは？',
+    choices: ['サントリー〈天然水のビール工場〉東京・武蔵野', 'アサヒ府中工場', 'キリン東京ビール園', 'サッポロ多摩工場'],
+    answer: 0,
+    explanation: '<strong>サントリー〈天然水のビール工場〉東京・武蔵野</strong>は府中市矢崎町にあり、1963年に建てられたサントリー初のビール工場。ザ・プレミアム・モルツもここで誕生しました。無料で工場見学（要予約）ができます。',
+    keyapi: '見学のあとはビールが3杯試飲できるんだって〜🍺',
+    source: 'suntory',
+    spots: ['suntory_brewery']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 2,
+    question: '馬場大門のケヤキ並木には、ケヤキ以外にもどんな木が植えられている？',
+    choices: ['イチョウ', 'イヌシデ・エノキ', 'ソメイヨシノだけ', 'スギ'],
+    answer: 1,
+    explanation: 'ケヤキ並木には、ケヤキ約120本に加え<strong>イヌシデ・エノキ</strong>などの大木も生育しています。特にイヌシデは全て50年以上前から生育する貴重な木です。',
+    keyapi: 'ぼくの仲間がたくさんいるんだよ〜！実は多様な森なんだ',
+    source: 'keyaki',
+    spots: ['keyaki_namiki']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 2,
+    question: '東京競馬場の最寄り駅として正しいのは？',
+    choices: ['府中駅', '府中本町駅・府中競馬正門前駅', '分倍河原駅', '武蔵野台駅'],
+    answer: 1,
+    explanation: '東京競馬場の最寄り駅は、JR<strong>府中本町駅</strong>と京王線<strong>府中競馬正門前駅</strong>。レース開催日は多くの来場者で賑わいます。',
+    keyapi: '京王線にはレース専用駅まであるよ〜🚃',
+    source: 'jra',
+    spots: ['tokyo_racecourse', 'fuchu_honmachi_station']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 2,
+    question: '東京競馬場で開催される、世界的に有名な国際G1レースは？',
+    choices: ['有馬記念', 'ジャパンカップ', '皐月賞', '菊花賞'],
+    answer: 1,
+    explanation: '<strong>ジャパンカップ</strong>は世界のトップホースが集う国際G1レース。日本ダービー、天皇賞（秋）、オークスなど数々のビッグレースが東京競馬場で開催されます。',
+    keyapi: '世界中の名馬が府中に集結するんだよ〜🌏🐎',
+    source: 'jra',
+    spots: ['tokyo_racecourse']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 2,
+    question: '府中市にある複合商業施設で、けやき並木に面したショッピングモールは？',
+    choices: ['ルミネ府中', 'ミッテン府中・フォーリス', 'マルイ府中', '府中PARCO'],
+    answer: 1,
+    explanation: '<strong>ミッテン府中・専門店街フォーリス</strong>は京王線府中駅南口の府中けやき並木通りに面した複合商業施設。映画館も併設され、市民の集いの場となっています。',
+    keyapi: 'お買い物も府中駅近くで楽しめるよ〜🛍️',
+    source: 'keyaki',
+    spots: ['keyaki_namiki', 'mitten_fuchu']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 2,
+    question: '府中市美術館があるのはどの公園内？',
+    choices: ['郷土の森公園', '府中の森公園', '武蔵野公園', '浅間山公園'],
+    answer: 1,
+    explanation: '府中市美術館は<strong>府中の森公園</strong>内にあります。府中の森公園は旧米軍施設跡地に整備された公園で、芸術劇場や図書館・スポーツ施設なども集まる文化エリアです。',
+    keyapi: '芸術もスポーツも一度に楽しめる素敵な公園だよ〜🎨',
+    source: 'kanko_spot',
+    spots: ['fuchu_no_mori_park', 'fuchu_art_museum']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 3,
+    question: 'サントリー武蔵野ビール工場が建てられたのは何年？',
+    choices: ['1955年', '1963年', '1978年', '1990年'],
+    answer: 1,
+    explanation: 'サントリー武蔵野ビール工場は<strong>1963年（昭和38年）</strong>に竣工。サントリーが本格的にビールの製造販売を開始した記念すべき工場です。',
+    keyapi: '60年以上の歴史あるビール工場なんだよ〜🍺',
+    source: 'suntory',
+    spots: ['suntory_brewery']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 3,
+    question: '大國魂神社の境内にある、東京都内最大規模の樹齢を誇るご神木は？',
+    choices: ['大銀杏', '巨樹のケヤキ', '神社椨（タブノキ）', '夫婦楠'],
+    answer: 0,
+    explanation: '大國魂神社境内の<strong>大銀杏</strong>は東京都の天然記念物に指定されており、樹齢推定1000年とも言われる巨樹です。秋には黄金色に染まり圧巻の景色になります。',
+    keyapi: 'ぼくたちケヤキも長生きだけど、銀杏はもっと長生きさん〜',
+    source: 'ookunitama',
+    spots: ['ookunitama_shrine']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 2,
+    question: '府中市内にある、競馬の歴史が学べる博物館の名前は？',
+    choices: ['JRA競馬博物館', '府中サラブレッド館', '東京ホースミュージアム', '武蔵野競馬記念館'],
+    answer: 0,
+    explanation: '<strong>JRA競馬博物館</strong>は東京競馬場内にある競馬専門博物館。映像ホールでのドラマ上映や、メモリアルホースの展示、競走馬シミュレーターで騎手気分が味わえます。',
+    keyapi: '騎手気分が味わえるなんてワクワクだね〜🏇',
+    source: 'jra',
+    spots: ['tokyo_racecourse', 'jra_racing_museum']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 3,
+    question: '府中市内の歴史散策コース、「ハケの道」とは何のこと？',
+    choices: ['古い宿場街道', '国分寺崖線（武蔵野台地の段丘）沿いの道', '商店街のメインストリート', '神社の参道'],
+    answer: 1,
+    explanation: '「<strong>ハケの道</strong>」は<strong>国分寺崖線（こくぶんじがいせん）</strong>沿いの道のこと。「ハケ」とは武蔵野台地と多摩川低地の境にある崖（段丘）を指す言葉で、湧水や緑豊かな道として知られます。',
+    keyapi: 'ハケってカワイイ呼び名だけど、地形の名前なんだよ〜',
+    source: 'kanko_spot'
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 2,
+    question: '府中市の中心エリアにある複合文化施設の名前は？',
+    choices: ['府中フォーラム', '府中の森芸術劇場', 'サントリーホール府中', '武蔵野文化センター'],
+    answer: 1,
+    explanation: '<strong>府中の森芸術劇場</strong>は府中の森公園内にある複合文化施設。コンサート・演劇・各種イベントが開催され、市内最大級の文化発信拠点となっています。',
+    keyapi: 'クラシックも演劇も楽しめる素敵な劇場だよ〜🎭',
+    source: 'kanko_spot',
+    spots: ['fuchu_no_mori_park']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 1,
+    question: '府中市郷土の森博物館で楽しめる、星空の鑑賞施設は？',
+    choices: ['天体ドーム', 'プラネタリウム', '展望台', '天文台'],
+    answer: 1,
+    explanation: '郷土の森博物館には<strong>プラネタリウム</strong>があり、季節ごとに様々なプログラムが楽しめます。野外の歴史的建造物の見学と合わせて1日楽しめるスポットです。',
+    keyapi: '星空とお散歩、両方たのしめるよ〜⭐',
+    source: 'kanko_spot',
+    spots: ['kyodo_no_mori_museum']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 3,
+    question: '府中市にある「東京農工大学」の府中キャンパスは何学部？',
+    choices: ['工学部', '農学部', '医学部', '文学部'],
+    answer: 1,
+    explanation: '東京農工大学の府中キャンパスは<strong>農学部</strong>。広大な敷地に農場や演習林があり、府中市の文教エリアの一翼を担っています。工学部キャンパスは小金井市にあります。',
+    keyapi: 'お隣の大学では、お米や野菜が育てられているんだ〜🌾',
+    source: 'fuchu_official'
+  },
+
+  // ============================================================
+  // === グルメ・文化カテゴリー（35問）===
+  // ============================================================
+  {
+    category: 'gourmet', catLabel: 'グルメ', difficulty: 1,
+    question: '府中駅周辺にある老舗「魚元（うおもと）」の名物料理は？',
+    choices: ['そば', 'うなぎ', '寿司', '天ぷら'],
+    answer: 1,
+    explanation: '<strong>「魚元」</strong>は京王線府中駅から徒歩5分の<strong>うなぎ・日本料理の老舗</strong>。浜名湖産のうなぎを使った上品な鰻重が名物で、長年地元で愛されています。',
+    keyapi: '老舗のうなぎ、一度は味わいたい贅沢だね〜🍱',
+    source: 'kanko_product',
+    spots: ['uomoto', 'fuchu_station']
+  },
+  {
+    category: 'gourmet', catLabel: 'グルメ', difficulty: 1,
+    question: '府中の特産品「黒米うどん」の特徴は？',
+    choices: ['イカ墨を使っている', '古代米を使っている', '海苔を練り込んでいる', '黒胡麻が入っている'],
+    answer: 1,
+    explanation: '黒米うどんは<strong>古代米（黒米）</strong>を使った珍しい黒色のうどんで、府中の特産品として販売されています。郷土の森観光物産館などで購入できます。',
+    keyapi: '古代米って、なんだか歴史を感じる味わいだね〜🌾',
+    source: 'kanko_spot',
+    spots: ['kyodo_no_mori_bussankan']
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 1,
+    question: 'くらやみ祭で行われる、国内最大級と言われるものは？',
+    choices: ['花火', '大太鼓と山車（だし）の行列', '相撲', '弓道大会'],
+    answer: 1,
+    explanation: 'くらやみ祭では、国内最大級の<strong>6張の大太鼓と22台もの山車（だし）の行列</strong>が見どころです。神輿8基も登場し、迫力満点。都指定無形民俗文化財に指定されています。',
+    keyapi: 'お腹に響く大太鼓の音、一度聴くと忘れられないよ〜🥁',
+    source: 'ookunitama_matsuri'
+  },
+  {
+    category: 'gourmet', catLabel: 'グルメ', difficulty: 1,
+    question: '府中市内のお店で買える、競馬場の街ならではのお菓子は？',
+    choices: ['レーシングサラブレッドサブレ', '蹄鉄まんじゅう', '騎手プリン', 'ダービードーナツ'],
+    answer: 0,
+    explanation: '<strong>レーシングサラブレッドサブレ</strong>は、府中観光協会推奨品「府中太鼓判」に選ばれているお菓子。東京競馬場のお膝元・府中ならではのユニークなお土産です。',
+    keyapi: '可愛いサラブレッド型のサブレで、お土産にぴったり〜🐎',
+    source: 'jra',
+    spots: ['tokyo_racecourse']
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 1,
+    question: '府中市の「市の鳥」に指定されているのは？',
+    choices: ['ツバメ', 'ひばり', 'カラス', 'スズメ'],
+    answer: 1,
+    explanation: '府中市の市の鳥は<strong>「ひばり」</strong>。澄みきった青空に真一文字に舞い上がるひばりは、「住みたくなる都市」を目指して進展を続ける府中市を象徴しています。',
+    keyapi: 'ひばりの歌声、聞こえると元気が出るよ〜🎵',
+    source: 'fuchu_official'
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 1,
+    question: '府中市の「市の木」に指定されているのは？',
+    choices: ['サクラ', 'ケヤキ', 'イチョウ', 'マツ'],
+    answer: 1,
+    explanation: '府中市の市の木は当然ながら<strong>「ケヤキ」</strong>！馬場大門のケヤキ並木は市のシンボルそのものです。市の花は「ウメ」と「サツキ」が指定されています。',
+    keyapi: 'やったー！ぼくたちケヤキは市の木なんだよ〜🌳✨',
+    source: 'keyaki',
+    spots: ['keyaki_namiki']
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 2,
+    question: '府中市の「市の花」に指定されている2つの花は？',
+    choices: ['サクラとアジサイ', 'ウメとサツキ', 'バラとチューリップ', 'コスモスとスイセン'],
+    answer: 1,
+    explanation: '府中市の市の花は<strong>「ウメ」と「サツキ」</strong>。郷土の森博物館の梅まつりは関東でも有名で、約60品種・1100本の梅が咲き誇ります。',
+    keyapi: '梅まつりは2月から3月！花の香りに包まれるよ〜🌸',
+    source: 'kanko_spot',
+    spots: ['kyodo_no_mori_museum']
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 2,
+    question: 'すもも祭の日のみ授与される、災い除けの縁起物は？',
+    choices: ['からす団扇・からす扇子', 'すもも守り', '雷除け絵馬', '鈴守り'],
+    answer: 0,
+    explanation: 'すもも祭の日（7月20日）のみ授与される<strong>「からす団扇・からす扇子」</strong>は、五穀豊穣・悪疫防除を祈願する縁起物。家に飾ると魔除けになると言われます。',
+    keyapi: '一年に一日だけのレアアイテム！要チェックだよ〜🌟',
+    source: 'ookunitama_matsuri'
+  },
+  {
+    category: 'gourmet', catLabel: 'グルメ', difficulty: 2,
+    question: '府中市内で楽しめる、麺創研紅（こう）の名物は？',
+    choices: ['塩らーめん', '濃厚辛みそラーメン', '醤油らーめん', '冷やし中華'],
+    answer: 1,
+    explanation: '<strong>麺創研紅の「紅らーめん」</strong>は、濃厚辛みそラーメンで人気のメニュー。府中市のふるさと納税返礼品にもなっており、ラーメン好きから愛されています。',
+    keyapi: 'ピリッと辛い、クセになる味なんだって〜🌶️',
+    source: 'kanko_product'
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 2,
+    question: 'くらやみ祭の名前の由来は？',
+    choices: ['夜に行われるから', 'かつて街の灯りを消して行われたから', '祭神が暗闇の神様だから', '森の中で行われるから'],
+    answer: 1,
+    explanation: 'くらやみ祭の名前は、かつて<strong>街の灯りをすべて消して暗闇の中で神事を行った</strong>ことに由来します。現在は安全のため照明がありますが、伝統の名前が今も受け継がれています。',
+    keyapi: '昔は本当に真っ暗な中でやってたんだって！神秘的〜🌃',
+    source: 'ookunitama_matsuri'
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 3,
+    question: 'すもも祭で約120軒並ぶ露店で売られる、府中名物の果物は？',
+    choices: ['さくらんぼ', 'すもも', '梅', 'ぶどう'],
+    answer: 1,
+    explanation: '<strong>すもも（プラム）</strong>がお祭りの名前の由来。源頼義が戦勝祈願の御礼にすももを奉納したのが始まりとされ、今も7月20日に約120軒の露店が並びます。',
+    keyapi: '夏の風物詩！すももかき氷も人気だよ〜🍧',
+    source: 'ookunitama_matsuri'
+  },
+  {
+    category: 'gourmet', catLabel: 'グルメ', difficulty: 3,
+    question: '「TOKYO府中アイス」に使われている、府中市産の果物は？',
+    choices: ['いちご', 'ブルーベリー', '柿', 'キウイ'],
+    answer: 1,
+    explanation: '<strong>TOKYO府中アイス</strong>は、市内の農家が栽培した<strong>ブルーベリー</strong>と阿蘇産ジャージー牛乳を使用したヨーグルト風味のご当地アイス。ブルーベリーの鮮やかな紫色が特徴です。',
+    keyapi: 'ブルーベリーの鮮やかな紫、見ただけでも美味しそう〜💜',
+    source: 'kanko_product'
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 3,
+    question: '府中市公式マスコットキャラクター「ふちゅこま」のモチーフは？',
+    choices: ['多摩川の鯉', '大國魂神社の木造狛犬', 'ひばり', 'けやきの妖精'],
+    answer: 1,
+    explanation: 'ふちゅこまは大國魂神社所蔵の<strong>国指定重要文化財「木造狛犬」</strong>をベースにしたキャラクター。しっぽにケヤキの葉があしらわれています。2014年市制施行60周年記念で誕生しました。',
+    keyapi: 'ぼくのお友達かな？でもぼくはケヤキの妖精だよ〜🌱',
+    source: 'ookunitama',
+    spots: ['ookunitama_shrine']
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 3,
+    question: '府中市出身で、女子サッカー日本代表として活躍した有名選手は？',
+    choices: ['澤穂希', '宮間あや', '川澄奈穂美', '岩渕真奈'],
+    answer: 0,
+    explanation: '<strong>澤穂希（さわ ほまれ）</strong>選手は府中市出身。2011年女子W杯優勝の立役者で、府中市市民栄誉賞も受賞しています。',
+    keyapi: '世界一になった澤さんは府中の誇り〜⚽✨',
+    source: 'fuchu_people'
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 3,
+    question: '府中市内にあるラグビーの強豪チームは？',
+    choices: ['東芝ブレイブルーパス東京', 'パナソニックワイルドナイツ', 'NTTドコモレッドハリケーンズ', 'コカ・コーラレッドスパークス'],
+    answer: 0,
+    explanation: '府中市は<strong>「ラグビーのまち」</strong>として知られ、東芝ブレイブルーパス東京とサントリーサンゴリアスの2チームがホームタウンとしています。',
+    keyapi: 'ラグビーの試合観戦も府中の楽しみの一つだよ〜🏉',
+    source: 'suntory',
+    spots: ['suntory_sports_center', 'suntory_brewery']
+  },
+
+  // ============================================================
+  // === 歴史カテゴリー追加問題（+12問）===
+  // ============================================================
+  {
+    category: 'history', catLabel: '歴史', difficulty: 2,
+    question: '鎌倉幕府滅亡のきっかけとなった、府中市で行われた合戦は？',
+    choices: ['桶狭間の戦い', '分倍河原の戦い', '川中島の戦い', '関ヶ原の戦い'],
+    answer: 1,
+    explanation: '<strong>分倍河原の戦い</strong>（1333年）は、新田義貞率いる反幕府軍と北条泰家率いる鎌倉幕府軍が激突した合戦。新田軍の勝利が鎌倉幕府滅亡の決定的な節目となりました。',
+    keyapi: '府中が日本史の舞台になった大きな出来事だよ〜⚔️',
+    source: 'fuchu_history',
+    spots: ['bubaigawara_battle_site']
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 2,
+    question: '分倍河原の戦いで、反幕府軍を率いた武将は？',
+    choices: ['足利尊氏', '楠木正成', '新田義貞', '後醍醐天皇'],
+    answer: 2,
+    explanation: '<strong>新田義貞</strong>が率いる反幕府軍が、北条泰家率いる鎌倉幕府軍を破った合戦。分倍河原駅前のロータリーには新田義貞の騎馬像が設置されています。',
+    keyapi: '分倍河原駅前で凛々しい義貞さまの像に会えるよ〜🐴',
+    source: 'fuchu_history',
+    spots: ['bubaigawara_battle_site', 'bubaigawara_station']
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 3,
+    question: '分倍河原古戦場碑が建てられたのは何年？',
+    choices: ['明治5年', '昭和10年', '昭和35年', '平成元年'],
+    answer: 1,
+    explanation: '分倍河原古戦場碑は<strong>昭和10年（1935年）</strong>、新田氏の子孫である元男爵・新田義美の筆によって建立されました。府中市分梅町2-59-4にあります。',
+    keyapi: '90年近く前に建てられた歴史の証人だね〜📜',
+    source: 'fuchu_history',
+    spots: ['bubaigawara_battle_site']
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 3,
+    question: '府中市内にある「高安寺」は、どの武将が再興したお寺と伝えられている？',
+    choices: ['源頼朝', '足利尊氏', '徳川家康', '武田信玄'],
+    answer: 1,
+    explanation: '高安寺は<strong>足利尊氏</strong>が安国寺の一つとして再興したと伝えられる古刹。分倍河原の戦いとも関わりが深く、府中の歴史を物語る重要な寺院です。',
+    keyapi: 'お寺巡りも府中の楽しみの一つだよ〜🏛️',
+    source: 'fuchu_history',
+    spots: ['koanji_temple', 'bubaigawara_battle_site']
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 3,
+    question: '府中市域に存在した古墳群の一つで、6世紀～7世紀の古墳群は？',
+    choices: ['白糸台古墳群', '稲荷山古墳群', '高松塚古墳', '大塚山古墳群'],
+    answer: 0,
+    explanation: '<strong>白糸台古墳群</strong>は、京王線多磨霊園駅西側から飛田給駅手前にかけて広がる古墳群。立川段丘の縁端に築造され、6世紀初頭から7世紀にかけて造られました。',
+    keyapi: '古墳時代から人が住んでいた、長い歴史の街なんだね〜🏺',
+    source: 'fuchu_history'
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 2,
+    question: '府中市内には国・都・市指定の文化財が合計で何件ある？',
+    choices: ['約30件', '約50件', '約77件', '約120件'],
+    answer: 2,
+    explanation: '府中市には<strong>国の文化財14件、都の文化財18件、市の文化財45件の計77件</strong>の指定文化財があります（2024年時点）。1900年の歴史にふさわしい文化財の宝庫です。',
+    keyapi: '77件もの文化財！歩いて回るだけでもタイムトラベルだね〜⏰',
+    source: 'fuchu_official'
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 1,
+    question: '江戸時代、府中宿は何街道の宿場町だった？',
+    choices: ['東海道', '中山道', '甲州街道', '日光街道'],
+    answer: 2,
+    explanation: '府中宿は江戸時代の<strong>甲州街道</strong>の宿場町。江戸（日本橋）から数えて第4の宿場で、武蔵国の中心として大いに栄えました。けやき並木は旧甲州街道沿いに位置します。',
+    keyapi: '江戸時代の主要街道の重要拠点だったんだ〜🛤️',
+    source: 'keyaki',
+    spots: ['keyaki_namiki']
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 2,
+    question: '大國魂神社の創建は西暦何年と伝えられている？',
+    choices: ['西暦41年', '西暦111年', '西暦500年', '西暦794年'],
+    answer: 1,
+    explanation: '大國魂神社の創建は<strong>景行天皇41年（西暦111年）</strong>と伝えられています。約1900年の歴史を持つ古社です。',
+    keyapi: '西暦100年代ってどんな時代だろう？想像つかないね〜⛩️',
+    source: 'ookunitama',
+    spots: ['ookunitama_shrine']
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 3,
+    question: '武蔵国に置かれた古代の役所「武蔵国府」の中心建物群があったとされる地区は、現在の何という地名？',
+    choices: ['本町', '宮町', '寿町', '矢崎町'],
+    answer: 1,
+    explanation: '<strong>宮町</strong>を中心に、大國魂神社境内および東側一帯に武蔵国府の中枢「国衙（こくが）」がありました。発掘調査により当時の建物跡が確認されています。',
+    keyapi: '足元に古代のロマンが眠っているんだよ〜🏛️',
+    source: 'ookunitama',
+    spots: ['ookunitama_shrine', 'musashi_kokufu_ato']
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 2,
+    question: '府中市の市制施行70周年は何年だった？',
+    choices: ['2014年', '2019年', '2024年', '2030年'],
+    answer: 2,
+    explanation: '1954年（昭和29年）に市制施行した府中市は、<strong>2024年に市制施行70周年</strong>を迎えました。記念事業が市を挙げて行われました。',
+    keyapi: '70歳のお誕生日おめでとう、府中市〜🎂',
+    source: 'fuchu_official'
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 1,
+    question: 'けやき並木の景観は、何のシンボルとして親しまれている？',
+    choices: ['国会議事堂のシンボル', '府中市のシンボル', '東京都のシンボル', '日本のシンボル'],
+    answer: 1,
+    explanation: 'けやき並木は<strong>府中市のシンボル</strong>として、市民から愛され続けています。市の木にもケヤキが指定されています。',
+    keyapi: 'ぼくたちの仲間が街のシンボル！誇らしいな〜🌳✨',
+    source: 'keyaki',
+    spots: ['keyaki_namiki']
+  },
+  {
+    category: 'history', catLabel: '歴史', difficulty: 3,
+    question: '府中市域から発掘された、武蔵国府の遺跡で見つかった代表的な遺物は？',
+    choices: ['銅鏡', '土器・瓦', '甲冑', '石器'],
+    answer: 1,
+    explanation: '武蔵国府跡からは<strong>土器・瓦・木簡</strong>など、古代官衙（役所）に関する貴重な遺物が多数出土しています。これらは郷土の森博物館などで展示・研究されています。',
+    keyapi: '昔の人の暮らしが土の中から蘇ってくるんだ〜🏺',
+    source: 'fuchu_history',
+    spots: ['musashi_kokufu_ato', 'kyodo_no_mori_museum']
+  },
+
+  // ============================================================
+  // === 名所カテゴリー追加問題（+18問）===
+  // ============================================================
+  {
+    category: 'spot', catLabel: '名所', difficulty: 1,
+    question: '府中市内にあり、多摩川沿いに東西約10kmにわたって続く歩行者・自転車専用道路は？',
+    choices: ['府中多摩川かぜのみち', '多摩サイクリングロード', '武蔵野グリーンライン', '甲州街道緑道'],
+    answer: 0,
+    explanation: '<strong>「府中多摩川かぜのみち」</strong>は市の南側を流れる多摩川沿いの堤防上、東西約10kmに及ぶ歩行者・自転車専用道。市立公園として管理され、ジョギングやサイクリングが楽しめます。',
+    keyapi: '川風を感じながら10km！気持ちいいだろうね〜🚴',
+    source: 'kanko_spot',
+    spots: ['tamagawa_kaze_no_michi']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 2,
+    question: '府中市内の公園の数は約何ヶ所？',
+    choices: ['約50ヶ所', '約100ヶ所', '約200ヶ所', '約400ヶ所'],
+    answer: 3,
+    explanation: '府中市内の公園は<strong>約400ヶ所</strong>もあり、市民が身近に自然と触れ合える環境が整っています。子育て世代に人気の街でもあります。',
+    keyapi: '400ヶ所！毎日違う公園で遊べちゃう〜🌳🌳🌳',
+    source: 'kanko_spot'
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 2,
+    question: '府中市内にある、多摩川の流れをミニチュア化したせせらぎで水遊びができる公園は？',
+    choices: ['府中の森公園', '郷土の森公園', '多摩川親水公園', '浅間山公園'],
+    answer: 2,
+    explanation: '<strong>多摩川親水公園</strong>は稲城大橋近くの河川敷にあり、源流から東京湾までの流れをイメージしたミニチュア多摩川が整備されています。夏は子どもたちの水遊びの場として人気です。',
+    keyapi: '夏は水遊び！多摩川の旅をミニチュアで体験〜💧',
+    source: 'kanko_spot',
+    spots: ['tamagawa_shinsui_park']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 2,
+    question: '府中市内の自然豊かな山で、桜の名所としても知られるのは？',
+    choices: ['高尾山', '浅間山（せんげんやま）', '陣馬山', '御岳山'],
+    answer: 1,
+    explanation: '<strong>浅間山（せんげんやま）</strong>は府中市内にある標高約80mの低山。武蔵野の自然が残り、桜やムサシノキスゲの群生地として知られています。',
+    keyapi: '東京に「浅間山」があるなんて意外でしょ？🌸',
+    source: 'kanko_spot',
+    spots: ['sengen_yama_park']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 1,
+    question: '京王線府中駅から新宿駅までは特急で約何分？',
+    choices: ['約12分', '約22分', '約35分', '約50分'],
+    answer: 1,
+    explanation: '京王線府中駅から新宿駅までは特急で<strong>約22分</strong>。都心へのアクセスがとても良いことから、住みたい街としても人気があります。',
+    keyapi: '都心にすぐ出られて自然も豊か、府中はいいとこ取り〜🚃',
+    source: 'transport',
+    spots: ['fuchu_station']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 2,
+    question: 'JR南武線で府中本町駅から川崎駅まではおよそ何分かかる？',
+    choices: ['約20分', '約30分', '約41分', '約60分'],
+    answer: 2,
+    explanation: 'JR南武線で府中本町駅から川崎駅までは<strong>約41分</strong>。新宿方面へは中央線・武蔵野線経由で約39分です。多方面へのアクセスが良好な街です。',
+    keyapi: '南武線で川崎まで一本！神奈川方面にも便利〜🚆',
+    source: 'transport',
+    spots: ['fuchu_honmachi_station']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 2,
+    question: 'JR府中本町駅に乗り入れている、ない路線はどれ？',
+    choices: ['JR南武線', 'JR武蔵野線', 'JR中央線', 'JR南武線・武蔵野線（の両方）'],
+    answer: 2,
+    explanation: 'JR府中本町駅には<strong>JR南武線とJR武蔵野線</strong>が乗り入れています。中央線は通っていません。武蔵野線は東京競馬場開催日には臨時列車も運行されます。',
+    keyapi: '2路線が交わる便利な駅なんだ〜🚉',
+    source: 'jra',
+    spots: ['tokyo_racecourse', 'fuchu_honmachi_station']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 3,
+    question: '府中市内にある京王電鉄の駅で、ないものは？',
+    choices: ['府中駅', '東府中駅', '武蔵野台駅', '飛田給駅'],
+    answer: 3,
+    explanation: '飛田給駅は<strong>調布市</strong>にある京王線の駅です。府中市内には府中駅・東府中駅・武蔵野台駅・多磨霊園駅・分倍河原駅・中河原駅・府中競馬正門前駅などがあります。',
+    keyapi: '府中市内には京王線の駅がたくさんあるよ〜🚃',
+    source: 'fuchu_history',
+    spots: ['fuchu_station', 'bubaigawara_station']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 1,
+    question: 'けやき並木通りで定期的に開催される、誰でも演奏できる楽器イベントは？',
+    choices: ['ストリートバンド', 'ストリートピアノ', 'ストリート太鼓', 'ストリートギター'],
+    answer: 1,
+    explanation: '<strong>「FUCHU STREETピアノ」</strong>として、けやき並木通りや郷土の森にストリートピアノが設置されることがあります。プロアマ問わず誰でも演奏できる人気イベントです。',
+    keyapi: 'けやき並木に音楽が流れる、素敵な街だね〜🎹',
+    source: 'keyaki',
+    spots: ['keyaki_namiki']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 2,
+    question: '府中駅前にある複合商業施設「くるる」の特徴は？',
+    choices: ['駅直結のショッピング施設', '純和風の老舗百貨店', 'スポーツ専門施設', '美術館を併設'],
+    answer: 0,
+    explanation: '<strong>「くるる」</strong>は京王線府中駅直結の複合商業施設。飲食店や物販店が集まり、駅前のストリートピアノも有名です。',
+    keyapi: '駅から雨に濡れずにお買い物できるよ〜☔',
+    source: 'transport',
+    spots: ['kururu', 'fuchu_station']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 2,
+    question: '府中市の面積は約何平方キロメートル？',
+    choices: ['約15km²', '約29km²', '約45km²', '約60km²'],
+    answer: 1,
+    explanation: '府中市の面積は<strong>約29.43平方キロメートル</strong>。約26万人がコンパクトに暮らす、密度のある都市です。',
+    keyapi: 'コンパクトだけど見どころ満載の街なんだよ〜🗾',
+    source: 'fuchu_official'
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 3,
+    question: '府中市内にある、農業大学のキャンパスは？',
+    choices: ['東京大学農学部', '東京農工大学農学部', '日本大学農獣医学部', '東京農業大学'],
+    answer: 1,
+    explanation: '<strong>東京農工大学農学部</strong>の府中キャンパスがあります（住所：東京都府中市晴見町3-8-1）。広大な敷地と農場・演習林を持ち、府中の文教エリアの一翼を担います。',
+    keyapi: '広い農場やお花畑があって学生さんも素敵だよ〜🌾',
+    source: 'fuchu_official'
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 2,
+    question: '東京競馬場で開催される、日本ダービーの正式名称は？',
+    choices: ['東京優駿', '皐月賞', '菊花賞', '天皇賞'],
+    answer: 0,
+    explanation: '日本ダービーの正式名称は<strong>「東京優駿（とうきょうゆうしゅん）」</strong>。3歳馬の頂点を決める、競馬界最高峰のレースです。毎年5月末に府中で開催されます。',
+    keyapi: '世代最強の3歳馬が府中に集まる、夢のレースだよ〜🐴',
+    source: 'jra',
+    spots: ['tokyo_racecourse']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 3,
+    question: '府中市内にある、府中市役所の最寄り駅は？',
+    choices: ['京王線府中駅', 'JR分倍河原駅', '京王線東府中駅', 'JR西府駅'],
+    answer: 0,
+    explanation: '府中市役所の最寄り駅は<strong>京王線府中駅</strong>。徒歩約5分の場所にあります。市役所はけやき並木からも近い場所に位置しています。',
+    keyapi: '駅から歩いてすぐ！便利な場所にあるんだ〜🏛️',
+    source: 'keyaki',
+    spots: ['keyaki_namiki', 'fuchu_station']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 3,
+    question: '府中市内にある、武蔵野の雑木林を保存した自然公園は？',
+    choices: ['府中の森公園', '浅間山公園', '武蔵野公園', '郷土の森公園'],
+    answer: 1,
+    explanation: '<strong>浅間山公園</strong>は、武蔵野の雑木林を保存した自然公園。希少な野草「ムサシノキスゲ」の群生地として知られ、5月の花期にはハイカーで賑わいます。',
+    keyapi: 'ムサシノキスゲは府中の宝物だよ〜🌼',
+    source: 'kanko_spot',
+    spots: ['sengen_yama_park']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 2,
+    question: '府中市の郷土の森公園内にある、観光案内・物産販売の拠点は？',
+    choices: ['郷土の森博物館', '郷土の森観光物産館', '府中観光センター', 'けやき観光案内所'],
+    answer: 1,
+    explanation: '<strong>郷土の森観光物産館</strong>は、地元野菜・お土産・観光情報を発信する施設。郷土の森博物館と隣接し、多摩川の自然に囲まれた癒しスポットです。',
+    keyapi: 'お土産選びはここがおすすめ〜🛍️',
+    source: 'kanko_spot',
+    spots: ['kyodo_no_mori_park', 'kyodo_no_mori_museum']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 2,
+    question: '東京競馬場の最初の競馬開催はいつ？',
+    choices: ['明治40年', '昭和8年', '昭和25年', '昭和40年'],
+    answer: 1,
+    explanation: '東京競馬場は<strong>昭和8年（1933年）</strong>11月に開設されました。現在では年間多数のG1レースが開催される日本競馬の中心地です。',
+    keyapi: '90年以上の歴史ある競馬場、ロマンを感じるね〜🐎',
+    source: 'jra',
+    spots: ['tokyo_racecourse']
+  },
+  {
+    category: 'spot', catLabel: '名所', difficulty: 1,
+    question: 'けやき並木通りで毎年開催される、行列ができることで有名なイベントは？',
+    choices: ['桜まつり', 'けやき市', '紅葉まつり', '盆踊り'],
+    answer: 1,
+    explanation: '<strong>「府中けやき市」</strong>は秋に開催される人気イベント。けやき並木通りに地元の店や手作り市の屋台が並び、多くの人で賑わいます。',
+    keyapi: 'ぼくたちの並木の下で楽しいお店がいっぱい〜🎪',
+    source: 'keyaki',
+    spots: ['keyaki_namiki']
+  },
+
+  // ============================================================
+  // === グルメ・文化カテゴリー追加問題（+20問）===
+  // ============================================================
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 1,
+    question: '府中市内でラグビーを本拠地とする、もう一つの強豪チームは？',
+    choices: ['東京サントリーサンゴリアス', '横浜キヤノンイーグルス', '埼玉ワイルドナイツ', 'クボタスピアーズ'],
+    answer: 0,
+    explanation: '<strong>東京サントリーサンゴリアス</strong>は府中市矢崎町に本拠地を持つラグビートップリーグの強豪。東芝ブレイブルーパス東京とのダービー戦は「府中ダービー」と呼ばれ盛り上がります。',
+    keyapi: '府中ダービーは大盛り上がり！熱気がすごいよ〜🏉',
+    source: 'suntory',
+    spots: ['suntory_sports_center', 'suntory_brewery']
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 2,
+    question: '府中市と2チームのラグビーチームが2018年に締結したのは？',
+    choices: ['競技協力協定', '友好都市協定', 'パートナーシップ協定', '販売契約'],
+    answer: 2,
+    explanation: '2018年、府中市は東芝ブレイブルーパスとサントリーサンゴリアスと<strong>パートナーシップ協定</strong>を締結。市民交流イベントや子ども向けラグビー教室などを共同で実施しています。',
+    keyapi: '街とチームが一緒に盛り上げる、いい関係だね〜🤝',
+    source: 'suntory',
+    spots: ['suntory_sports_center', 'suntory_brewery']
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 1,
+    question: '府中市で毎年7月頃に大國魂神社で行われる夏の風物詩は？',
+    choices: ['くらやみ祭', 'すもも祭', '府中納涼大盆踊り大会', '桜まつり'],
+    answer: 2,
+    explanation: '<strong>府中納涼大盆踊り大会</strong>は7月初旬に大國魂神社境内で開催される夏の風物詩。子どもから大人まで楽しめ、踊り方が分からなくても飛び入り参加可能です。',
+    keyapi: '浴衣を着て踊りに行きたいね〜🎐',
+    source: 'ookunitama',
+    spots: ['ookunitama_shrine']
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 3,
+    question: '府中市出身の女子サッカー選手・澤穂希さんが受賞した、市の最高栄誉は？',
+    choices: ['府中市民勲章', '府中市市民栄誉賞', '府中市文化大賞', '府中市スポーツ栄光賞'],
+    answer: 1,
+    explanation: '澤穂希選手は2011年女子W杯優勝を機に、府中市から<strong>「市民栄誉賞」</strong>を贈呈されました。府中市の誇りとして語り継がれています。',
+    keyapi: '世界一の選手が府中出身なんて本当にすごい！⚽',
+    source: 'fuchu_people'
+  },
+  {
+    category: 'gourmet', catLabel: 'グルメ', difficulty: 2,
+    question: '府中観光協会が府中の魅力あるお土産品を選定する推奨品制度の名前は？',
+    choices: ['府中ブランド', '府中太鼓判', '府中印', '府中名物'],
+    answer: 1,
+    explanation: '<strong>「府中太鼓判（たいこばん）」</strong>は<strong>府中観光協会の推奨品認定制度</strong>。お菓子・お酒・農産物・伝統工芸品など、府中ならではの優れた商品が認定されています。',
+    keyapi: '太鼓判マークを見つけたら間違いなしの逸品〜🥁',
+    source: 'kanko_product'
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 2,
+    question: 'くらやみ祭で5月5日午後6時から行われる、最も荘厳な神事は？',
+    choices: ['御綱祭', '大太鼓送り込み', '神輿渡御', '萬燈大会'],
+    answer: 2,
+    explanation: 'くらやみ祭のクライマックスは5月5日の<strong>「神輿渡御（みこしとぎょ）」</strong>。8基の神輿が大鳥居前から御旅所まで渡御する、最も荘厳な神事です。',
+    keyapi: 'お神輿が地響きを立てて進む様子は圧巻だよ〜🏯',
+    source: 'ookunitama_matsuri'
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 3,
+    question: 'すもも祭で奉納される、源頼義・義家親子ゆかりの行事は？',
+    choices: ['流鏑馬（やぶさめ）', '相撲奉納', '田植え舞', '神楽'],
+    answer: 0,
+    explanation: '大國魂神社では時折<strong>流鏑馬（やぶさめ）</strong>などの古式神事が奉納されます。源義家ゆかりの武家文化が今に残ります。',
+    keyapi: '弓と馬の伝統技、見たら忘れられないよ〜🏹',
+    source: 'ookunitama_matsuri',
+    spots: ['ookunitama_shrine']
+  },
+  {
+    category: 'gourmet', catLabel: 'グルメ', difficulty: 2,
+    question: '府中名物として知られる青木屋の「武蔵野日誌」とは？',
+    choices: ['ぜんざい', 'ミニバームクーヘンにチョコクリーム', 'もなか', 'ようかん'],
+    answer: 1,
+    explanation: '<strong>「武蔵野日誌」</strong>は、武蔵野の雑木林の小枝をイメージした<strong>ミニバームクーヘンにチョコレートクリームを詰めた青木屋のロングセラー菓子</strong>。発売55周年を超える名菓で、府中市のふるさと納税返礼品にもなっています。',
+    keyapi: 'バームクーヘンにクリームが詰まった名菓だよ〜🍫',
+    source: 'kanko_product'
+  },
+  {
+    category: 'gourmet', catLabel: 'グルメ', difficulty: 3,
+    question: '府中市内で歴史ある老舗で、和菓子の名店として知られるのは？',
+    choices: ['御菓子司 亀田屋', '虎屋 府中店', '舟和 府中支店', '岡埜栄泉府中店'],
+    answer: 0,
+    explanation: '<strong>御菓子司 亀田屋</strong>は府中市内の老舗和菓子店。府中太鼓判にも選ばれ、地元で長く愛されています。',
+    keyapi: '老舗の和菓子、お茶と一緒にいただきたいね〜🍵',
+    source: 'kanko_product',
+    spots: ['kamedaya']
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 1,
+    question: '府中市の市の鳥「ひばり」を題材にした府中市民の歌詞・歌があるのは何という体操？',
+    choices: ['府中ラジオ体操', '元気一番!!ふちゅう体操', 'ひばり体操', 'けやき体操'],
+    answer: 1,
+    explanation: '<strong>「元気一番!!ふちゅう体操」</strong>のイメージキャラクターは「ひばピー」というひばりの子ども。府中市の鳥にちなんだ、健康増進のための市民体操です。',
+    keyapi: 'ひばピーかわいい！ぼくも体操したくなっちゃう〜🐤',
+    source: 'fuchu_mascot'
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 2,
+    question: '府中市公式マスコット「ふちゅこま」が誕生したのは市制施行何周年？',
+    choices: ['50周年', '60周年', '70周年', '80周年'],
+    answer: 1,
+    explanation: 'ふちゅこまは<strong>市制施行60周年（2014年）</strong>記念の市民提案事業で誕生。市民から愛されるマスコットとして活躍しています。',
+    keyapi: 'ぼくの先輩マスコットだね〜よろしくこま〜🐺',
+    source: 'fuchu_mascot'
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 3,
+    question: '「ふちゅこま」キャラクターのデザインに協力した、府中市出身の有名人は？',
+    choices: ['指原莉乃', '河西智美（元AKB48）', '大島優子', '小嶋陽菜'],
+    answer: 1,
+    explanation: '<strong>河西智美</strong>さん（元AKB48・府中市出身）がデザインに協力しました。市制施行60周年の市民提案事業として2015年に誕生しました。',
+    keyapi: '地元出身の方が関わるなんて素敵だね〜🌟',
+    source: 'fuchu_mascot'
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 1,
+    question: '府中市で「ラグビーのまち」を象徴する場所として活用されている、駅前の施設は？',
+    choices: ['183 FUCHU', 'ラグビープラザ', 'ラグビーパーク', 'FUCHUドーム'],
+    answer: 0,
+    explanation: '<strong>「183 FUCHU」</strong>は府中駅北口にあるラグビーのまち府中の情報発信拠点。「183」は府中市の郵便番号（183-0000）から付けられています。',
+    keyapi: '駅前で府中のラグビー文化に触れられるよ〜🏉',
+    source: 'rugby',
+    spots: ['fan_zone_183', 'fuchu_station']
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 2,
+    question: 'けやき並木の現在の本数は約何本？（2024年時点）',
+    choices: ['約60本', '約120本', '約250本', '約400本'],
+    answer: 1,
+    explanation: '馬場大門のケヤキ並木は<strong>約120本</strong>のケヤキで構成されています（2024年3月時点で127本）。樹齢約400年の古木から比較的新しい補植まで、世代を越えて並木を守っています。',
+    keyapi: '120本の大家族！世代を越えて見守ってるよ〜🌳🌳',
+    source: 'keyaki',
+    spots: ['keyaki_namiki']
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 3,
+    question: '府中市出身のソウル・バルセロナ両五輪の体操メダリストは？',
+    choices: ['梶原悠太郎', '千家始一', '代本中生', '池谷幸雄'],
+    answer: 3,
+    explanation: '<strong>池谷幸雄（いけたにゆきお）</strong>選手は1970年東京都府中市出身の元体操選手。1988年ソウル、1992年バルセロナ両五輪でメダルを獲得した名選手です。',
+    keyapi: 'オリンピックメダリストも府中出身なんだね〜🤸',
+    source: 'fuchu_people'
+  },
+  {
+    category: 'gourmet', catLabel: 'グルメ', difficulty: 3,
+    question: '府中市の特産米「武蔵国府米」の特徴は？',
+    choices: ['超大粒', '黒色', '減農薬栽培', '冷涼地米'],
+    answer: 2,
+    explanation: '<strong>「武蔵国府米」</strong>は、府中市内の田んぼで栽培される<strong>減農薬栽培米</strong>。府中の歴史を冠した地元ブランド米として認知されています。',
+    keyapi: '武蔵国府の名を冠した、由緒ある府中のお米だよ〜🍚',
+    source: 'fuchu_history'
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 2,
+    question: '府中市が掲げる「介護予防」のまちづくりキーワードは？',
+    choices: ['つなぐ', 'つながる', 'まなぶ', 'いきいき'],
+    answer: 1,
+    explanation: '府中市は介護予防の自主グループ化により市民同士が<strong>「つながる」</strong>介護予防を推進。ヘルスケア分野でも先進的な取り組みを行っています。',
+    keyapi: 'お年寄りも元気に過ごせる、優しい街なんだ〜👵',
+    source: 'fuchu_official'
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 3,
+    question: '府中市がデジタル化を進める分野として注目されている取り組みは？',
+    choices: ['ICTスマートシティ', 'デジタル市民参加プラットフォーム', 'AI市政', 'メタバース府中'],
+    answer: 1,
+    explanation: '府中市は<strong>参加型合意形成プラットフォーム「Liqlid」</strong>を活用し、デジタル市民参加の仕組みを推進。市民協働の新しい形を実現しています。',
+    keyapi: 'デジタル時代でも市民の声を大切にする街〜📱',
+    source: 'fuchu_official'
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 2,
+    question: '府中市内で開催される、地元の野菜や手作り品を販売する人気のマルシェは？',
+    choices: ['キテキテ府中マルシェ', '武蔵野市場', '多摩川マーケット', '府中ふれあい市'],
+    answer: 0,
+    explanation: '<strong>「キテキテ府中マルシェ」</strong>は、地元の農家や手作り職人が集まる人気イベント。府中の地産地消を象徴するマルシェとして定期開催されています。',
+    keyapi: '地元の野菜や手作り品、選ぶのが楽しいよ〜🥕',
+    source: 'fuchu_official'
+  },
+  {
+    category: 'gourmet', catLabel: '文化', difficulty: 1,
+    question: '府中市民が誇る、ケヤキ並木に関する2024年の記念すべき出来事は？',
+    choices: ['ユネスコ世界遺産登録', '国天然記念物指定100周年', '東京都指定文化財追加', '万葉集に詠まれた発見'],
+    answer: 1,
+    explanation: '<strong>2024年12月9日に国天然記念物指定100周年</strong>を迎えました。1924年（大正13年）の指定以来、長きにわたって府中市民とともに歩んできた歴史を持ちます。',
+    keyapi: '100周年！おめでとう、ケヤキ並木の仲間たち〜🎊🌳',
+    source: 'keyaki',
+    spots: ['keyaki_namiki']
+  }
+];
+
+// 画像URL（外部CDN参照）
+const KEYAPI_WAVE = './assets/keyapi-wave.webp';
+const KEYAPI_HAPPY = './assets/keyapi-happy.webp';
+
+/* ============================================================
+   状態管理
+   ============================================================ */
+const state = {
+  selectedCategory: 'all',
+  selectedDifficulty: 'all',
+  questions: [],
+  currentIndex: 0,
+  score: 0,
+  answered: false,
+  startTime: 0,
+  endTime: 0
+};
+
+/* ============================================================
+   ユーティリティ
+   ============================================================ */
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function formatTime(ms) {
+  const sec = Math.round(ms / 1000);
+  if (sec < 60) return sec + '秒';
+  return Math.floor(sec / 60) + '分' + (sec % 60) + '秒';
+}
+
+/* ============================================================
+   問題数カウント表示更新
+   ============================================================ */
+function updateCounts() {
+  const cnt = (c) => QUIZ_DATA.filter(q => q.category === c).length;
+  document.getElementById('cnt-all').textContent = QUIZ_DATA.length + '問';
+  document.getElementById('cnt-history').textContent = cnt('history') + '問';
+  document.getElementById('cnt-spot').textContent = cnt('spot') + '問';
+  document.getElementById('cnt-gourmet').textContent = cnt('gourmet') + '問';
+}
+
+/* ============================================================
+   クイズ開始
+   ============================================================ */
+function startQuiz() {
+  let pool = state.selectedCategory === 'all'
+    ? [...QUIZ_DATA]
+    : QUIZ_DATA.filter(q => q.category === state.selectedCategory);
+
+  if (state.selectedDifficulty !== 'all') {
+    const diff = parseInt(state.selectedDifficulty);
+    pool = pool.filter(q => q.difficulty === diff);
+  }
+
+  if (pool.length === 0) {
+    alert('該当する問題がありません。条件を変更してください。');
+    return;
+  }
+
+  // 全部の場合は10問、それ以外は全問（最大15問）
+  const count = state.selectedCategory === 'all' ? Math.min(10, pool.length) : Math.min(15, pool.length);
+  state.questions = shuffle(pool).slice(0, count);
+  state.currentIndex = 0;
+  state.score = 0;
+  state.answered = false;
+  state.startTime = Date.now();
+
+  document.getElementById('q-total').textContent = state.questions.length;
+  document.getElementById('final-total').textContent = state.questions.length;
+  showScreen('screen-quiz');
+  renderQuestion();
+}
+
+/* ============================================================
+   問題描画
+   ============================================================ */
+function renderQuestion() {
+  const q = state.questions[state.currentIndex];
+  state.answered = false;
+
+  document.getElementById('q-current').textContent = state.currentIndex + 1;
+  document.getElementById('score-num').textContent = state.score;
+  document.getElementById('cat-tag').textContent = `― ${q.catLabel} ―`;
+
+  const diffTag = document.getElementById('diff-tag');
+  diffTag.textContent = ['初級', '中級', '上級'][q.difficulty - 1];
+  diffTag.className = 'difficulty-tag lv' + q.difficulty;
+
+  document.getElementById('question-text').textContent = q.question;
+
+  const progress = ((state.currentIndex) / state.questions.length) * 100;
+  document.getElementById('progress-fill').style.width = progress + '%';
+
+  // 選択肢をシャッフル（毎回違う配置）
+  const choiceData = q.choices.map((text, i) => ({ text, originalIndex: i }));
+  const shuffledChoices = shuffle(choiceData);
+
+  const choicesEl = document.getElementById('choices');
+  choicesEl.innerHTML = '';
+  const labels = ['ア', 'イ', 'ウ', 'エ'];
+  shuffledChoices.forEach((c, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice';
+    btn.innerHTML = `<span class="label">${labels[i]}</span><span>${c.text}</span>`;
+    btn.addEventListener('click', () => selectAnswer(c.originalIndex, btn));
+    choicesEl.appendChild(btn);
+  });
+
+  document.getElementById('explanation-wrap').innerHTML = '';
+  document.getElementById('next-wrap').style.display = 'none';
+}
+
+/* ============================================================
+   回答処理
+   ============================================================ */
+function selectAnswer(originalIndex, btn) {
+  if (state.answered) return;
+  state.answered = true;
+
+  const q = state.questions[state.currentIndex];
+  const isCorrect = originalIndex === q.answer;
+  const buttons = document.querySelectorAll('.choice');
+
+  // 全ボタンの正解・不正解表示
+  buttons.forEach((b) => {
+    b.disabled = true;
+    const text = b.querySelector('span:nth-child(2)').textContent;
+    if (text === q.choices[q.answer]) b.classList.add('correct');
+    else if (b === btn && !isCorrect) b.classList.add('incorrect');
+  });
+
+  if (isCorrect) {
+    state.score++;
+    document.getElementById('score-num').textContent = state.score;
+  }
+
+  // 解説表示
+  const verdictText = isCorrect ? '正解！' : '残念...';
+  const verdictIcon = isCorrect ? '◯' : '✕';
+  const verdictClass = isCorrect ? 'correct' : 'incorrect';
+  const mascotImg = isCorrect ? KEYAPI_HAPPY : KEYAPI_WAVE;
+
+  // 出典バッジのHTMLを生成
+  let sourceBadgeHtml = '';
+  if (q.source && SOURCES[q.source]) {
+    const src = SOURCES[q.source];
+    sourceBadgeHtml = `
+      <div class="source-badge" data-src-key="${q.source}" role="button" tabindex="0" aria-label="出典詳細を見る">
+        <span class="src-icon">📚</span>
+        <span class="src-label">出典：</span>
+        <span class="src-name">${src.name}</span>
+        <span class="src-arrow">▶</span>
+      </div>
+    `;
+  }
+
+  // スポットリンクのHTMLを生成
+  let spotsHtml = '';
+  if (q.spots && q.spots.length > 0) {
+    const pills = q.spots
+      .filter(sid => SPOTS[sid])
+      .map(sid => {
+        const spot = SPOTS[sid];
+        const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(spot.mapsQuery)}`;
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="spot-pill">
+          <span class="spot-pill-icon">${spot.icon}</span>
+          <span>📍 ${spot.name}</span>
+          <span class="spot-pill-arrow">▶</span>
+        </a>`;
+      }).join('');
+    if (pills) {
+      spotsHtml = `<div class="spots-in-explanation">${pills}</div>`;
+    }
+  }
+
+  document.getElementById('explanation-wrap').innerHTML = `
+    <div class="explanation">
+      <div class="mascot-bubble">
+        <img class="mascot-img tiny" src="${mascotImg}" alt="けやぴ" />
+      </div>
+      <div class="content">
+        <div class="verdict ${verdictClass}">${verdictIcon} ${verdictText}</div>
+        <div class="text">${q.explanation}</div>
+        <div class="keyapi-comment">💭 けやぴ：${q.keyapi}</div>
+        ${spotsHtml}
+        ${sourceBadgeHtml}
+      </div>
+    </div>
+  `;
+
+  // 出典バッジのクリックイベント
+  const sourceBadge = document.querySelector('.source-badge');
+  if (sourceBadge) {
+    sourceBadge.addEventListener('click', () => {
+      openSourceModal(sourceBadge.dataset.srcKey);
+    });
+    sourceBadge.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openSourceModal(sourceBadge.dataset.srcKey);
+      }
+    });
+  }
+
+  const progress = ((state.currentIndex + 1) / state.questions.length) * 100;
+  document.getElementById('progress-fill').style.width = progress + '%';
+
+  const nextWrap = document.getElementById('next-wrap');
+  const nextBtn = document.getElementById('btn-next');
+  nextBtn.textContent = (state.currentIndex + 1 >= state.questions.length) ? '結果を見る' : '次の問題へ';
+  nextWrap.style.display = 'block';
+
+  if (navigator.vibrate) {
+    navigator.vibrate(isCorrect ? 50 : [40, 40, 40]);
+  }
+}
+
+/* ============================================================
+   次の問題へ
+   ============================================================ */
+function nextQuestion() {
+  state.currentIndex++;
+  if (state.currentIndex >= state.questions.length) {
+    showResult();
+  } else {
+    renderQuestion();
+  }
+}
+
+/* ============================================================
+   結果表示
+   ============================================================ */
+function showResult() {
+  state.endTime = Date.now();
+  const total = state.questions.length;
+  const score = state.score;
+  const rate = score / total;
+  const ratePercent = Math.round(rate * 100);
+  const timeMs = state.endTime - state.startTime;
+
+  document.getElementById('final-score').textContent = score;
+  document.getElementById('stat-rate').textContent = ratePercent;
+  document.getElementById('stat-time').textContent = formatTime(timeMs);
+
+  let icon, title, comment;
+  if (rate === 1) {
+    icon = '🏆'; title = '府中博士'; comment = 'パーフェクト達成！\nあなたは府中の歴史も名所もグルメも知り尽くした「府中博士」です。\n地元の方でも自慢できる知識量！';
+  } else if (rate >= 0.8) {
+    icon = '⛩️'; title = '府中マスター'; comment = '素晴らしい！府中市の魅力をよく知っていますね。\n次は実際に大國魂神社や郷土の森を訪れてみては？';
+  } else if (rate >= 0.6) {
+    icon = '🌸'; title = '府中通'; comment = 'なかなかの府中通！\nけやき並木やくらやみ祭など、まだまだ深い魅力がありますよ。';
+  } else if (rate >= 0.4) {
+    icon = '🍡'; title = '府中見習い'; comment = 'もう一歩！府中市は歴史も自然もグルメも豊か。\n実際に訪れて魅力を発見してみましょう。';
+  } else {
+    icon = '🌱'; title = '府中はじめて'; comment = 'これから府中の魅力を発見していきましょう！\n1900年の歴史を持つ大國魂神社からスタートがおすすめです。';
+  }
+
+  document.getElementById('rank-icon').textContent = icon;
+  document.getElementById('rank-title').textContent = title;
+  document.getElementById('rank-comment').textContent = comment;
+
+  // 結果に応じてマスコット表情切替
+  document.getElementById('mascot-result').src = rate >= 0.6 ? KEYAPI_HAPPY : KEYAPI_WAVE;
+
+  showScreen('screen-result');
+}
+
+/* ============================================================
+   シェア機能
+   ============================================================ */
+function shareToX() {
+  const total = state.questions.length;
+  const title = document.getElementById('rank-title').textContent;
+  const text = `府中ものしりクイズで${state.score}/${total}問正解！\n称号：${title}🌳\nあなたも東京都府中市の魅力を学んでみよう⛩️\n#府中ものしりクイズ #東京都府中市`;
+  const url = window.location.href;
+  const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+  window.open(shareUrl, '_blank', 'noopener');
+}
+
+function shareToLine() {
+  const total = state.questions.length;
+  const title = document.getElementById('rank-title').textContent;
+  const text = `府中ものしりクイズで${state.score}/${total}問正解！\n称号：${title} 🌳\n${window.location.href}`;
+  const shareUrl = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(text)}`;
+  window.open(shareUrl, '_blank', 'noopener');
+}
+
+async function copyLink() {
+  const url = window.location.href;
+  try {
+    await navigator.clipboard.writeText(url);
+    const btn = document.getElementById('btn-share-copy');
+    const orig = btn.textContent;
+    btn.textContent = '✓ コピー完了';
+    setTimeout(() => { btn.textContent = orig; }, 1800);
+  } catch (e) {
+    prompt('リンクをコピーしてください：', url);
+  }
+}
+
+/* ============================================================
+   イベントバインド
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  // マスコット画像セット
+  document.getElementById('mascot-start').src = KEYAPI_WAVE;
+  document.getElementById('mascot-result').src = KEYAPI_HAPPY;
+
+  // 問題数表示
+  updateCounts();
+
+  // カテゴリー選択
+  document.querySelectorAll('.category-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.selectedCategory = btn.dataset.cat;
+    });
+  });
+
+  // 難易度選択
+  document.querySelectorAll('.diff-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.selectedDifficulty = btn.dataset.diff;
+    });
+  });
+
+  document.getElementById('btn-start').addEventListener('click', startQuiz);
+  document.getElementById('btn-next').addEventListener('click', nextQuestion);
+  document.getElementById('btn-retry').addEventListener('click', startQuiz);
+  document.getElementById('btn-home').addEventListener('click', () => showScreen('screen-start'));
+  document.getElementById('btn-share-x').addEventListener('click', shareToX);
+  document.getElementById('btn-share-line').addEventListener('click', shareToLine);
+  document.getElementById('btn-share-copy').addEventListener('click', copyLink);
+
+  // About モーダル
+  document.getElementById('btn-info').addEventListener('click', () => {
+    document.getElementById('modal-about').classList.add('active');
+  });
+  document.getElementById('modal-close').addEventListener('click', () => {
+    document.getElementById('modal-about').classList.remove('active');
+  });
+  document.getElementById('modal-about').addEventListener('click', (e) => {
+    if (e.target.id === 'modal-about') {
+      document.getElementById('modal-about').classList.remove('active');
+    }
+  });
+
+  // ===== 出典詳細モーダル関連のイベント =====
+  document.getElementById('modal-source-close').addEventListener('click', () => {
+    document.getElementById('modal-source').classList.remove('active');
+  });
+  document.getElementById('modal-source').addEventListener('click', (e) => {
+    if (e.target.id === 'modal-source') {
+      document.getElementById('modal-source').classList.remove('active');
+    }
+  });
+
+  // ===== お出かけマップ関連のイベント =====
+  document.getElementById('btn-open-map').addEventListener('click', openMapScreen);
+  document.getElementById('btn-map-back').addEventListener('click', () => showScreen('screen-start'));
+  document.getElementById('btn-reset-visits').addEventListener('click', resetVisits);
+  document.getElementById('btn-back-to-top').addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // スクロール位置によってトップへ戻るボタンを表示
+  let scrollTimer = null;
+  window.addEventListener('scroll', () => {
+    const btn = document.getElementById('btn-back-to-top');
+    if (!btn) return;
+    // マップ画面で、一定以上スクロールしたときだけ表示
+    const mapActive = document.getElementById('screen-map').classList.contains('active');
+    if (mapActive && window.scrollY > 300) {
+      btn.classList.add('show');
+    } else {
+      btn.classList.remove('show');
+    }
+  }, { passive: true });
+
+  // トップ画面の訪問カウントを初期表示
+  updateTopMapButton();
+
+  // ===== PWA インストール機能 =====
+  initPWAInstall();
+});
+
+/* ============================================================
+   お出かけスポット機能
+   ============================================================ */
+
+// localStorage キー
+const VISITS_KEY = 'fuchu-quiz-visits';
+
+// 訪問済みスポットを取得
+function getVisitedSpots() {
+  try {
+    const data = localStorage.getItem(VISITS_KEY);
+    return data ? JSON.parse(data) : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+// 訪問状態を保存
+function saveVisitedSpots(visits) {
+  try {
+    localStorage.setItem(VISITS_KEY, JSON.stringify(visits));
+  } catch (e) {}
+}
+
+// トップ画面のボタン表示を更新
+function updateTopMapButton() {
+  const visits = getVisitedSpots();
+  const count = Object.keys(visits).filter(k => visits[k]).length;
+  const el = document.getElementById('visited-count-top');
+  if (el) el.textContent = count;
+}
+
+// お出かけマップ画面を開く
+function openMapScreen() {
+  renderMapScreen();
+  showScreen('screen-map');
+}
+
+// マップ画面をレンダリング
+function renderMapScreen() {
+  const visits = getVisitedSpots();
+  const visitedIds = Object.keys(visits).filter(k => visits[k]);
+  const total = Object.keys(SPOTS).length;
+  const count = visitedIds.length;
+  const rate = count / total;
+
+  // 達成状況カード更新
+  document.getElementById('pc-count').textContent = count;
+  document.getElementById('pc-total').textContent = total;
+  document.getElementById('pc-bar').style.width = (rate * 100) + '%';
+
+  // バッジとコメント
+  let badge, comment;
+  if (count === 0) {
+    badge = '🌱';
+    comment = 'さあ、府中探検に出かけよう！まずは大國魂神社からどうぞ〜';
+  } else if (count < 5) {
+    badge = '🌿';
+    comment = '探検スタート！もう少しで「探検者」バッジがもらえるよ〜';
+  } else if (count < 10) {
+    badge = '🌳';
+    comment = 'もう5ヶ所訪問したね！「府中探検者」バッジ獲得〜';
+  } else if (count < 15) {
+    badge = '⛩️';
+    comment = 'すごい！10ヶ所達成！「府中通」バッジ獲得〜';
+  } else if (count < 20) {
+    badge = '🌸';
+    comment = '「府中マスター」バッジ獲得！街を歩き尽くしてるね〜';
+  } else if (count < total) {
+    badge = '🏆';
+    comment = 'あと少しで全制覇！「府中博士」を目指そう〜';
+  } else {
+    badge = '🌟';
+    comment = 'あなたは完全に「府中超博士」です！全スポット制覇、おめでとうございます〜🎉';
+  }
+  document.getElementById('pc-badge').textContent = badge;
+  document.getElementById('pc-comment').textContent = comment;
+
+  // スポットリストをカテゴリー別にグルーピング
+  const byCategory = {};
+  Object.entries(SPOTS).forEach(([id, spot]) => {
+    if (!byCategory[spot.categoryLabel]) {
+      byCategory[spot.categoryLabel] = { icon: spot.icon, spots: [] };
+    }
+    byCategory[spot.categoryLabel].spots.push({ id, ...spot });
+  });
+
+  // HTML生成
+  const listEl = document.getElementById('spots-list');
+  listEl.innerHTML = '';
+  Object.entries(byCategory).forEach(([catLabel, catData]) => {
+    const section = document.createElement('div');
+    section.className = 'spot-category-section';
+    
+    const visitedInCat = catData.spots.filter(s => visits[s.id]).length;
+    section.innerHTML = `
+      <div class="spot-category-title">
+        <span class="scc-icon">${catData.icon}</span>
+        <span class="scc-name">${catLabel}</span>
+        <span class="scc-line"></span>
+        <span class="scc-count">${visitedInCat} / ${catData.spots.length}</span>
+      </div>
+    `;
+    
+    catData.spots.forEach(spot => {
+      const isVisited = !!visits[spot.id];
+      const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(spot.mapsQuery)}`;
+      const card = document.createElement('div');
+      card.className = 'spot-card' + (isVisited ? ' visited' : '');
+      card.innerHTML = `
+        <div class="sc-icon">${spot.icon}</div>
+        <div class="sc-body">
+          <div class="sc-name">${spot.name}</div>
+          <div class="sc-desc">${spot.description}</div>
+          <div class="sc-station">🚃 ${spot.nearestStation}</div>
+          <div class="sc-actions">
+            <a class="sc-btn map" href="${url}" target="_blank" rel="noopener noreferrer">📍 地図で見る</a>
+            <button class="sc-btn visit-check ${isVisited ? 'checked' : ''}" data-spot-id="${spot.id}">
+              ${isVisited ? '✓ 訪問済' : '訪問済みにする'}
+            </button>
+          </div>
+        </div>
+      `;
+      section.appendChild(card);
+    });
+    listEl.appendChild(section);
+  });
+
+  // 訪問チェックボタンのイベントバインド
+  document.querySelectorAll('.visit-check').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const spotId = btn.dataset.spotId;
+      toggleVisit(spotId);
+    });
+  });
+}
+
+// 訪問状態をトグル
+function toggleVisit(spotId) {
+  const visits = getVisitedSpots();
+  const wasVisited = !!visits[spotId];
+  visits[spotId] = !wasVisited;
+  saveVisitedSpots(visits);
+
+  // アニメーション付きでリレンダリング
+  renderMapScreen();
+  updateTopMapButton();
+
+  // アチーブメントチェック
+  if (!wasVisited) {
+    const newCount = Object.keys(visits).filter(k => visits[k]).length;
+    const milestones = {
+      1: '初めての訪問！🌱 探検の始まり',
+      5: '「府中探検者」バッジ獲得！🌳',
+      10: '「府中通」バッジ獲得！⛩️',
+      15: '「府中マスター」バッジ獲得！🌸',
+      20: '「府中博士」もうすぐそこ！🏆',
+      25: '全制覇達成！「府中超博士」バッジ獲得〜🌟'
+    };
+    if (milestones[newCount]) {
+      showAchievementToast(milestones[newCount]);
+      if (navigator.vibrate) navigator.vibrate([60, 30, 60]);
+    }
+  }
+}
+
+// 達成トースト表示
+function showAchievementToast(text) {
+  const toast = document.getElementById('achievement-toast');
+  const textEl = document.getElementById('achievement-text');
+  if (!toast || !textEl) return;
+  textEl.textContent = text;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3500);
+}
+
+// 訪問記録リセット
+function resetVisits() {
+  if (confirm('すべての訪問記録をリセットします。よろしいですか？')) {
+    saveVisitedSpots({});
+    renderMapScreen();
+    updateTopMapButton();
+  }
+}
+
+/* ============================================================
+   出典詳細モーダルを開く
+   ============================================================ */
+function openSourceModal(sourceKey) {
+  const src = SOURCES[sourceKey];
+  if (!src) return;
+
+  const body = document.getElementById('source-modal-body');
+  body.innerHTML = `
+    <div class="src-detail-icon">📖</div>
+    <div class="src-detail-name">${src.name}</div>
+    <div class="src-detail-desc">${src.description}</div>
+    <a href="${src.url}" target="_blank" rel="noopener noreferrer" class="src-detail-link-btn">
+      🔗 公式サイトでもっと詳しく
+    </a>
+    <p class="src-detail-note">
+      ※ 外部サイトに移動します<br>
+      本アプリは当該サイトとは関係ありません
+    </p>
+  `;
+  document.getElementById('modal-source').classList.add('active');
+}
+
+/* ============================================================
+   PWA インストール機能
+   ============================================================ */
+let deferredInstallPrompt = null;
+
+function initPWAInstall() {
+  // 既にPWAとして起動されているか判定
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                       window.navigator.standalone === true;
+
+  // 端末判定
+  const ua = navigator.userAgent || '';
+  const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+  const isAndroid = /Android/.test(ua);
+  const isMobile = isIOS || isAndroid;
+
+  // モーダル開閉
+  const modal = document.getElementById('modal-install');
+  const openModal = () => {
+    modal.classList.add('active');
+    // デフォルトで端末に合ったタブを開く
+    const defaultTab = isIOS ? 'ios' : 'android';
+    activateTab(defaultTab);
+  };
+  const closeModal = () => modal.classList.remove('active');
+
+  // ボタン類のイベント
+  document.getElementById('btn-install-help').addEventListener('click', openModal);
+  document.getElementById('install-banner-action').addEventListener('click', openModal);
+  document.getElementById('modal-install-close').addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target.id === 'modal-install') closeModal();
+  });
+
+  // タブ切替
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => activateTab(btn.dataset.tab));
+  });
+
+  // beforeinstallprompt（Android Chrome等）
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+
+    // ネイティブインストールが可能な端末用：ボタンの文言を「今すぐ追加」に
+    const actionBtn = document.getElementById('install-banner-action');
+    if (actionBtn) {
+      actionBtn.textContent = '今すぐ追加';
+      actionBtn.removeEventListener('click', openModal);
+      actionBtn.addEventListener('click', async () => {
+        if (deferredInstallPrompt) {
+          deferredInstallPrompt.prompt();
+          const { outcome } = await deferredInstallPrompt.userChoice;
+          if (outcome === 'accepted') {
+            hideBanner();
+            localStorage.setItem('fuchu-quiz-installed', '1');
+          }
+          deferredInstallPrompt = null;
+        } else {
+          openModal();
+        }
+      });
+    }
+  });
+
+  // インストール完了検知
+  window.addEventListener('appinstalled', () => {
+    hideBanner();
+    localStorage.setItem('fuchu-quiz-installed', '1');
+  });
+
+  // バナー閉じるボタン
+  document.getElementById('install-banner-close').addEventListener('click', () => {
+    hideBanner();
+    // 7日間は再表示しない
+    const reshowAt = Date.now() + 7 * 24 * 60 * 60 * 1000;
+    localStorage.setItem('fuchu-quiz-banner-dismissed', reshowAt);
+  });
+
+  // バナー表示判定
+  // 条件：モバイル端末 ＆ PWA未起動 ＆ 未インストール ＆ 直近で閉じていない
+  if (isMobile && !isStandalone) {
+    const installed = localStorage.getItem('fuchu-quiz-installed');
+    const dismissedUntil = parseInt(localStorage.getItem('fuchu-quiz-banner-dismissed') || '0');
+    if (!installed && Date.now() > dismissedUntil) {
+      // 5秒後に優しく表示（ユーザーが画面に慣れた頃）
+      setTimeout(() => {
+        document.getElementById('install-banner').classList.add('show');
+      }, 5000);
+    }
+  }
+}
+
+function activateTab(tabName) {
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === tabName);
+  });
+  document.querySelectorAll('.tab-content').forEach(c => {
+    c.classList.toggle('active', c.id === 'tab-' + tabName);
+  });
+}
+
+function hideBanner() {
+  const banner = document.getElementById('install-banner');
+  if (banner) banner.classList.remove('show');
+}
+</script>
+
+
+<!-- Service Worker Registration -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then((reg) => console.log('SW registered:', reg.scope))
+      .catch((err) => console.log('SW registration failed:', err));
+  });
+}
+</script>
+
+</body>
+</html>
