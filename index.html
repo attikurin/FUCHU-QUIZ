@@ -1166,6 +1166,62 @@
     color: #fff;
   }
 
+  /* フィードバックリンク（解説下） */
+  .feedback-link {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(139, 90, 60, 0.25);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #8b5a3c;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+    -webkit-user-select: none;
+    user-select: none;
+    background: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    width: 100%;
+    text-align: left;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+  .feedback-link:active { opacity: 0.6; }
+  .feedback-link .fb-icon { font-size: 12px; }
+  .feedback-link .fb-text {
+    flex: 1;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 2px;
+  }
+  .feedback-link .fb-arrow {
+    font-size: 10px;
+    color: #8b5a3c;
+  }
+
+  /* フィードバックボタン（トップ画面） */
+  .feedback-top-btn {
+    background: none;
+    border: 1px solid #8b5a3c;
+    color: #6b4226;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-family: 'Shippori Mincho', serif;
+    cursor: pointer;
+    margin-top: 6px;
+  }
+  .feedback-top-btn:active {
+    background: #8b5a3c;
+    color: #fff;
+  }
+
   /* リセットテキストリンク */
   .reset-link {
     background: none;
@@ -1414,6 +1470,7 @@
 
     <button class="info-btn" id="btn-install-help" style="margin-top:4px;">📲 ホーム画面に追加する方法</button>
     <button class="info-btn" id="btn-info">このアプリについて</button>
+    <button class="feedback-top-btn" id="btn-feedback-top">💬 ご意見・ご感想を送る</button>
 
     <div class="footer">
       <p>誰でも楽しめる、府中の魅力を知るミニアプリ</p>
@@ -1648,8 +1705,12 @@
         <h3>🔒 プライバシー</h3>
         <p>本アプリはユーザーの個人情報を一切収集しません。スコア等のデータはお使いの端末のブラウザ内にのみ保存されます。</p>
 
+        <h3>💬 ご意見をお寄せください</h3>
+        <p>クイズの誤り、追加アイデア、ご感想など、どんなことでもお気軽にお知らせください。より良いアプリにしていくための参考にさせていただきます。</p>
+        <button class="feedback-top-btn" id="btn-feedback-modal" style="display:block; margin: 10px auto;">💬 フィードバックを送る</button>
+
         <h3>📅 バージョン</h3>
-        <p>v2.7.1 ／ 全100問・出典明示・お出かけマップ・UI磨き込み完了</p>
+        <p>v2.8.1 ／ 全100問・出典明示・お出かけマップ・フィードバック窓口（稼働中）</p>
       </div>
       <button class="modal-close" id="modal-close">閉じる</button>
     </div>
@@ -3148,6 +3209,16 @@ function selectAnswer(originalIndex, btn) {
     `;
   }
 
+  // フィードバックリンクのHTMLを生成（解説下）
+  const feedbackUrl = buildFeedbackUrl(state.currentIndex + 1);
+  const feedbackLinkHtml = `
+    <a href="${feedbackUrl}" target="_blank" rel="noopener noreferrer" class="feedback-link">
+      <span class="fb-icon">💬</span>
+      <span class="fb-text">この問題について意見・誤りを報告</span>
+      <span class="fb-arrow">▶</span>
+    </a>
+  `;
+
   // スポットリンクのHTMLを生成
   let spotsHtml = '';
   if (q.spots && q.spots.length > 0) {
@@ -3178,6 +3249,7 @@ function selectAnswer(originalIndex, btn) {
         <div class="keyapi-comment">💭 けやぴ：${q.keyapi}</div>
         ${spotsHtml}
         ${sourceBadgeHtml}
+        ${feedbackLinkHtml}
       </div>
     </div>
   `;
@@ -3377,9 +3449,46 @@ document.addEventListener('DOMContentLoaded', () => {
   // トップ画面の訪問カウントを初期表示
   updateTopMapButton();
 
+  // ===== フィードバックボタン関連のイベント =====
+  document.getElementById('btn-feedback-top').addEventListener('click', () => {
+    window.open(buildFeedbackUrl(null), '_blank', 'noopener,noreferrer');
+  });
+  const fbModalBtn = document.getElementById('btn-feedback-modal');
+  if (fbModalBtn) {
+    fbModalBtn.addEventListener('click', () => {
+      window.open(buildFeedbackUrl(null), '_blank', 'noopener,noreferrer');
+    });
+  }
+
   // ===== PWA インストール機能 =====
   initPWAInstall();
 });
+
+/* ============================================================
+   フィードバックフォームURL生成
+   ============================================================ */
+
+// ⚠️ ここにGoogleフォームの「事前入力済みURL」を設定してください
+// 手順：
+//   1. Googleフォームを作成
+//   2. 「事前入力済みURLを取得」を選択
+//   3. 問題番号フィールドに __QUESTION_NUM__ と入力
+//   4. 生成されたURLを以下にFEEDBACK_FORM_URLに設定
+//
+// 未設定の間は null のままにしておくと、ボタンを押した人に「設定されていません」と表示されます
+const FEEDBACK_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScE-4Pep_w2Nh0jPKpY-5d9mABlzLAPGdCsmZyEUUCllApGfw/viewform?usp=pp_url&entry.1856167586=__QUESTION_NUM__';
+// 設定済み：問題番号は entry.1856167586 に事前入力されます
+
+function buildFeedbackUrl(questionNumber) {
+  if (!FEEDBACK_FORM_URL) {
+    // 未設定時はダミーURLを返す
+    return 'javascript:alert(「フィードバックフォームは現在準備中です。近栄公開予定です。」);void(0);';
+  }
+  if (questionNumber) {
+    return FEEDBACK_FORM_URL.replace('__QUESTION_NUM__', encodeURIComponent('Q' + questionNumber));
+  }
+  return FEEDBACK_FORM_URL.replace('__QUESTION_NUM__', '');
+}
 
 /* ============================================================
    お出かけスポット機能
