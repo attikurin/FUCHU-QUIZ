@@ -3,7 +3,7 @@
    オフライン対応・キャッシュ管理
    =========================================== */
 
-const CACHE_VERSION = 'fuchu-quiz-v2.8.1';
+const CACHE_VERSION = 'fuchu-quiz-v3.1.1';
 const CACHE_FILES = [
   './',
   './index.html',

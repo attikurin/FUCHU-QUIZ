@@ -558,6 +558,109 @@
   }
   .share-btn:active { opacity: 0.8; }
 
+  /* ===== 結果カードプレビュー ===== */
+  .result-card-preview {
+    width: 100%;
+    max-width: 320px;
+    margin: 6px auto 14px;
+    aspect-ratio: 1 / 1;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(60, 40, 20, 0.18);
+    position: relative;
+    background: #f5efe3;
+  }
+  .result-card-preview canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .card-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 13px;
+    color: #8b5a3c;
+    background: rgba(245, 239, 227, 0.95);
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .card-loading.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .share-image-btns {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+  .share-img-btn {
+    flex: 1 1 140px;
+    min-width: 140px;
+    padding: 11px 14px;
+    border: none;
+    border-radius: 22px;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s, opacity 0.2s;
+  }
+  .share-img-btn.primary {
+    background: linear-gradient(135deg, #c95825 0%, #8b3a14 100%);
+    color: #fff;
+    box-shadow: 0 3px 8px rgba(139, 58, 20, 0.3);
+  }
+  .share-img-btn.primary:hover { transform: translateY(-1px); box-shadow: 0 5px 12px rgba(139,58,20,0.4); }
+  .share-img-btn.secondary {
+    background: #fff8f0;
+    color: #8b5a3c;
+    border: 1.5px solid #c4926a;
+  }
+  .share-img-btn.secondary:hover { background: #ffeed8; }
+  .share-img-btn:active { transform: translateY(0); opacity: 0.85; }
+  .share-img-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .share-sub-label {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 12px;
+    color: #8b5a3c;
+    margin: 4px 0 8px;
+    opacity: 0.75;
+  }
+
+  /* シェア成功トースト */
+  .share-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(45, 30, 20, 0.95);
+    color: #fff;
+    padding: 12px 22px;
+    border-radius: 24px;
+    font-size: 13px;
+    font-weight: 700;
+    z-index: 10001;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+  .share-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
   /* フッター */
   .footer {
     text-align: center;
@@ -904,6 +1007,427 @@
   }
   .spot-pill:active .spot-pill-arrow { color: #fff; }
 
+  /* ===== 診断 CTA ボタン ===== */
+  .diagnosis-cta-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #f3e5f5 0%, #e0c2db 60%, #c9a7c5 100%);
+    border: 2px solid #9b6390;
+    border-radius: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 12px rgba(155, 99, 144, 0.25);
+    position: relative;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .diagnosis-cta-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(155,99,144,0.35); }
+  .diagnosis-cta-btn:active { transform: translateY(0); }
+  .diagnosis-cta-new {
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #c92a2a 100%);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 8px;
+    letter-spacing: 0.05em;
+    box-shadow: 0 2px 4px rgba(201, 42, 42, 0.3);
+    animation: newBlink 2s ease-in-out infinite;
+  }
+  @keyframes newBlink {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+  .diagnosis-cta-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+  .diagnosis-cta-text {
+    flex: 1;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .diagnosis-cta-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #5a3a55;
+  }
+  .diagnosis-cta-sub {
+    font-size: 11px;
+    color: #7a5a72;
+    opacity: 0.85;
+  }
+  .diagnosis-cta-arrow {
+    color: #9b6390;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  /* ===== 診断スタート画面 ===== */
+  .diag-start-screen .diag-header {
+    text-align: center;
+    margin-bottom: 14px;
+  }
+  .diag-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #3d2817;
+    margin: 0 0 6px;
+  }
+  .diag-subtitle {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 13px;
+    color: #8b5a3c;
+    letter-spacing: 0.1em;
+  }
+  .diag-intro-card {
+    width: 100%;
+    background: linear-gradient(135deg, #fff8f5 0%, #fce4ec 100%);
+    border: 1.5px solid #c9a7c5;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 3px 10px rgba(155, 99, 144, 0.15);
+  }
+  .diag-intro-text {
+    font-size: 13px;
+    color: #5a3a55;
+    line-height: 1.7;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .diag-types-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+  }
+  .diag-type-chip {
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid #c9a7c5;
+    color: #5a3a55;
+    padding: 4px 10px;
+    border-radius: 14px;
+    font-size: 11px;
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 600;
+  }
+
+  /* ===== 診断結果画面 ===== */
+  .diag-result-icon {
+    text-align: center;
+    line-height: 1;
+    margin: 10px 0 4px;
+  }
+  .diag-result-name {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #3d2817;
+    margin: 0 0 4px;
+    text-align: center;
+  }
+  .diag-result-catch {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 14px;
+    color: #8b5a3c;
+    text-align: center;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+  .diag-result-desc-card {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1.5px solid #c4926a;
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin: 12px 0;
+  }
+  .diag-result-desc {
+    font-size: 13px;
+    color: #3d2817;
+    line-height: 1.7;
+  }
+  .diag-result-spots-card {
+    width: 100%;
+    background: linear-gradient(135deg, #fff8e7 0%, #ffeec9 100%);
+    border: 1.5px solid #d9a441;
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin: 8px 0 12px;
+  }
+  .diag-result-spots-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #8b5a3c;
+    margin: 0 0 10px;
+  }
+  .diag-result-spots {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .diag-spot-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,0.65);
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+  }
+  .diag-spot-item:hover { background: rgba(255,255,255,0.85); }
+  .diag-spot-icon { font-size: 18px; }
+  .diag-spot-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #3d2817;
+    flex: 1;
+  }
+  .diag-spot-arrow {
+    font-size: 10px;
+    color: #c4926a;
+  }
+  .diag-keyapi-msg {
+    width: 100%;
+    background: rgba(255, 248, 232, 0.85);
+    border-left: 3px solid #d9a441;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: #6b4423;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.6;
+  }
+  .diag-keyapi-icon { font-size: 16px; flex-shrink: 0; }
+  .diag-keyapi-text { flex: 1; }
+
+  /* ===== デイリーチャレンジ・カード ===== */
+  .daily-card {
+    width: 100%;
+    margin: 14px 0 6px;
+    padding: 16px 18px;
+    background: linear-gradient(135deg, #fff8e7 0%, #ffeec9 60%, #ffe2b0 100%);
+    border: 2px solid #d9a441;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(217, 164, 65, 0.25);
+    position: relative;
+    overflow: hidden;
+  }
+  .daily-card::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .daily-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .daily-card-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #8b5a3c;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .daily-card-date {
+    font-size: 11px;
+    color: #a87a3d;
+    background: rgba(255,255,255,0.6);
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+  .daily-card-desc {
+    font-size: 12px;
+    color: #6b4423;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .daily-streak {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.55);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .daily-streak-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .daily-streak-icon {
+    font-size: 22px;
+  }
+  .daily-streak-text {
+    font-size: 12px;
+    color: #6b4423;
+    line-height: 1.4;
+  }
+  .daily-streak-num {
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: #c95825;
+    margin-right: 2px;
+  }
+  .daily-badges {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .daily-badge {
+    font-size: 16px;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ffd76b 0%, #ff9d3f 100%);
+    box-shadow: 0 2px 4px rgba(217, 100, 30, 0.3);
+    border: 1.5px solid #fff;
+    position: relative;
+  }
+  .daily-badge.locked {
+    background: #e6dcc8;
+    box-shadow: none;
+    opacity: 0.45;
+    filter: grayscale(0.6);
+  }
+  .daily-badge-tooltip {
+    font-size: 9px;
+    color: #8b5a3c;
+    margin-top: 2px;
+    text-align: center;
+  }
+  .daily-status {
+    font-size: 11px;
+    color: #6b4423;
+    line-height: 1.4;
+    margin-bottom: 10px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,0.45);
+    border-radius: 8px;
+    position: relative;
+  }
+  .daily-status .daily-score-num {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #c95825;
+  }
+  .daily-cta {
+    width: 100%;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #d9a441 0%, #c47e1f 100%);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(196, 126, 31, 0.35);
+    transition: transform 0.15s, box-shadow 0.15s;
+    position: relative;
+  }
+  .daily-cta:hover { transform: translateY(-1px); box-shadow: 0 5px 12px rgba(196,126,31,0.45); }
+  .daily-cta:active { transform: translateY(0); }
+  .daily-cta.replay {
+    background: linear-gradient(135deg, #b9a589 0%, #8b7355 100%);
+    box-shadow: 0 3px 8px rgba(139, 115, 85, 0.3);
+  }
+  /* デイリーモード時のヘッダーアクセント */
+  .mode-badge {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 3px 8px;
+    background: linear-gradient(135deg, #d9a441 0%, #c47e1f 100%);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 10px;
+    letter-spacing: 0.05em;
+    vertical-align: middle;
+  }
+  /* ストリーク達成トースト */
+  .streak-toast-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(60, 40, 20, 0.55);
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .streak-toast-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .streak-toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.7);
+    background: linear-gradient(135deg, #fff8e7 0%, #ffd76b 100%);
+    border: 3px solid #d9a441;
+    border-radius: 20px;
+    padding: 24px 32px;
+    box-shadow: 0 10px 40px rgba(217,164,65,0.5);
+    z-index: 10000;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-width: 80vw;
+  }
+  .streak-toast.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .streak-toast-icon { font-size: 48px; margin-bottom: 8px; }
+  .streak-toast-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 18px;
+    color: #8b5a3c;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .streak-toast-desc { font-size: 13px; color: #6b4423; line-height: 1.5; }
+
   /* トップ画面の「お出かけマップ」ボタン */
   .map-btn {
     width: 100%;
@@ -1242,15 +1766,15 @@
   /* フローティング「トップへ戻る」ボタン */
   .back-to-top-btn {
     position: fixed;
-    bottom: 24px;
-    right: 24px;
-    width: 48px;
-    height: 48px;
+    bottom: 16px;
+    right: 14px;
+    width: 44px;
+    height: 44px;
     background: rgba(61, 40, 23, 0.85);
     color: #f5efe3;
     border: none;
     border-radius: 50%;
-    font-size: 22px;
+    font-size: 20px;
     cursor: pointer;
     z-index: 50;
     box-shadow: 0 4px 12px rgba(61, 40, 23, 0.3);
@@ -1259,6 +1783,15 @@
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  /* スポットリスト下部に余白を確保し、「↑」ボタンと重ならないようにする */
+  .map-screen #spots-list {
+    padding-bottom: 80px;
+  }
+  /* もしスクロール中にカードボタンと重なる場合は「↑」ボタンを右側に退避 */
+  .map-screen .back-to-top-btn {
+    right: 10px;
+    bottom: 12px;
   }
   .back-to-top-btn.show {
     opacity: 1;
@@ -1438,6 +1971,53 @@
 
     <button class="btn-primary" id="btn-start">クイズをはじめる</button>
 
+    <!-- 府中市民タイプ診断ボタン -->
+    <button class="diagnosis-cta-btn" id="btn-open-diagnosis">
+      <span class="diagnosis-cta-new">NEW</span>
+      <span class="diagnosis-cta-icon">🎭</span>
+      <span class="diagnosis-cta-text">
+        <span class="diagnosis-cta-title">府中市民タイプ診断</span>
+        <span class="diagnosis-cta-sub">6つの質問で「あなたの府中タイプ」を診断</span>
+      </span>
+      <span class="diagnosis-cta-arrow">▶</span>
+    </button>
+
+    <!-- セクション間仕切り -->
+    <div style="width: 100%; margin: 18px 0 8px; display: flex; align-items: center; gap: 10px;">
+      <div style="flex:1; height:1px; background: rgba(139, 90, 60, 0.2);"></div>
+      <span style="font-family:'Shippori Mincho',serif; font-size:11px; color:#8b5a3c; letter-spacing:0.15em;">今日のひととき</span>
+      <div style="flex:1; height:1px; background: rgba(139, 90, 60, 0.2);"></div>
+    </div>
+
+    <!-- デイリーチャレンジ・カード -->
+    <div class="daily-card" id="daily-card">
+      <div class="daily-card-header">
+        <div class="daily-card-title">✨ 今日のデイリーチャレンジ</div>
+        <div class="daily-card-date" id="daily-date">——</div>
+      </div>
+      <div class="daily-card-desc">毎日入れ替わる<strong>3問</strong>に挑戦して、連続記録を伸ばそう！</div>
+
+      <div class="daily-streak">
+        <div class="daily-streak-left">
+          <div class="daily-streak-icon">🔥</div>
+          <div class="daily-streak-text">
+            連続 <span class="daily-streak-num" id="daily-streak-num">0</span>日
+            <div style="font-size:10px; opacity:0.7;">総チャレンジ数 <span id="daily-total-num">0</span>回</div>
+          </div>
+        </div>
+        <div class="daily-badges" id="daily-badges">
+          <span class="daily-badge locked" id="badge-3" title="連続3日達成">🌱</span>
+          <span class="daily-badge locked" id="badge-7" title="連続7日達成">🌸</span>
+          <span class="daily-badge locked" id="badge-30" title="連続30日達成">🌿</span>
+          <span class="daily-badge locked" id="badge-100" title="連続100日達成">🏆</span>
+        </div>
+      </div>
+
+      <div class="daily-status" id="daily-status" style="display:none;">——</div>
+
+      <button class="daily-cta" id="btn-daily-start">🎯 今日の3問に挑戦</button>
+    </div>
+
     <!-- セクション間仕切り -->
     <div style="width: 100%; margin: 18px 0 8px; display: flex; align-items: center; gap: 10px;">
       <div style="flex:1; height:1px; background: rgba(139, 90, 60, 0.2);"></div>
@@ -1482,6 +2062,104 @@
   </section>
 
   <!-- ===== Quiz Screen ===== -->
+  <!-- ===== 診断スタート画面 ===== -->
+  <section class="screen diag-start-screen" id="screen-diag-start">
+    <div class="diag-header">
+      <h2 class="diag-title">🎭 府中市民タイプ診断</h2>
+      <p class="diag-subtitle">〜 あなたはどんな府中人？ 〜</p>
+    </div>
+
+    <div class="diag-intro-card">
+      <p class="diag-intro-text">
+        6つの質問に答えると、あなたの「府中人タイプ」を診断します。<br>
+        さあ、けやぴと一緒に始めよう！
+      </p>
+      <div class="diag-types-preview">
+        <span class="diag-type-chip">⛩️ 歴史探訪派</span>
+        <span class="diag-type-chip">🌳 自然満喫派</span>
+        <span class="diag-type-chip">🍡 グルメ探求派</span>
+        <span class="diag-type-chip">🥁 お祭り熱狂派</span>
+        <span class="diag-type-chip">🏉 スポーツ応援派</span>
+        <span class="diag-type-chip">🏡 暮らし重視派</span>
+      </div>
+    </div>
+
+    <img class="mascot-img mascot-float" id="mascot-diag-start" alt="けやぴ" src="./assets/keyapi-wave.webp" />
+    <div class="speech-bubble">さあ、診断スタート～🌱<br>直感で選んでね！</div>
+
+    <button class="btn-primary" id="btn-diag-start">診断をはじめる</button>
+    <button class="btn-secondary" id="btn-diag-back">トップに戻る</button>
+  </section>
+
+  <!-- ===== 診断質問画面 ===== -->
+  <section class="screen" id="screen-diag-quiz">
+    <div class="quiz-header">
+      <div class="progress">
+        第 <span class="current" id="diag-q-current">1</span> 問 <span style="opacity:0.6;">／ <span id="diag-q-total">6</span></span>
+      </div>
+      <div class="score-display">
+        <span style="font-size:11px;opacity:0.7;">あなたを診断中</span>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="diag-progress-fill" style="width:0%;"></div></div>
+
+    <div class="tags-row">
+      <span class="category-tag">〜 診断質問 〜</span>
+    </div>
+    <p class="question" id="diag-question-text">質問文がここに表示されます。</p>
+    <div class="choices" id="diag-choices"></div>
+
+    <div class="quiz-footer">
+      <button class="btn-secondary" id="btn-diag-prev" style="display:none;">← 前の質問</button>
+    </div>
+  </section>
+
+  <!-- ===== 診断結果画面 ===== -->
+  <section class="screen result-screen" id="screen-diag-result">
+    <p class="result-title">― あなたのタイプは ―</p>
+
+    <div class="diag-result-icon" id="diag-result-icon" style="font-size:120px;">🎭</div>
+    <h2 class="diag-result-name" id="diag-result-name">【診断タイプ】</h2>
+    <p class="diag-result-catch" id="diag-result-catch">キャッチコピー</p>
+
+    <img class="mascot-img" id="mascot-diag-result" alt="けやぴ" src="./assets/keyapi-happy.webp" style="width:120px;" />
+
+    <div class="diag-result-desc-card">
+      <p class="diag-result-desc" id="diag-result-desc">詳細説明</p>
+    </div>
+
+    <div class="diag-result-spots-card">
+      <p class="diag-result-spots-title">📍 あなたにおすすめのスポット</p>
+      <div class="diag-result-spots" id="diag-result-spots"></div>
+    </div>
+
+    <div class="diag-keyapi-msg">
+      <span class="diag-keyapi-icon">🌱</span>
+      <span class="diag-keyapi-text" id="diag-keyapi-msg">けやぴからのメッセージ</span>
+    </div>
+
+    <div class="share-section">
+      <p class="share-label">― 結果をシェア ―</p>
+
+      <div class="result-card-preview" id="diag-card-preview">
+        <canvas id="diag-card-canvas" width="1080" height="1080" aria-label="診断結果カード画像"></canvas>
+        <div class="card-loading" id="diag-card-loading">🌱 診断カードを生成中…</div>
+      </div>
+
+      <div class="share-image-btns">
+        <button class="share-img-btn primary" id="btn-diag-share-img">📱 画像つきでシェア</button>
+        <button class="share-img-btn secondary" id="btn-diag-save-img">💾 画像を保存</button>
+      </div>
+
+      <p class="share-sub-label">― テキストでシェア ―</p>
+      <button class="share-btn" id="btn-diag-share-x">𝖏でシェア</button>
+      <button class="share-btn" id="btn-diag-share-line">LINEで送る</button>
+    </div>
+
+    <button class="btn-primary" id="btn-diag-retry" style="margin-top:18px;">もう一度診断する</button>
+    <button class="btn-secondary" id="btn-diag-home">トップに戻る</button>
+  </section>
+
   <section class="screen" id="screen-quiz">
     <div class="quiz-header">
       <div class="progress">
@@ -1560,7 +2238,7 @@
 
   <!-- ===== Result Screen ===== -->
   <section class="screen result-screen" id="screen-result">
-    <p class="result-title">― 結果発表 ―</p>
+    <p class="result-title"><span id="result-title-text">― 結果発表 ―</span><span id="result-mode-badge" class="mode-badge" style="display:none;">今日の3問</span></p>
     <img class="mascot-img" id="mascot-result" alt="けやぴ" src="" />
     <div class="score-big"><span id="final-score">0</span><span class="total"> / <span id="final-total">10</span></span></div>
 
@@ -1583,6 +2261,20 @@
 
     <div class="share-section">
       <p class="share-label">― 結果をシェア ―</p>
+
+      <!-- 生成画像プレビュー -->
+      <div class="result-card-preview" id="result-card-preview">
+        <canvas id="result-card-canvas" width="1080" height="1080" aria-label="結果カード画像"></canvas>
+        <div class="card-loading" id="card-loading">🌱 結果カードを生成中…</div>
+      </div>
+
+      <!-- 画像付きシェアボタン -->
+      <div class="share-image-btns">
+        <button class="share-img-btn primary" id="btn-share-img">📱 画像つきでシェア</button>
+        <button class="share-img-btn secondary" id="btn-save-img">💾 画像を保存</button>
+      </div>
+
+      <p class="share-sub-label">― テキストでシェア ―</p>
       <button class="share-btn" id="btn-share-x">𝕏でシェア</button>
       <button class="share-btn" id="btn-share-line">LINEで送る</button>
       <button class="share-btn" id="btn-share-copy">リンクをコピー</button>
@@ -1710,7 +2402,7 @@
         <button class="feedback-top-btn" id="btn-feedback-modal" style="display:block; margin: 10px auto;">💬 フィードバックを送る</button>
 
         <h3>📅 バージョン</h3>
-        <p>v2.8.1 ／ 全100問・出典明示・お出かけマップ・フィードバック窓口（稼働中）</p>
+        <p>v3.1.1 ／ 全100問・全機能搭載・UI品質チェック済</p>
       </div>
       <button class="modal-close" id="modal-close">閉じる</button>
     </div>
@@ -1720,7 +2412,7 @@
 
 <script>
 /* ============================================================
-   府中ものしりクイズ v2.5 - データ（全100問・ファクトチェック済）
+   府中ものしりクイズ v3.1 - データ（全100問・市民タイプ診断対応）
    出典：府中市オープンデータ・大國魂神社公式・府中観光協会・Wikipedia等
    difficulty: 1=初級 2=中級 3=上級
    ============================================================ */
@@ -3056,7 +3748,9 @@ const state = {
   score: 0,
   answered: false,
   startTime: 0,
-  endTime: 0
+  endTime: 0,
+  mode: 'normal',           // 'normal' | 'daily'
+  dailyReplay: false        // 復習プレイかどうか（スコア記録を上書きしない）
 };
 
 /* ============================================================
@@ -3098,6 +3792,10 @@ function updateCounts() {
    クイズ開始
    ============================================================ */
 function startQuiz() {
+  // 通常モードにリセット
+  state.mode = 'normal';
+  state.dailyReplay = false;
+
   let pool = state.selectedCategory === 'all'
     ? [...QUIZ_DATA]
     : QUIZ_DATA.filter(q => q.category === state.selectedCategory);
@@ -3308,6 +4006,26 @@ function showResult() {
   document.getElementById('stat-rate').textContent = ratePercent;
   document.getElementById('stat-time').textContent = formatTime(timeMs);
 
+  // デイリーモードバッジ・ストリーク処理
+  const modeBadge = document.getElementById('result-mode-badge');
+  if (state.mode === 'daily') {
+    modeBadge.style.display = 'inline-block';
+    modeBadge.textContent = state.dailyReplay ? '今日の3問（復習）' : '今日の3問';
+    // 初回のみスコアを記録
+    if (!state.dailyReplay) {
+      const result = recordDailyResult(score);
+      if (result.newlyEarned.length > 0) {
+        // 一番高いマイルストーンを表示
+        const top = Math.max(...result.newlyEarned);
+        setTimeout(() => showStreakToast(top), 700);
+      }
+      // トップカードも更新
+      renderDailyCard();
+    }
+  } else {
+    modeBadge.style.display = 'none';
+  }
+
   let icon, title, comment;
   if (rate === 1) {
     icon = '🏆'; title = '府中博士'; comment = 'パーフェクト達成！\nあなたは府中の歴史も名所もグルメも知り尽くした「府中博士」です。\n地元の方でも自慢できる知識量！';
@@ -3329,6 +4047,9 @@ function showResult() {
   document.getElementById('mascot-result').src = rate >= 0.6 ? KEYAPI_HAPPY : KEYAPI_WAVE;
 
   showScreen('screen-result');
+
+  // 結果カード画像を生成
+  setTimeout(() => generateResultCard(), 100);
 }
 
 /* ============================================================
@@ -3337,7 +4058,14 @@ function showResult() {
 function shareToX() {
   const total = state.questions.length;
   const title = document.getElementById('rank-title').textContent;
-  const text = `府中ものしりクイズで${state.score}/${total}問正解！\n称号：${title}🌳\nあなたも東京都府中市の魅力を学んでみよう⛩️\n#府中ものしりクイズ #東京都府中市`;
+  let text;
+  if (state.mode === 'daily') {
+    const data = loadDailyData();
+    const dateLabel = formatDateLabel(getTodayKey());
+    text = `【今日の3問 · ${dateLabel}】\n府中ものしりクイズで ${state.score}/${total}問正解！\n🔥 連続${data.streak}日チャレンジ中🌱\n称号：${title}\nあなたも今日の3問に挑戦！\n#府中ものしりクイズ #今日の3問 #東京都府中市`;
+  } else {
+    text = `府中ものしりクイズで${state.score}/${total}問正解！\n称号：${title}🌳\nあなたも東京都府中市の魅力を学んでみよう⛩️\n#府中ものしりクイズ #東京都府中市`;
+  }
   const url = window.location.href;
   const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
   window.open(shareUrl, '_blank', 'noopener');
@@ -3395,9 +4123,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('btn-start').addEventListener('click', startQuiz);
   document.getElementById('btn-next').addEventListener('click', nextQuestion);
-  document.getElementById('btn-retry').addEventListener('click', startQuiz);
-  document.getElementById('btn-home').addEventListener('click', () => showScreen('screen-start'));
+  document.getElementById('btn-retry').addEventListener('click', () => {
+    if (state.mode === 'daily') {
+      // デイリーをもう一度：同じ今日の3問を復習プレイ
+      state.dailyReplay = true;
+      startDailyChallenge();
+    } else {
+      startQuiz();
+    }
+  });
+  document.getElementById('btn-home').addEventListener('click', () => {
+    renderDailyCard();  // トップ戻り時にカード更新
+    showScreen('screen-start');
+  });
   document.getElementById('btn-share-x').addEventListener('click', shareToX);
+  // 画像付きシェア・保存
+  const btnShareImg = document.getElementById('btn-share-img');
+  const btnSaveImg = document.getElementById('btn-save-img');
+  if (btnShareImg) btnShareImg.addEventListener('click', shareResultCardImage);
+  if (btnSaveImg) btnSaveImg.addEventListener('click', saveResultCard);
   document.getElementById('btn-share-line').addEventListener('click', shareToLine);
   document.getElementById('btn-share-copy').addEventListener('click', copyLink);
 
@@ -3462,7 +4206,1098 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ===== PWA インストール機能 =====
   initPWAInstall();
+
+  // ===== デイリーチャレンジ初期化 =====
+  initDailyChallenge();
+
+  // ===== 診断機能初期化 =====
+  initDiagnosis();
 });
+
+/* ============================================================
+   デイリーチャレンジ機能
+   ============================================================ */
+const DAILY_STORAGE_KEY = 'fuchu_daily_v1';
+const DAILY_COUNT = 3;  // 今日の出題数
+
+// JST基準で今日のキーを取得 (YYYY-MM-DD)
+function getTodayKey() {
+  const now = new Date();
+  const jst = new Date(now.getTime() + (now.getTimezoneOffset() + 9 * 60) * 60000);
+  const y = jst.getFullYear();
+  const m = String(jst.getMonth() + 1).padStart(2, '0');
+  const d = String(jst.getDate()).padStart(2, '0');
+  return y + '-' + m + '-' + d;
+}
+
+// 表示用の日付フォーマット
+function formatDateLabel(dateKey) {
+  const [y, m, d] = dateKey.split('-').map(Number);
+  const dt = new Date(y, m - 1, d);
+  const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+  return m + '/' + d + '（' + weekdays[dt.getDay()] + '）';
+}
+
+// 日付文字列からシード生成（FNV-1aハッシュ）
+function seedFromDate(dateKey) {
+  let hash = 2166136261;
+  for (let i = 0; i < dateKey.length; i++) {
+    hash ^= dateKey.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+// シード付き乱数 (Mulberry32)
+function seededRandom(seed) {
+  let s = seed;
+  return function() {
+    s = (s + 0x6D2B79F5) | 0;
+    let t = s;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+// シード付きシャッフル
+function seededShuffle(arr, seed) {
+  const a = [...arr];
+  const rand = seededRandom(seed);
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// 今日の3問を選出（全利用者同じ）
+function pickDailyQuestions() {
+  const dateKey = getTodayKey();
+  const seed = seedFromDate(dateKey);
+  // 全カテゴリ・全難易度からミックス
+  return seededShuffle(QUIZ_DATA, seed).slice(0, DAILY_COUNT);
+}
+
+// デイリーデータ読み込み
+function loadDailyData() {
+  try {
+    const raw = localStorage.getItem(DAILY_STORAGE_KEY);
+    if (!raw) return getDefaultDailyData();
+    const data = JSON.parse(raw);
+    return Object.assign(getDefaultDailyData(), data);
+  } catch (e) {
+    return getDefaultDailyData();
+  }
+}
+
+function getDefaultDailyData() {
+  return {
+    lastPlayedDate: null,    // 最後にスコア記録した日
+    streak: 0,                // 現在の連続日数
+    bestStreak: 0,            // 過去最高連続
+    totalChallenges: 0,       // 総チャレンジ数
+    totalCorrect: 0,          // 総正解数
+    lastScore: null,          // 今日のスコア（未プレイならnull）
+    badges: []                // 獲得済みバッジの限値配列
+  };
+}
+
+function saveDailyData(data) {
+  try {
+    localStorage.setItem(DAILY_STORAGE_KEY, JSON.stringify(data));
+  } catch (e) {
+    console.warn('localStorage save failed:', e);
+  }
+}
+
+// 昨日のキーを返す
+function getYesterdayKey() {
+  const now = new Date();
+  const jst = new Date(now.getTime() + (now.getTimezoneOffset() + 9 * 60) * 60000);
+  jst.setDate(jst.getDate() - 1);
+  const y = jst.getFullYear();
+  const m = String(jst.getMonth() + 1).padStart(2, '0');
+  const d = String(jst.getDate()).padStart(2, '0');
+  return y + '-' + m + '-' + d;
+}
+
+// 挑戦結果を記録（復習プレイではない初回のみ呼ばれる）
+function recordDailyResult(score) {
+  const data = loadDailyData();
+  const today = getTodayKey();
+  const yesterday = getYesterdayKey();
+
+  // ストリーク更新ロジック
+  if (data.lastPlayedDate === today) {
+    // 同日に記録済み→ストリークはいじらず、スコアのみ更新（はされることはないが一応）
+  } else if (data.lastPlayedDate === yesterday) {
+    data.streak += 1;
+  } else {
+    // 逓中離脱 or 初回
+    data.streak = 1;
+  }
+
+  data.lastPlayedDate = today;
+  data.lastScore = score;
+  data.totalChallenges += 1;
+  data.totalCorrect += score;
+  if (data.streak > data.bestStreak) data.bestStreak = data.streak;
+
+  // バッジ達成チェック
+  const milestones = [3, 7, 30, 100];
+  const newlyEarned = [];
+  milestones.forEach(m => {
+    if (data.streak >= m && !data.badges.includes(m)) {
+      data.badges.push(m);
+      newlyEarned.push(m);
+    }
+  });
+
+  saveDailyData(data);
+  return { data, newlyEarned };
+}
+
+// トップ画面のデイリーカードを描画
+function renderDailyCard() {
+  const data = loadDailyData();
+  const today = getTodayKey();
+
+  document.getElementById('daily-date').textContent = formatDateLabel(today);
+  document.getElementById('daily-streak-num').textContent = data.streak;
+  document.getElementById('daily-total-num').textContent = data.totalChallenges;
+
+  // バッジ表示更新
+  [3, 7, 30, 100].forEach(m => {
+    const badge = document.getElementById('badge-' + m);
+    if (!badge) return;
+    if (data.badges.includes(m) || data.streak >= m) {
+      badge.classList.remove('locked');
+    } else {
+      badge.classList.add('locked');
+    }
+  });
+
+  // 本日ステータス
+  const status = document.getElementById('daily-status');
+  const cta = document.getElementById('btn-daily-start');
+  if (data.lastPlayedDate === today && data.lastScore !== null) {
+    status.style.display = 'block';
+    status.innerHTML = '✅ 今日は完了済み： <span class="daily-score-num">' + data.lastScore + '/' + DAILY_COUNT + '問正解</span>（何度でも復習プレイOK）';
+    cta.textContent = '🔄 今日の3問を復習プレイ';
+    cta.classList.add('replay');
+  } else {
+    status.style.display = 'none';
+    cta.textContent = '🎯 今日の3問に挑戦';
+    cta.classList.remove('replay');
+  }
+
+  // ストリーク途切れチェック（昨日以外にプレイしていたらリセットを促す表示というところだが、ここではサイレントにストリークを保持し、次回記録時に自動リセット）
+}
+
+// デイリーチャレンジを開始
+function startDailyChallenge() {
+  const data = loadDailyData();
+  const today = getTodayKey();
+  const alreadyPlayed = (data.lastPlayedDate === today && data.lastScore !== null);
+
+  state.mode = 'daily';
+  // すでに今日プレイ済みなら復習プレイ扱い（スコア記録しない）
+  // 明示的に「もう一度ボタン」から送られた場合 (state.dailyReplayが既にtrue) もそのまま
+  state.dailyReplay = alreadyPlayed || state.dailyReplay === true;
+  state.questions = pickDailyQuestions();
+  state.currentIndex = 0;
+  state.score = 0;
+  state.answered = false;
+  state.startTime = Date.now();
+
+  document.getElementById('q-total').textContent = state.questions.length;
+  document.getElementById('final-total').textContent = state.questions.length;
+  showScreen('screen-quiz');
+  renderQuestion();
+}
+
+// ストリーク達成トースト表示
+function showStreakToast(milestone) {
+  const toast = document.getElementById('streak-toast');
+  const icon = document.getElementById('streak-toast-icon');
+  const title = document.getElementById('streak-toast-title');
+  const desc = document.getElementById('streak-toast-desc');
+
+  const presets = {
+    3:   { icon: '🌱', title: '連続3日達成！', desc: 'ケヤキの芽がうめばえたよ🌱' },
+    7:   { icon: '🌸', title: '連続7日達成！', desc: '1週間毎日よく頑張ったね🌸' },
+    30:  { icon: '🌿', title: '連続30日達成！', desc: 'もう「府中マスター」の仲間入りだね🌿' },
+    100: { icon: '🏆', title: '連続100日達成！', desc: 'あなたは本物の「府中博士」！🏆' }
+  };
+  const p = presets[milestone] || presets[3];
+  icon.textContent = p.icon;
+  title.textContent = p.title;
+  desc.textContent = p.desc;
+
+  const overlay = document.getElementById('streak-toast-overlay');
+  overlay.classList.add('show');
+  toast.classList.add('show');
+  toast.setAttribute('aria-hidden', 'false');
+  setTimeout(() => {
+    toast.classList.remove('show');
+    overlay.classList.remove('show');
+    toast.setAttribute('aria-hidden', 'true');
+  }, 3200);
+}
+
+// 初期化
+function initDailyChallenge() {
+  renderDailyCard();
+  const btn = document.getElementById('btn-daily-start');
+  if (btn) btn.addEventListener('click', startDailyChallenge);
+}
+
+/* ============================================================
+   府中市民タイプ診断 (A-5)
+   ============================================================ */
+const DIAGNOSIS_STORAGE_KEY = 'fuchu_diagnosis_v1';
+
+// 6つのタイプ
+const DIAGNOSIS_TYPES = {
+  history: {
+    name: '歴史探訪派',
+    icon: '⛩️',
+    color: '#8b3a14',
+    bgGradient: ['#fff5e6', '#ffd9a8'],
+    catch: '1900年の歴史に魅了される本格派',
+    desc: 'あなたは府中市の長い歴史と伝統に心引かれるタイプ。武蔵国の国府として栄えたこの街には、何世代を超えて受け継がれる物語があります。スポットを巡るたびに、その背景にある歴史を読み解く楽しみを味わえるでしょう。',
+    spots: [
+      { icon: '⛩️', name: '大國魂神社（创建約1900年）' },
+      { icon: '🏰', name: '高安寺（足利尊氏再興）' },
+      { icon: '📜', name: '分倍河原古戦場碑（1333年）' }
+    ],
+    keyapi: '歴史好きのあなたさん、はんとうに素敵～🌿 けやぴも今度一緒に古い神社めぐりしたいだ～'
+  },
+  nature: {
+    name: '自然満喫派',
+    icon: '🌳',
+    color: '#5a7d3a',
+    bgGradient: ['#f5fae6', '#d0e6a0'],
+    catch: 'ケヤキ並木と多摩川で深呼吸',
+    desc: 'あなたは府中の豊かな自然に癖されるタイプ。馬場大門のケヤキ並木や多摩川のオープンスペース、郷土の森公園など、四季を通じて身近に季節の变化を感じられる場所が、あなたのココロを満たしてくれます。',
+    spots: [
+      { icon: '🌳', name: '馬場大門のケヤキ並木（約600m）' },
+      { icon: '🛍', name: '府中多摩川かぜのみち（約10km）' },
+      { icon: '🏞', name: '郷土の森公園' }
+    ],
+    keyapi: 'やっぱりケヤキの仲間だね🌱 一緒に府中の緑を散歩しよう～'
+  },
+  gourmet: {
+    name: 'グルメ探求派',
+    icon: '🍡',
+    color: '#c47e1f',
+    bgGradient: ['#fff5e0', '#ffd97a'],
+    catch: '府中の味で人生を豊かにする',
+    desc: 'あなたは府中のその土地ならではの味を守り、探ることに喜びを見出すタイプ。青木屋の「武蔵野日誌」、黒米うどん、TOKYO府中アイスなど、「府中太鼓判」に認定された名品たちを探す旅は、あなたの人生を豊かにしてくれるはず。',
+    spots: [
+      { icon: '🍬', name: '青木屋「武蔵野日誌」' },
+      { icon: '🍜', name: '黒米うどん（古代米使用）' },
+      { icon: '🍦', name: 'TOKYO府中アイス' }
+    ],
+    keyapi: 'おいしいもので府中を知る、とっても素敵な跟し方だよ🍡 けやぴもお腐手さんだね～'
+  },
+  festival: {
+    name: 'お祭り熱狂派',
+    icon: '🥁',
+    color: '#c95825',
+    bgGradient: ['#ffe8e0', '#ffb494'],
+    catch: 'くらやみ祭でテンションMAX',
+    desc: 'あなたは府中の热いお祭りに魂を微わせるタイプ。関東三大奇祭の一つ「くらやみ祭」の大太鼓や山車の辣辻は、一度体験したら忘れられない迫力。多くの人と興奮を共有できる、そんな現場があなたの仲間なのです。',
+    spots: [
+      { icon: '🥁', name: 'くらやみ祭（4/30、5/6）' },
+      { icon: '🍒', name: 'すもも祭（7/20）' },
+      { icon: '🏮', name: '府中納涼大盆踊り' }
+    ],
+    keyapi: 'お祭りの焼んだたましい香りと太鼓の音…わくわくしてきた～🥁'
+  },
+  sports: {
+    name: 'スポーツ応援派',
+    icon: '🏉',
+    color: '#3d6a8b',
+    bgGradient: ['#e6f0f7', '#a8c8e0'],
+    catch: 'ラグビーと競馬の街を愛する',
+    desc: 'あなたは府中のスポーツ文化をとん人主義のタイプ。「ラグビーのまち」として東芝ブレイブルーパスとサンゴリアスが拠点を置き、東京競馬場ではダービーなど名勝負が繰り広げられる。試合の興奮と仲間との一体感が、あなたをより府中人らしくしてくれます。',
+    spots: [
+      { icon: '🏇', name: '東京競馬場（1933年開設）' },
+      { icon: '🏉', name: '東芝ブレイブルーパス東京' },
+      { icon: '🏉', name: '東京サントリーサンゴリアス' }
+    ],
+    keyapi: '試合の日は街がワイワイして、けやぴもドキドキしちゃう～🏉'
+  },
+  life: {
+    name: '暮らし重視派',
+    icon: '🏡',
+    color: '#7a5a3c',
+    bgGradient: ['#f5efe3', '#d4c4a8'],
+    catch: '府中で穏やかに生きる市民派',
+    desc: 'あなたは派手さよりも、日々の暮らしやすさを大事にするタイプ。驅けぶち適当な潺洒さと、香水のように香る文化と自然が、あなたにとっての「ちょうどいい街」。京王線、武蔵野線、JR南武線と交通の便もよく、もの静かで充実した生活の拠点として、府中を愛しているのです。',
+    spots: [
+      { icon: '🌸', name: '郷土の森観光物産館' },
+      { icon: '🛍', name: '多摩川親水公園' },
+      { icon: '🚆', name: '京王・武蔵野・JR南武線' }
+    ],
+    keyapi: 'ゆったりとした毎日が一番の贅沢だねー🌱 けやぴもそう思うよ～'
+  }
+};
+
+// 6問
+const DIAGNOSIS_QUESTIONS = [
+  {
+    q: '休日の理想の過ごし方は？',
+    choices: [
+      { text: '古い神社やお寺をめぐる', type: 'history' },
+      { text: '公園や川沿いを散歩する', type: 'nature' },
+      { text: '美味しいものを食べ歩く', type: 'gourmet' },
+      { text: 'お祭りやイベントに参加', type: 'festival' }
+    ]
+  },
+  {
+    q: '府中で一番興味があるのは？',
+    choices: [
+      { text: '大國魂神社の歴史', type: 'history' },
+      { text: '多摩川の自然', type: 'nature' },
+      { text: '地元のグルメ', type: 'gourmet' },
+      { text: 'ラグビーや競馬', type: 'sports' }
+    ]
+  },
+  {
+    q: '友達を案内するなら？',
+    choices: [
+      { text: '重要文化財や史跡めぐり', type: 'history' },
+      { text: '季節の花や紅葉スポット', type: 'nature' },
+      { text: '地元で愛される名店', type: 'gourmet' },
+      { text: '大規模なお祭り', type: 'festival' }
+    ]
+  },
+  {
+    q: '平日夕方、ふと立ち寄りたいのは？',
+    choices: [
+      { text: '商店街の老舗', type: 'gourmet' },
+      { text: 'ケヤキ並木のベンチ', type: 'nature' },
+      { text: '試合中継ににぎわうパブ', type: 'sports' },
+      { text: '行きつけの静かなカフェ', type: 'life' }
+    ]
+  },
+  {
+    q: '一年で一番楽しみな府中の出来事は？',
+    choices: [
+      { text: '5月のくらやみ祭', type: 'festival' },
+      { text: 'ダービーやジャパンC', type: 'sports' },
+      { text: '桜・紅葉シーズン', type: 'nature' },
+      { text: '日常の静かなひととき', type: 'life' }
+    ]
+  },
+  {
+    q: 'あなたが府中に望むのは？',
+    choices: [
+      { text: '歴史と伝統の保存', type: 'history' },
+      { text: '自然環境の保護', type: 'nature' },
+      { text: 'グルメ文化の発展', type: 'gourmet' },
+      { text: '静かに住み続けられること', type: 'life' }
+    ]
+  }
+];
+
+// 診断状態
+const diagState = {
+  currentQ: 0,
+  answers: [],         // 各質問で選ばれた type の配列
+  result: null         // 最終診断タイプキー
+};
+
+let _diagCardBlob = null;
+
+function startDiagnosis() {
+  showScreen('screen-diag-start');
+  // スタート画面マスコット画像を設定
+  const mascot = document.getElementById('mascot-diag-start');
+  if (mascot && !mascot.src) mascot.src = KEYAPI_WAVE;
+}
+
+function beginDiagnosisQuiz() {
+  diagState.currentQ = 0;
+  diagState.answers = [];
+  diagState.result = null;
+  document.getElementById('diag-q-total').textContent = DIAGNOSIS_QUESTIONS.length;
+  showScreen('screen-diag-quiz');
+  renderDiagnosisQuestion();
+}
+
+function renderDiagnosisQuestion() {
+  const q = DIAGNOSIS_QUESTIONS[diagState.currentQ];
+  document.getElementById('diag-q-current').textContent = diagState.currentQ + 1;
+  document.getElementById('diag-question-text').textContent = q.q;
+
+  const progress = ((diagState.currentQ) / DIAGNOSIS_QUESTIONS.length) * 100;
+  document.getElementById('diag-progress-fill').style.width = progress + '%';
+
+  // 選択肢描画
+  const choicesDiv = document.getElementById('diag-choices');
+  choicesDiv.innerHTML = '';
+  q.choices.forEach((c, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice';
+    btn.textContent = c.text;
+    btn.addEventListener('click', () => selectDiagnosisAnswer(i));
+    choicesDiv.appendChild(btn);
+  });
+
+  // 前の質問ボタン
+  const prevBtn = document.getElementById('btn-diag-prev');
+  prevBtn.style.display = diagState.currentQ > 0 ? 'inline-block' : 'none';
+}
+
+function selectDiagnosisAnswer(choiceIdx) {
+  const q = DIAGNOSIS_QUESTIONS[diagState.currentQ];
+  diagState.answers[diagState.currentQ] = q.choices[choiceIdx].type;
+
+  if (diagState.currentQ < DIAGNOSIS_QUESTIONS.length - 1) {
+    diagState.currentQ++;
+    renderDiagnosisQuestion();
+  } else {
+    // 診断完了
+    diagState.result = calculateDiagnosisResult();
+    showDiagnosisResult();
+  }
+}
+
+function goToPrevDiagnosisQuestion() {
+  if (diagState.currentQ > 0) {
+    diagState.currentQ--;
+    renderDiagnosisQuestion();
+  }
+}
+
+// タイプ判定
+function calculateDiagnosisResult() {
+  const counts = {};
+  diagState.answers.forEach(t => {
+    counts[t] = (counts[t] || 0) + 1;
+  });
+  // 最高得点のタイプを選ぶ
+  let maxCount = 0;
+  let maxType = diagState.answers[0]; // 同点時はQ1優先
+  Object.keys(counts).forEach(t => {
+    if (counts[t] > maxCount) {
+      maxCount = counts[t];
+      maxType = t;
+    }
+  });
+  return maxType;
+}
+
+function showDiagnosisResult() {
+  const typeKey = diagState.result;
+  const type = DIAGNOSIS_TYPES[typeKey];
+  if (!type) return;
+
+  document.getElementById('diag-result-icon').textContent = type.icon;
+  document.getElementById('diag-result-name').textContent = type.name;
+  document.getElementById('diag-result-catch').textContent = type.catch;
+  document.getElementById('diag-result-desc').textContent = type.desc;
+  document.getElementById('diag-keyapi-msg').textContent = type.keyapi;
+  // マスコット
+  document.getElementById('mascot-diag-result').src = KEYAPI_HAPPY;
+
+  // スポット一覧
+  const spotsDiv = document.getElementById('diag-result-spots');
+  spotsDiv.innerHTML = '';
+  type.spots.forEach(s => {
+    const item = document.createElement('div');
+    item.className = 'diag-spot-item';
+    item.innerHTML = '<span class="diag-spot-icon">' + s.icon + '</span><span class="diag-spot-name">' + s.name + '</span>';
+    spotsDiv.appendChild(item);
+  });
+
+  // localStorage保存
+  try {
+    localStorage.setItem(DIAGNOSIS_STORAGE_KEY, JSON.stringify({
+      type: typeKey,
+      date: getTodayKey(),
+      answers: diagState.answers
+    }));
+  } catch (e) { /* ignore */ }
+
+  showScreen('screen-diag-result');
+
+  // カード画像生成
+  setTimeout(() => generateDiagnosisCard(), 100);
+}
+
+// 診断カード画像生成（1080×1080）
+async function generateDiagnosisCard() {
+  const canvas = document.getElementById('diag-card-canvas');
+  const loading = document.getElementById('diag-card-loading');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const type = DIAGNOSIS_TYPES[diagState.result];
+  if (!type) return;
+
+  await preloadMascotImages();
+
+  const W = CARD_SIZE, H = CARD_SIZE;
+
+  // ===== 背景：タイプ色グラデーション =====
+  const bg = ctx.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0, type.bgGradient[0]);
+  bg.addColorStop(0.5, '#f5efe3');
+  bg.addColorStop(1, type.bgGradient[1]);
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // 和紙風テクスチャー
+  ctx.fillStyle = 'rgba(139, 90, 60, 0.04)';
+  for (let i = 0; i < 200; i++) {
+    const x = Math.random() * W;
+    const y = Math.random() * H;
+    const r = Math.random() * 3 + 0.5;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // ===== 上部装飾線 =====
+  ctx.strokeStyle = type.color;
+  ctx.lineWidth = 3;
+  ctx.globalAlpha = 0.5;
+  ctx.beginPath();
+  ctx.moveTo(80, 70);
+  ctx.lineTo(W - 80, 70);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(80, 88);
+  ctx.lineTo(W - 80, 88);
+  ctx.stroke();
+  ctx.globalAlpha = 1;
+
+  // ===== タイトル =====
+  ctx.fillStyle = '#3d2817';
+  ctx.font = 'bold 52px "Shippori Mincho", serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('府中市民タイプ診断', W / 2, 150);
+
+  ctx.font = '26px "Shippori Mincho", serif';
+  ctx.fillStyle = '#8b5a3c';
+  ctx.fillText('〜 あなたのタイプは 〜', W / 2, 210);
+
+  // ===== タイプアイコン（大） =====
+  ctx.font = '220px sans-serif';
+  ctx.fillText(type.icon, W / 2, 380);
+
+  // ===== タイプ名 =====
+  ctx.font = 'bold 80px "Shippori Mincho", serif';
+  ctx.fillStyle = type.color;
+  ctx.fillText(type.name, W / 2, 540);
+
+  // ===== キャッチコピー =====
+  ctx.font = '30px "Shippori Mincho", serif';
+  ctx.fillStyle = '#3d2817';
+  ctx.fillText(type.catch, W / 2, 605);
+
+  // ===== けやぴキャラクター =====
+  if (_keyapiImgHappy && _keyapiImgHappy.complete && _keyapiImgHappy.naturalWidth > 0) {
+    const mascotSize = 150;
+    const mascotX = (W - mascotSize) / 2;
+    const mascotY = 640;
+    ctx.drawImage(_keyapiImgHappy, mascotX, mascotY, mascotSize, mascotSize);
+  }
+
+  // ===== おすすめスポットカード =====
+  const cardX = 90;
+  const cardY = 815;
+  const cardW = W - 180;
+  const cardH = 145;
+
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
+  roundRect(ctx, cardX, cardY, cardW, cardH, 16);
+  ctx.fill();
+  ctx.strokeStyle = type.color;
+  ctx.lineWidth = 2;
+  ctx.globalAlpha = 0.6;
+  roundRect(ctx, cardX, cardY, cardW, cardH, 16);
+  ctx.stroke();
+  ctx.globalAlpha = 1;
+
+  ctx.font = 'bold 24px "Shippori Mincho", serif';
+  ctx.fillStyle = type.color;
+  ctx.textAlign = 'left';
+  ctx.fillText('📍 あなたにおすすめのスポット', cardX + 22, cardY + 30);
+
+  ctx.font = '22px "Shippori Mincho", serif';
+  ctx.fillStyle = '#3d2817';
+  type.spots.forEach((s, i) => {
+    ctx.fillText(s.icon + '  ' + s.name, cardX + 30, cardY + 65 + i * 28);
+  });
+
+  // ===== ハッシュタグ =====
+  ctx.font = '22px "Shippori Mincho", serif';
+  ctx.fillStyle = '#8b5a3c';
+  ctx.textAlign = 'center';
+  ctx.fillText('#府中ものしりクイズ  #府中市民タイプ診断', W / 2, H - 95);
+
+  // ===== 下部装飾線 =====
+  ctx.strokeStyle = type.color;
+  ctx.lineWidth = 3;
+  ctx.globalAlpha = 0.5;
+  ctx.beginPath();
+  ctx.moveTo(80, H - 55);
+  ctx.lineTo(W - 80, H - 55);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(80, H - 37);
+  ctx.lineTo(W - 80, H - 37);
+  ctx.stroke();
+  ctx.globalAlpha = 1;
+
+  // 葉装飾
+  drawLeafDecoration(ctx, 100, 110, 65, -25);
+  drawLeafDecoration(ctx, W - 100, 110, 65, 25);
+  drawLeafDecoration(ctx, 100, H - 100, 55, -160);
+  drawLeafDecoration(ctx, W - 100, H - 100, 55, 160);
+
+  // Blob化
+  canvas.toBlob((blob) => {
+    _diagCardBlob = blob;
+    if (loading) loading.classList.add('hidden');
+  }, 'image/png', 0.92);
+}
+
+// 診断カード保存
+async function saveDiagnosisCard() {
+  if (!_diagCardBlob) {
+    await generateDiagnosisCard();
+    await new Promise(r => setTimeout(r, 300));
+  }
+  if (!_diagCardBlob) {
+    showShareToast('画像生成に失敗しました');
+    return;
+  }
+  const url = URL.createObjectURL(_diagCardBlob);
+  const a = document.createElement('a');
+  const typeKey = diagState.result || 'type';
+  a.href = url;
+  a.download = 'fuchu-diagnosis-' + typeKey + '.png';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  showShareToast('✓ 画像を保存しました');
+}
+
+// 診断カード画像つきシェア
+async function shareDiagnosisCardImage() {
+  if (!_diagCardBlob) {
+    await generateDiagnosisCard();
+    await new Promise(r => setTimeout(r, 300));
+  }
+  if (!_diagCardBlob) {
+    showShareToast('画像生成に失敗しました');
+    return;
+  }
+  const type = DIAGNOSIS_TYPES[diagState.result];
+  const text = '【府中市民タイプ診断】\n私は「' + type.icon + ' ' + type.name + '」でした！\n' + type.catch + '\n\nあなたの府中タイプも診断してみよう🌱\n#府中ものしりクイズ #府中市民タイプ診断 #東京都府中市';
+  const file = new File([_diagCardBlob], 'fuchu-diagnosis.png', { type: 'image/png' });
+  const shareData = { files: [file], text: text, title: '府中市民タイプ診断' };
+
+  if (navigator.canShare && navigator.canShare(shareData)) {
+    try {
+      await navigator.share(shareData);
+      showShareToast('✓ シェアしました');
+      return;
+    } catch (err) {
+      if (err.name === 'AbortError') return;
+      console.warn('Share failed:', err);
+    }
+  }
+  // フォールバック
+  const ok = confirm('この環境では画像を直接投稿できません。\n\n1. 「画像を保存」して\n2. Xを開いて画像を手動で添付\n\nという手順になります。画像を保存してXを開きますか？');
+  if (ok) {
+    await saveDiagnosisCard();
+    setTimeout(() => {
+      const url = window.location.href;
+      const shareUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url);
+      window.open(shareUrl, '_blank', 'noopener');
+    }, 500);
+  }
+}
+
+// 診断結果テキストシェア
+function shareDiagnosisToX() {
+  const type = DIAGNOSIS_TYPES[diagState.result];
+  if (!type) return;
+  const text = '【府中市民タイプ診断】\n私は「' + type.icon + ' ' + type.name + '」でした！\n' + type.catch + '\nあなたも診断してみよう🌱\n#府中ものしりクイズ #府中市民タイプ診断';
+  const url = window.location.href;
+  const shareUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url);
+  window.open(shareUrl, '_blank', 'noopener');
+}
+
+function shareDiagnosisToLine() {
+  const type = DIAGNOSIS_TYPES[diagState.result];
+  if (!type) return;
+  const text = '【府中市民タイプ診断】\n私は「' + type.icon + ' ' + type.name + '」でした！\n' + window.location.href;
+  const shareUrl = 'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(window.location.href) + '&text=' + encodeURIComponent(text);
+  window.open(shareUrl, '_blank', 'noopener');
+}
+
+// 診断初期化
+function initDiagnosis() {
+  document.getElementById('btn-open-diagnosis').addEventListener('click', startDiagnosis);
+  document.getElementById('btn-diag-start').addEventListener('click', beginDiagnosisQuiz);
+  document.getElementById('btn-diag-back').addEventListener('click', () => showScreen('screen-start'));
+  document.getElementById('btn-diag-prev').addEventListener('click', goToPrevDiagnosisQuestion);
+  document.getElementById('btn-diag-retry').addEventListener('click', beginDiagnosisQuiz);
+  document.getElementById('btn-diag-home').addEventListener('click', () => showScreen('screen-start'));
+  document.getElementById('btn-diag-share-img').addEventListener('click', shareDiagnosisCardImage);
+  document.getElementById('btn-diag-save-img').addEventListener('click', saveDiagnosisCard);
+  document.getElementById('btn-diag-share-x').addEventListener('click', shareDiagnosisToX);
+  document.getElementById('btn-diag-share-line').addEventListener('click', shareDiagnosisToLine);
+}
+
+/* ============================================================
+   結果カード画像生成 (C-1)
+   ============================================================ */
+const CARD_SIZE = 1080;
+let _resultCardBlob = null;       // 生成した画像の Blob キャッシュ
+let _keyapiImgHappy = null;
+let _keyapiImgWave = null;
+
+// マスコット画像を事前読み込み
+function preloadMascotImages() {
+  if (_keyapiImgHappy && _keyapiImgWave) return Promise.resolve();
+  return new Promise((resolve) => {
+    let loadedCount = 0;
+    const onLoad = () => {
+      loadedCount++;
+      if (loadedCount >= 2) resolve();
+    };
+    _keyapiImgHappy = new Image();
+    _keyapiImgHappy.crossOrigin = 'anonymous';
+    _keyapiImgHappy.onload = onLoad;
+    _keyapiImgHappy.onerror = onLoad;  // エラーでも進める
+    _keyapiImgHappy.src = KEYAPI_HAPPY;
+
+    _keyapiImgWave = new Image();
+    _keyapiImgWave.crossOrigin = 'anonymous';
+    _keyapiImgWave.onload = onLoad;
+    _keyapiImgWave.onerror = onLoad;
+    _keyapiImgWave.src = KEYAPI_WAVE;
+  });
+}
+
+// キャンバスに結果カードを描画
+async function generateResultCard() {
+  const canvas = document.getElementById('result-card-canvas');
+  const loading = document.getElementById('card-loading');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  await preloadMascotImages();
+
+  const total = state.questions.length;
+  const score = state.score;
+  const rate = score / total;
+  const title = document.getElementById('rank-title').textContent;
+  const rankIcon = document.getElementById('rank-icon').textContent;
+  const isDaily = state.mode === 'daily';
+  const isReplay = isDaily && state.dailyReplay;
+  const W = CARD_SIZE, H = CARD_SIZE;
+
+  // ===== 背景：和風ベージュグラデーション =====
+  const bg = ctx.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0, '#fcf5e9');
+  bg.addColorStop(0.5, '#f5efe3');
+  bg.addColorStop(1, '#ebe0c7');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // 和紙風のテクスチャー（点描画）
+  ctx.fillStyle = 'rgba(139, 90, 60, 0.04)';
+  for (let i = 0; i < 200; i++) {
+    const x = Math.random() * W;
+    const y = Math.random() * H;
+    const r = Math.random() * 3 + 0.5;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // ===== 上部装飾ライン =====
+  ctx.strokeStyle = '#c4926a';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(80, 70);
+  ctx.lineTo(W - 80, 70);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(80, 88);
+  ctx.lineTo(W - 80, 88);
+  ctx.stroke();
+
+  // ===== タイトル =====
+  ctx.fillStyle = '#3d2817';
+  ctx.font = 'bold 56px "Shippori Mincho", "Noto Serif JP", serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('府中ものしりクイズ', W / 2, 155);
+
+  ctx.font = '28px "Shippori Mincho", serif';
+  ctx.fillStyle = '#8b5a3c';
+  ctx.fillText('〜 ケヤキの姖精と学ぶ府中市 〜', W / 2, 215);
+
+  // ===== デイリーバッジ（デイリーモード時のみ） =====
+  if (isDaily) {
+    const data = loadDailyData();
+    const dateLabel = formatDateLabel(getTodayKey());
+    const badgeY = 265;
+    const badgeText = isReplay ? '✨ 今日の3問（復習） · ' + dateLabel : '✨ 今日の3問 · ' + dateLabel;
+    ctx.font = 'bold 24px "Shippori Mincho", serif';
+    const textW = ctx.measureText(badgeText).width;
+    const padX = 30;
+    const badgeW = textW + padX * 2;
+    const badgeH = 50;
+    const badgeX = (W - badgeW) / 2;
+
+    // ゴールドグラデーション背景
+    const grad = ctx.createLinearGradient(badgeX, badgeY, badgeX + badgeW, badgeY + badgeH);
+    grad.addColorStop(0, '#d9a441');
+    grad.addColorStop(1, '#c47e1f');
+    ctx.fillStyle = grad;
+    roundRect(ctx, badgeX, badgeY, badgeW, badgeH, 25);
+    ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.fillText(badgeText, W / 2, badgeY + badgeH / 2);
+  }
+
+  // レイアウト：下から逆算して各要素の Y 座標を安定化
+  // 底辺装飾線 Y = H-50 / H-32
+  // ハッシュタグ Y = H-95
+  // ストリーク表示 Y = H-150 (デイリー時のみ)
+  // 称号カード (cardH=120): デイリー=H-300 / 通常=H-260
+
+  // ===== スコア表示（大きく） =====
+  const scoreY = isDaily ? 360 : 330;
+  ctx.fillStyle = '#3d2817';
+  ctx.font = 'bold 240px "Shippori Mincho", serif';
+  ctx.fillText(String(score), W / 2 - 75, scoreY + 80);
+
+  ctx.font = 'bold 72px "Shippori Mincho", serif';
+  ctx.fillStyle = '#8b5a3c';
+  ctx.fillText('/ ' + total, W / 2 + 110, scoreY + 105);
+
+  ctx.font = '26px "Shippori Mincho", serif';
+  ctx.fillStyle = '#8b5a3c';
+  ctx.fillText('問正解', W / 2, scoreY + 170);
+
+  // ===== けやぴキャラクター =====
+  const mascotImg = rate >= 0.6 ? _keyapiImgHappy : _keyapiImgWave;
+  if (mascotImg && mascotImg.complete && mascotImg.naturalWidth > 0) {
+    const mascotSize = 220;
+    const mascotX = (W - mascotSize) / 2;
+    const mascotY = scoreY + 200;
+    ctx.drawImage(mascotImg, mascotX, mascotY, mascotSize, mascotSize);
+  }
+
+  // ===== 称号カード（下から逆算で配置） =====
+  const cardW = 720;
+  const cardH = 120;
+  const cardX = (W - cardW) / 2;
+  // デイリー時はストリーク表示とハッシュタグのスペースを確保
+  const titleY = isDaily ? H - 320 : H - 270;
+
+  // カード背景
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+  roundRect(ctx, cardX, titleY, cardW, cardH, 20);
+  ctx.fill();
+  ctx.strokeStyle = '#c4926a';
+  ctx.lineWidth = 2;
+  roundRect(ctx, cardX, titleY, cardW, cardH, 20);
+  ctx.stroke();
+
+  // アイコン
+  ctx.font = '54px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(rankIcon, cardX + 70, titleY + cardH / 2);
+
+  // 称号テキスト
+  ctx.font = 'bold 44px "Shippori Mincho", serif';
+  ctx.fillStyle = '#3d2817';
+  ctx.textAlign = 'left';
+  ctx.fillText('称号：' + title, cardX + 130, titleY + cardH / 2);
+  ctx.textAlign = 'center';
+
+  // ===== デイリーモード：連続日数表示 =====
+  if (isDaily) {
+    const data = loadDailyData();
+    const streakY = titleY + cardH + 50;
+    ctx.font = 'bold 30px "Shippori Mincho", serif';
+    ctx.fillStyle = '#c95825';
+    ctx.textAlign = 'center';
+    ctx.fillText('🔥 連続 ' + data.streak + ' 日チャレンジ中', W / 2, streakY);
+  }
+
+  // ===== ハッシュタグ・クレジット =====
+  ctx.font = '22px "Shippori Mincho", serif';
+  ctx.fillStyle = '#8b5a3c';
+  ctx.textAlign = 'center';
+  const hashtags = isDaily
+    ? '#府中ものしりクイズ  #今日の3問  #東京都府中市'
+    : '#府中ものしりクイズ  #東京都府中市';
+  ctx.fillText(hashtags, W / 2, H - 95);
+
+  // ===== 下部装飾ライン =====
+  ctx.strokeStyle = '#c4926a';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(80, H - 55);
+  ctx.lineTo(W - 80, H - 55);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(80, H - 37);
+  ctx.lineTo(W - 80, H - 37);
+  ctx.stroke();
+
+  // ===== 装飾：ケヤキの葉（コーナー） =====
+  drawLeafDecoration(ctx, 100, 110, 65, -25);   // 左上
+  drawLeafDecoration(ctx, W - 100, 110, 65, 25); // 右上
+  drawLeafDecoration(ctx, 100, H - 100, 55, -160); // 左下
+  drawLeafDecoration(ctx, W - 100, H - 100, 55, 160); // 右下
+
+  // ===== Blob化してキャッシュ =====
+  canvas.toBlob((blob) => {
+    _resultCardBlob = blob;
+    if (loading) loading.classList.add('hidden');
+  }, 'image/png', 0.92);
+}
+
+// 丸角長方形ヘルパー
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+// ケヤキの葉装飾描画
+function drawLeafDecoration(ctx, cx, cy, size, angle) {
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate((angle * Math.PI) / 180);
+  ctx.fillStyle = 'rgba(139, 90, 60, 0.25)';
+  ctx.beginPath();
+  ctx.moveTo(0, -size);
+  ctx.bezierCurveTo(size * 0.6, -size * 0.8, size * 0.6, size * 0.3, 0, size);
+  ctx.bezierCurveTo(-size * 0.6, size * 0.3, -size * 0.6, -size * 0.8, 0, -size);
+  ctx.closePath();
+  ctx.fill();
+  // 葉脈
+  ctx.strokeStyle = 'rgba(139, 90, 60, 0.4)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(0, -size);
+  ctx.lineTo(0, size);
+  ctx.stroke();
+  ctx.restore();
+}
+
+// 画像保存
+async function saveResultCard() {
+  if (!_resultCardBlob) {
+    await generateResultCard();
+    await new Promise(r => setTimeout(r, 300));
+  }
+  if (!_resultCardBlob) {
+    showShareToast('画像生成に失敗しました');
+    return;
+  }
+  const url = URL.createObjectURL(_resultCardBlob);
+  const a = document.createElement('a');
+  const dateStr = getTodayKey().replace(/-/g, '');
+  a.href = url;
+  a.download = 'fuchu-quiz-' + dateStr + '.png';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  showShareToast('✓ 画像を保存しました');
+}
+
+// 画像つきシェア（Web Share API 使用 / fallback: 保存→Xシェアの二段階）
+async function shareResultCardImage() {
+  if (!_resultCardBlob) {
+    await generateResultCard();
+    await new Promise(r => setTimeout(r, 300));
+  }
+  if (!_resultCardBlob) {
+    showShareToast('画像生成に失敗しました');
+    return;
+  }
+
+  const total = state.questions.length;
+  const title = document.getElementById('rank-title').textContent;
+  const isDaily = state.mode === 'daily';
+  let text;
+  if (isDaily) {
+    const data = loadDailyData();
+    text = '【今日の3問】府中ものしりクイズで ' + state.score + '/' + total + '問正解！\n🔥 連続' + data.streak + '日チャレンジ中🌱\n称号：' + title + '\n#府中ものしりクイズ #今日の3問 #東京都府中市';
+  } else {
+    text = '府中ものしりクイズで ' + state.score + '/' + total + '問正解！\n称号：' + title + '🌳\n#府中ものしりクイズ #東京都府中市';
+  }
+
+  // Web Share API 画像対応チェック（モバイル中心）
+  const file = new File([_resultCardBlob], 'fuchu-quiz.png', { type: 'image/png' });
+  const shareData = { files: [file], text: text, title: '府中ものしりクイズ' };
+
+  if (navigator.canShare && navigator.canShare(shareData)) {
+    try {
+      await navigator.share(shareData);
+      showShareToast('✓ シェアしました');
+      return;
+    } catch (err) {
+      if (err.name === 'AbortError') return; // ユーザーキャンセル
+      console.warn('Share failed:', err);
+      // フォールバックへ
+    }
+  }
+
+  // フォールバック：PC等・画像保存→Xシェアの二段階案内
+  const ok = confirm('この環境では画像を直接投稿できません。\n\n1. 「画像を保存」して\n2. Xを開いて画像を手動で添付\n\nという手順になります。\n画像保存してXを開きますか？');
+  if (ok) {
+    await saveResultCard();
+    setTimeout(() => {
+      const url = window.location.href;
+      const shareUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url);
+      window.open(shareUrl, '_blank', 'noopener');
+    }, 500);
+  }
+}
+
+// トースト表示
+function showShareToast(message) {
+  const toast = document.getElementById('share-toast');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.classList.add('show');
+  toast.setAttribute('aria-hidden', 'false');
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => {
+    toast.classList.remove('show');
+    toast.setAttribute('aria-hidden', 'true');
+  }, 2200);
+}
 
 /* ============================================================
    フィードバックフォームURL生成
@@ -3818,6 +5653,17 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
+
+<!-- シェア・保存トースト -->
+<div class="share-toast" id="share-toast" aria-hidden="true">✓ 保存しました</div>
+
+<!-- ストリーク達成トースト -->
+<div class="streak-toast-overlay" id="streak-toast-overlay"></div>
+<div class="streak-toast" id="streak-toast" aria-hidden="true">
+  <div class="streak-toast-icon" id="streak-toast-icon">🎉</div>
+  <div class="streak-toast-title" id="streak-toast-title">連続3日達成！</div>
+  <div class="streak-toast-desc" id="streak-toast-desc">けやびが喜んでるよ🌱</div>
+</div>
 
 </body>
 </html>
