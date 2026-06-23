@@ -2731,7 +2731,7 @@
         <button class="feedback-top-btn" id="btn-feedback-modal" style="display:block; margin: 10px auto;">💬 フィードバックを送る</button>
 
         <h3>📅 バージョン</h3>
-        <p>v3.3.1 ／ 全161問・78スポット・スタンプラリー対応・8カテゴリ（ファクトチェック済）</p>
+        <p>v3.3.2 ／ 全161問・78スポット・スタンプラリー対応・8カテゴリ（ストリートピアノ修正）</p>
       </div>
       <button class="modal-close" id="modal-close">閉じる</button>
     </div>
@@ -2741,7 +2741,7 @@
 
 <script>
 /* ============================================================
-   府中ものしりクイズ v3.3.1 - データ（全161問・78スポット・市民タイプ診断・スタンプラリー対応・ファクトチェック済）
+   府中ものしりクイズ v3.3.2 - データ（全161問・78スポット・市民タイプ診断・スタンプラリー対応・ストリートピアノ位置修正）
    出典：府中市オープンデータ・大國魂神社公式・府中観光協会・Wikipedia等
    difficulty: 1=初級 2=中級 3=上級
    ============================================================ */
@@ -2865,7 +2865,7 @@ const SPOTS = {
     "category": "shrine",
     "categoryLabel": "神社・寺",
     "icon": "🛕",
-    "description": "妙光院の末寺。「目の仏様」として親しまれる真言宗の寺。",
+    "description": "妙光院の末寺。「目の薬師様」として信仰される真言宗豊山派の寺。毎年9月12日に宮町薬師如来縁日。",
     "address": "東京都府中市",
     "mapsQuery": "普門寺 府中市宮町",
     "nearestStation": "府中競馬正門前駅 徒歩1分"
@@ -3271,13 +3271,13 @@ const SPOTS = {
     "nearestStation": "京王線飛田給駅 徒歩5分"
   },
   "suntory-rugby": {
-    "name": "サントリーラグビー練習場",
+    "name": "サントリー府中スポーツセンター",
     "category": "sports",
     "categoryLabel": "競馬・スポーツ",
     "icon": "🏉",
     "description": "東京サントリーサンゴリアスの拠点。",
     "address": "東京都府中市",
-    "mapsQuery": "サントリーラグビー練習場 府中",
+    "mapsQuery": "サントリー府中スポーツセンター",
     "nearestStation": "是政駅 徒歩15分"
   },
   "toshiba-rugby": {
@@ -3371,14 +3371,14 @@ const SPOTS = {
     "nearestStation": "京王線府中駅 徒歩3分"
   },
   "street-piano": {
-    "name": "府中駅ストリートピアノ",
+    "name": "くるる府中 ストリートピアノ",
     "category": "gourmet",
     "categoryLabel": "商業・グルメ",
     "icon": "🎹",
-    "description": "府中駅構内に設置された誰でも弾けるピアノ。",
-    "address": "東京都府中市",
-    "mapsQuery": "府中駅 ストリートピアノ",
-    "nearestStation": "京王線府中駅"
+    "description": "「くるる府中」2階中央広場に設置されたアップライトピアノ。10：00～20：00誰でも無料で演奏可。",
+    "address": "東京都府中市宮町1-50 くるる府中 2階",
+    "mapsQuery": "くるる府中 2階",
+    "nearestStation": "京王線府中駅南口 直結"
   },
   "fuchu-mori-gekijo": {
     "name": "府中の森芸術劇場",
@@ -3421,14 +3421,14 @@ const SPOTS = {
     "nearestStation": "京王線府中駅 徒歩2分"
   },
   "art-beans": {
-    "name": "府中市役所",
+    "name": "くるる府中",
     "category": "gourmet",
     "categoryLabel": "商業・グルメ",
-    "icon": "🏛️",
-    "description": "府中市の行政中枢。府中駅北口から徒歩7分、聖蹟桁門跡の近くにあり、関連文化集会も開催される。",
-    "address": "東京都府中市宮西町2-24",
-    "mapsQuery": "府中市役所",
-    "nearestStation": "京王線府中駅 徒歩7分"
+    "icon": "🎬",
+    "description": "2005年開業、府中駅南口直結の複合商業施設。TOHOシネマズ・タイトーステーションを含む。10階建て。2階にストリートピアノスポットもあり。",
+    "address": "東京都府中市宮町1-50",
+    "mapsQuery": "くるる府中",
+    "nearestStation": "京王線府中駅南口 直結"
   },
   "bussankan": {
     "name": "郷土の森観光物産館",
@@ -4302,23 +4302,23 @@ const QUIZ_DATA = [
   },
   {
     category: 'spot', catLabel: '名所', difficulty: 1,
-    question: 'けやき並木通りで定期的に開催される、誰でも演奏できる楽器イベントは？',
+    question: '府中駅南口直結「くるる府中」２階中央広場に設置されている、誰でも演奏できる楽器は？',
     choices: ['ストリートバンド', 'ストリートピアノ', 'ストリート太鼓', 'ストリートギター'],
     answer: 1,
-    explanation: '<strong>「FUCHU STREETピアノ」</strong>として、けやき並木通りや郷土の森にストリートピアノが設置されることがあります。プロアマ問わず誰でも演奏できる人気イベントです。',
+    explanation: '<strong>くるる府中のストリートピアノ</strong>は府中駅南口直結の複合商業施設「くるる府中」2階広場に設置されています。演奏可能時間は10：00〜20：00。プロアマ問わず誰でも演奏できます。',
     keyapi: 'けやき並木に音楽が流れる、素敵な街だね〜🎹',
     source: 'keyaki',
     spots: ['keyaki-namiki']
   },
   {
     category: 'spot', catLabel: '名所', difficulty: 2,
-    question: '府中駅前にある複合商業施設「くるる」の特徴は？',
-    choices: ['駅直結のショッピング施設', '純和風の老舗百貨店', 'スポーツ専門施設', '美術館を併設'],
+    question: '府中駅南口直結の複合商業施設「くるる府中」の特徴は？',
+    choices: ['駅直結、映画館併設の商業施設', '純和風の老舗百貨店', 'スポーツ専門施設', '都立美術館'],
     answer: 0,
-    explanation: '<strong>「くるる」</strong>は京王線府中駅直結の複合商業施設。飲食店や物販店が集まり、駅前のストリートピアノも有名です。',
-    keyapi: '駅から雨に濡れずにお買い物できるよ〜☔',
+    explanation: '<strong>「くるる府中」</strong>は2005年開業、京王線府中駅南口直結の複合商業施設。TOHOシネマズ・タイトーステーションを併設し、2階にはストリートピアノもあります。',
+    keyapi: '映画もショッピングもピアノも、一箇所で楽しめるよ〜🎬',
     source: 'transport',
-    spots: ['le-signe', 'fuchu-station']
+    spots: ['art-beans', 'fuchu-station']
   },
   {
     category: 'spot', catLabel: '名所', difficulty: 2,
@@ -4593,7 +4593,7 @@ const QUIZ_DATA = [
 ,
   {"category": "history", "catLabel": "歴史", "difficulty": 2, "question": "大國魂神社の南隣にある真言宗豊山派の寺院は？", "choices": ["妙光院", "延暦寺", "本願寺", "清水寺"], "answer": 0, "explanation": "<strong>妙光院（みょうこういん）</strong>は大國魂神社の南側に位置する真言宗豊山派の寺院。山号は本覺山。安養寺とともに府中市本町に並んでいます。", "keyapi": "知っている人だけ知ってる、静かなお寺だよ〜🌿", "source": "sando", "spots": ["myokoin"]},
   {"category": "history", "catLabel": "歴史", "difficulty": 2, "question": "大國魂神社のすぐ南に妙光院と並んで建つ天台宗の寺院は？", "choices": ["安養寺", "高安寺", "金剛寺", "円覚寺"], "answer": 0, "explanation": "<strong>安養寺（あんようじ）</strong>は天台宗の寺院で、山号は叡光山。妙光院とともに大國魂神社南側の歴史的な寺院群を成しています。", "keyapi": "妙光院とお隣どうしだよ〜🛕", "source": "shrine", "spots": ["anyoji"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 3, "question": "府中競馬正門前駅近くにある「目の仏様」として知られる寺は？", "choices": ["普門寺", "観音寺", "薬師寺", "仁王寺"], "answer": 0, "explanation": "<strong>普門寺</strong>は妙光院の末寺で真言宗豊山派。「目の仏様」として地元で信仰されています。", "keyapi": "目の調子が悪い時にお参りされる、優しいお寺さん〜👁️", "source": "shrine", "spots": ["fumonji"]},
+  {"category": "history", "catLabel": "歴史", "difficulty": 3, "question": "府中競馬正門前駅近くにある「目の薬師様」として知られる寺は？", "choices": ["普門寺", "観音寺", "薬師寺", "仁王寺"], "answer": 0, "explanation": "<strong>普門寺</strong>は妙光院の末寺で真言宗豊山派。薬師徳上人が眼病の療館文を上げたとされ、「目の薬師様」として信仰されています。毎年9月12日には「お目玉」をお供えする縁日が開かれます。", "keyapi": "「お目玉」のお供えものお下りをいただくと、眼病がよくなるとされるよ〜👁️", "source": "shrine", "spots": ["fumonji"]},
   {"category": "history", "catLabel": "歴史", "difficulty": 2, "question": "府中市西府町にある熊野神社の境内には何が保存されている？", "choices": ["上円下方墳", "三重塔", "古井戸", "巨石"], "answer": 0, "explanation": "<strong>武蔵府中熊野神社古墳</strong>は7世紀中頃から後半の上円下方墳で、国の史跡。展示館も併設されています。", "keyapi": "古墳の上に神社が建ってる、めずらしいパターンだよ〜⛰️", "source": "shrine", "spots": ["kumanojinja"]},
   {"category": "spot", "catLabel": "名所", "difficulty": 1, "question": "府中の森芸術劇場に隣接する、約17ヘクタールの都立公園は？", "choices": ["府中の森公園", "郷土の森公園", "武蔵野公園", "浅間山公園"], "answer": 0, "explanation": "<strong>府中の森公園</strong>は1991年開園の都立公園。約17ヘクタールの広大な敷地に芸術劇場・美術館などを内包します。", "keyapi": "芸術劇場や美術館があって、お散歩も楽しい〜🌳", "source": "spot", "spots": ["fuchu-no-mori-park"]},
   {"category": "spot", "catLabel": "名所", "difficulty": 2, "question": "府中市と小金井市にまたがる、BBQ場のある都立公園は？", "choices": ["都立武蔵野公園", "府中の森公園", "郷土の森公園", "浅間山公園"], "answer": 0, "explanation": "<strong>都立武蔵野公園</strong>は雑木林や原っぱ、BBQ場、野球場などがある府中市と小金井市にまたがる都立公園です。", "keyapi": "バーベキューもできて、ファミリーに大人気〜🍖", "source": "spot", "spots": ["musashino-park"]},
@@ -4619,7 +4619,7 @@ const QUIZ_DATA = [
   {"category": "spot", "catLabel": "名所", "difficulty": 2, "question": "大國魂神社の隣にある、府中の観光案内拠点は？", "choices": ["府中市観光情報センター", "府中駅前案内所", "ル・シーニュ案内所", "郷土の森案内所"], "answer": 0, "explanation": "<strong>府中市観光情報センター</strong>は大國魂神社の隣にあり、観光マップやパンフ配布、案内スタッフが常駐しています。", "keyapi": "道に迷ったらまずここに寄って、府中マップをもらおう〜ℹ️", "source": "museum", "spots": ["kankou-center"]},
   {"category": "history", "catLabel": "歴史", "difficulty": 3, "question": "武蔵府中熊野神社古墳の出土品を展示する公式施設は？", "choices": ["国史跡 武蔵府中熊野神社古墳 展示館", "府中市考古資料館", "熊野神社宝物殿", "西府史跡資料館"], "answer": 0, "explanation": "<strong>国史跡 武蔵府中熊野神社古墳 展示館</strong>は古墳の出土品や上円下方墳の構造を紹介する公式展示館です。", "keyapi": "古墳のことを詳しく学べる、隠れた名スポット〜🏛️", "source": "museum", "spots": ["kumano-tenji"]},
   {"category": "spot", "catLabel": "名所", "difficulty": 3, "question": "府中市浅間町にある、市民の学びの拠点施設は？", "choices": ["府中市生涯学習センター", "府中市民会館", "府中文化会館", "ふちゅう市民館"], "answer": 0, "explanation": "<strong>府中市生涯学習センター</strong>は浅間町1丁目7番地にある、市民の学習・スポーツ・交流の拠点施設です。", "keyapi": "色んな講座やイベントが開かれているよ〜📚", "source": "museum", "spots": ["shogai-gakushu"]},
-  {"category": "gourmet", "catLabel": "文化", "difficulty": 2, "question": "府中市是政にある、ラグビートップリーグの強豪「サンゴリアス」の本拠地は？", "choices": ["サントリーラグビー練習場", "東芝ラグビー府中グラウンド", "府中ラグビー場", "味の素フィールド"], "answer": 0, "explanation": "<strong>東京サントリーサンゴリアス</strong>は府中市是政の練習場を本拠地としています。「ラグビーのまち府中」を代表するチームの一つ。", "keyapi": "府中はラグビー2強の街、サンゴリアスの本拠地だよ〜🏉", "source": "sports", "spots": ["suntory-rugby"]},
+  {"category": "gourmet", "catLabel": "文化", "difficulty": 2, "question": "府中市是政6-22にある、「サンゴリアス」の本拠地となるスポーツセンターは？", "choices": ["サントリー府中スポーツセンター", "東芝府中グラウンド", "府中ラグビー場", "味の素スタジアム"], "answer": 0, "explanation": "<strong>サントリー府中スポーツセンター</strong>は府中市是政6-22にあり、東京サントリーサンゴリアスの練習グラウンドとして使われています。「ラグビーのまち府中」を代表するチームの一つ。", "keyapi": "府中はラグビー2強の街、サンゴリアスの本拠地だよ〜🏉", "source": "sports", "spots": ["suntory-rugby"]},
   {"category": "gourmet", "catLabel": "文化", "difficulty": 2, "question": "JR北府中駅近くにグラウンドがあるラグビーチームは？", "choices": ["東芝ブレイブルーパス東京", "サントリーサンゴリアス", "パナソニックワイルドナイツ", "ヤマハジュビロ"], "answer": 0, "explanation": "<strong>東芝ブレイブルーパス東京</strong>はJR北府中駅近くにグラウンドを構えるラグビーチーム。府中のラグビー文化を支える存在です。", "keyapi": "東芝とサントリー、府中のラグビー2強だ〜🏉", "source": "sports", "spots": ["toshiba-rugby"]},
   {"category": "gourmet", "catLabel": "文化", "difficulty": 3, "question": "府中駅北口にあるラグビーファン交流拠点は？", "choices": ["183 FUCHU fan zone", "府中ラグビー館", "ケヤキラグビーカフェ", "府中スポーツ交流館"], "answer": 0, "explanation": "<strong>183 FUCHU fan zone</strong>は府中駅北口にあるラグビー応援の交流拠点。試合の日には多くのファンが集います。", "keyapi": "ラグビー観戦前後に立ち寄りたい、ファンの聖地〜🏉", "source": "sports", "spots": ["183-fanzone"]},
   {"category": "spot", "catLabel": "名所", "difficulty": 2, "question": "府中市是政にある、別名「水の宝石箱」と称される競艇場は？", "choices": ["ボートレース多摩川", "平和島競艇場", "江戸川競艇場", "戸田競艇場"], "answer": 0, "explanation": "<strong>ボートレース多摩川</strong>は府中市是政4-11にある競艇場。穏やかな水面で「水の宝石箱」とも呼ばれます。", "keyapi": "穏やかな水面でレースが楽しめる場所だよ〜🚤", "source": "sports", "spots": ["tamagawa-boatrace"]},
@@ -4649,9 +4649,9 @@ const QUIZ_DATA = [
   {"category": "history", "catLabel": "歴史", "difficulty": 1, "question": "大國魂神社に隣接する、府中の歴史を映像と展示で紹介する施設は？", "choices": ["ふるさと府中歴史館", "府中市郷土の森博物館", "府中市美術館", "府中市観光情報センター"], "answer": 0, "explanation": "<strong>ふるさと府中歴史館</strong>は大國魂神社の隣にあり、府中の歴史を多くの映像と展示で学べる施設です。", "keyapi": "無料で府中の歴史を学べる、おすすめスポット〜📚", "source": "museum", "spots": ["furusato-rekishi"]},
   {"category": "spot", "catLabel": "名所", "difficulty": 2, "question": "郷土の森博物館内にある、星空を投映する施設は？", "choices": ["プラネタリウム", "天文台", "宇宙博物館", "星空シアター"], "answer": 0, "explanation": "<strong>郷土の森プラネタリウム</strong>は最新鋭のハイブリッド・プラネタリウムで、星空や宇宙を楽しめます。", "keyapi": "博物館に来たら星空も楽しんでね〜🌌", "source": "museum", "spots": ["planetarium"]},
   {"category": "gourmet", "catLabel": "文化", "difficulty": 1, "question": "FC東京と東京ヴェルディがホームスタジアムにしている、府中市の隣接地にある競技場は？", "choices": ["味の素スタジアム", "東京ドーム", "国立競技場", "西武ドーム"], "answer": 0, "explanation": "<strong>味の素スタジアム</strong>はJ1リーグのFC東京と東京ヴェルディが本拠地とする多目的スタジアム。府中市東部に近接しています。", "keyapi": "Jリーグの試合観戦で府中から歩いて行ける距離〜⚽", "source": "sports", "spots": ["ajinomoto-stadium"]},
-  {"category": "gourmet", "catLabel": "文化", "difficulty": 3, "question": "府中駅構内に設置されている、誰でも自由に演奏できるピアノは？", "choices": ["ストリートピアノ", "共有ピアノ", "フリーピアノ", "駅ピアノ"], "answer": 0, "explanation": "<strong>府中駅ストリートピアノ</strong>は駅構内にあり、誰でも自由に演奏できる人気スポット。郷土の森にも設置されました。", "keyapi": "通りすがりの人が素敵な音色を聴かせてくれる〜🎹", "source": "gourmet", "spots": ["street-piano"]},
+  {"category": "gourmet", "catLabel": "文化", "difficulty": 3, "question": "府中駅直結の複合商業施設「くるる府中」2階広場にある、誰でも自由に演奏できるピアノは？", "choices": ["ストリートピアノ", "共有ピアノ", "フリーピアノ", "駅ピアノ"], "answer": 0, "explanation": "<strong>くるる府中のストリートピアノ</strong>は京王線府中駅南口直結の「くるる府中」2階中央広場に設置。演奏可能時間は10:00〜20:00、アップライトピアノを設置。誰でも無料で演奏できます。", "keyapi": "くるるの吹き抜けに響く音色が素敵だよ〜🎹", "source": "gourmet", "spots": ["street-piano"]},
   {"category": "gourmet", "catLabel": "文化", "difficulty": 1, "question": "府中の森公園に隣接する、収容人数2,000名超の「どりーむホール」を擁する文化施設は？", "choices": ["府中の森芸術劇場", "府中市民会館", "府中ホール", "ル・シーニュホール"], "answer": 0, "explanation": "<strong>府中の森芸術劇場</strong>は1991年開館。約2,027人収容の「どりーむホール」、パイプオルガン付き「ウィーンホール」など複数のホールを備えます。", "keyapi": "オペラもバンドもクラシックも、なんでも楽しめる〜🎭", "source": "gourmet", "spots": ["fuchu-mori-gekijo"]},
-  {"category": "gourmet", "catLabel": "文化", "difficulty": 3, "question": "府中市の行政中枢で、府中駅近くの「けやき並木」エリアにある施設は？", "choices": ["府中市役所", "府中市公民館", "府中市ホール", "府中市交流センター"], "answer": 0, "explanation": "<strong>府中市役所</strong>は東京都府中市宮西町2-24にある行政中枢。府中駅北口から徒歩7分、「けやき並木」エリア近くに位置します。", "keyapi": "府中市の「脳」みたいなところだよ〜🏛️", "source": "gourmet", "spots": ["art-beans"]},
+  {"category": "gourmet", "catLabel": "文化", "difficulty": 3, "question": "京王線府中駅南口直結のTOHOシネマズを内包する複合商業施設は？", "choices": ["くるる府中", "ミッテン府中", "ル・シーニュ", "府中フォーリス"], "answer": 0, "explanation": "<strong>くるる府中</strong>は2005年開業の府中駅南口直結の複合商業施設。TOHOシネマズやタイトーステーションを含み、2階にはストリートピアノスポットもあります。", "keyapi": "ペデストリアンデッキで雨に濡れずに行けるよ〜☘️", "source": "gourmet", "spots": ["art-beans"]},
   {"category": "spot", "catLabel": "名所", "difficulty": 2, "question": "西武多摩川線の終点で、多摩川に近い府中市の駅は？", "choices": ["是政駅", "白糸台駅", "多磨駅", "新小金井駅"], "answer": 0, "explanation": "<strong>是政駅</strong>は西武多摩川線の終点。府中市是政にあり、多摩川や是政橋・競艇場が徒歩圏内です。", "keyapi": "西武多摩川線の終点、ここから多摩川散歩へ〜🚉", "source": "station", "spots": ["koremasa-station"]}
 ];
 
