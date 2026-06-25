@@ -1691,6 +1691,9 @@
   }
 
   /* === お出かけマップ: リスト/地図切替トグル === */
+  /* 地図機能は座標精度の問題により v3.4.5 で一時無効化（リスト表示のみ） */
+  #toggle-view-map,
+  #leaflet-map-container { display: none !important; }
   .map-view-toggle {
     display: flex;
     gap: 4px;
@@ -2521,14 +2524,8 @@
 
     <!-- お出かけマップボタン -->
     <button class="map-btn" id="btn-open-map">
-      <div class="map-btn-icon">🗺️</div>
-      <div class="map-btn-text">
-        <div class="map-btn-title">府中お出かけマップ</div>
-        <div class="map-btn-progress">
-          全<strong id="total-spots-top">25</strong>ヶ所中、訪問済み <strong id="visited-count-top">0</strong>ヶ所
-        </div>
-      </div>
-      <div class="map-btn-arrow">▶</div>
+      🗒️ お出かけスポット一覧
+      <span style="display:block;font-size:11px;font-weight:normal;opacity:.9;margin-top:2px;">78スポット・スタンプラリー対応</span>
     </button>
 
     <!-- PWA インストールバナー（条件により表示） -->
@@ -2685,7 +2682,7 @@
     <div class="map-header">
       <button class="back-btn" id="btn-map-back" aria-label="戻る">←</button>
       <div>
-        <div class="map-title">🗺️ 府中お出かけマップ</div>
+        <div class="map-title">🗒️ 府中お出かけスポット一覧</div>
         <div class="map-title-sub">クイズに出てきたスポットを実際に訪れてみよう！</div>
       </div>
     </div>
@@ -2733,11 +2730,7 @@
     <div id="leaflet-map-container">
       <div id="leaflet-map" role="region" aria-label="府中市お出かけ地図"></div>
       <div class="map-legend">
-        <div class="ml-row">
-          <span class="ml-item"><span class="ml-dot unvisited"></span>未訪問</span>
-          <span class="ml-item"><span class="ml-dot visited"></span>訪問済（スタンプ取得）</span>
-          <span class="ml-item">📌タップで詳細・Googleマップへ</span>
-        </div>
+        <!-- 凡例は地図機能無効化のため非表示 -->
       </div>
     </div>
 
@@ -2931,7 +2924,7 @@
         <button class="feedback-top-btn" id="btn-feedback-modal" style="display:block; margin: 10px auto;">💬 フィードバックを送る</button>
 
         <h3>📅 バージョン</h3>
-        <p>v3.4.4 ／ 全161問・78スポット・8カテゴリ・お出かけマップ(Leaflet)搭載</p>
+        <p>v3.4.5 ／ 全161問・78スポット・8カテゴリ・お出かけスポット一覧（地図機能は一時停止）</p>
       </div>
       <button class="modal-close" id="modal-close">閉じる</button>
     </div>
@@ -8991,11 +8984,9 @@ function updateTopMapButton() {
 function openMapScreen() {
   renderMapScreen();
   showScreen('screen-map');
-  // 前回選んだ表示モードを復元（デフォルトはリスト）
-  let prefMode = 'list';
-  try { prefMode = localStorage.getItem('fuchu-quiz-map-view') || 'list'; } catch(e){}
+  // 地図機能は座標精度問題により一時無効化（v3.4.5）。常にリスト表示を強制
   if (typeof switchMapView === 'function') {
-    setTimeout(() => switchMapView(prefMode), 60);
+    setTimeout(() => switchMapView('list'), 60);
   }
 }
 
