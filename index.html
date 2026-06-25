@@ -1690,6 +1690,184 @@
     color: #fff;
   }
 
+  /* === お出かけマップ: リスト/地図切替トグル === */
+  .map-view-toggle {
+    display: flex;
+    gap: 4px;
+    background: #efe4cf;
+    border-radius: 12px;
+    padding: 4px;
+    margin: 12px 0 14px;
+    border: 1px solid rgba(139, 90, 60, 0.2);
+  }
+  .map-view-toggle button {
+    flex: 1;
+    padding: 10px 12px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    border: none;
+    background: transparent;
+    color: #8b5a3c;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .map-view-toggle button.active {
+    background: #c9302c;
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(201, 48, 44, 0.3);
+  }
+  .map-view-toggle button:not(.active):active {
+    background: rgba(201, 48, 44, 0.1);
+  }
+
+  /* === Leaflet 地図コンテナ === */
+  #leaflet-map-container {
+    display: none;
+    position: relative;
+    margin: 0 -14px 14px;
+    background: #fffaf0;
+    border-top: 2px solid #c9302c;
+    border-bottom: 2px solid #c9302c;
+  }
+  #leaflet-map-container.active { display: block; }
+  #leaflet-map {
+    width: 100%;
+    height: 70vh;
+    min-height: 480px;
+    max-height: 720px;
+    background: #e8e0d0;
+  }
+  .map-legend {
+    padding: 10px 14px;
+    background: #fff7e6;
+    border-top: 1px solid rgba(139, 90, 60, 0.15);
+    font-size: 11px;
+    color: #6b4030;
+    line-height: 1.6;
+  }
+  .map-legend .ml-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .map-legend .ml-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .map-legend .ml-dot {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+  .ml-dot.unvisited { background: #b9a989; }
+  .ml-dot.visited { background: #c9302c; }
+
+  /* Leaflet カスタムマーカー */
+  .fc-marker {
+    width: 30px;
+    height: 30px;
+    border-radius: 50% 50% 50% 0;
+    background: #b9a989;
+    border: 2.5px solid #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+    transform: rotate(-45deg);
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+  }
+  .fc-marker.visited {
+    background: #c9302c;
+    width: 34px; height: 34px;
+    box-shadow: 0 2px 8px rgba(201, 48, 44, 0.55);
+  }
+  .fc-marker .fc-marker-inner {
+    transform: rotate(45deg);
+    font-size: 14px;
+    line-height: 1;
+  }
+  .fc-marker.visited .fc-marker-inner {
+    font-size: 16px;
+  }
+  .fc-marker:hover {
+    transform: rotate(-45deg) scale(1.15);
+    z-index: 1000;
+  }
+  /* Leaflet popup customization */
+  .leaflet-popup-content-wrapper {
+    border-radius: 10px;
+    background: #fffaf0;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+  }
+  .leaflet-popup-content {
+    margin: 12px 14px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #4a3020;
+    min-width: 180px;
+  }
+  .fc-popup .fp-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #c9302c;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .fc-popup .fp-station {
+    font-size: 11px;
+    color: #8b5a3c;
+    margin-bottom: 8px;
+  }
+  .fc-popup .fp-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .fc-popup .fp-btn {
+    flex: 1;
+    padding: 7px 8px;
+    border-radius: 7px;
+    text-decoration: none;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+  .fc-popup .fp-btn-map {
+    background: #4285f4;
+    color: #fff;
+  }
+  .fc-popup .fp-btn-visit {
+    background: #4a7c2e;
+    color: #fff;
+  }
+  .fc-popup .fp-btn-unvisit {
+    background: #e9d8b8;
+    color: #6b4030;
+  }
+  .fc-popup .fp-visited-tag {
+    display: inline-block;
+    background: #4a7c2e;
+    color: #fff;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-left: 5px;
+  }
+
   /* フィードバックリンク（解説下） */
   .feedback-link {
     margin-top: 8px;
@@ -2218,6 +2396,10 @@
 <meta name="twitter:description" content="東京都府中市の歴史・名所・グルメをクイズで学ぼう！全100問・3カテゴリー・3難易度">
 <meta name="twitter:image" content="./assets/icon-512.png">
 
+<!-- Leaflet (お出かけマップ用) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
 </head>
 <body>
 
@@ -2541,6 +2723,24 @@
       <button class="complete-cert-btn" id="btn-complete-cert">🏆 「府中マスター証」を見る</button>
     </div>
 
+    <!-- リスト/地図切替トグル -->
+    <div class="map-view-toggle">
+      <button id="toggle-view-list" class="active" type="button">📋 リスト</button>
+      <button id="toggle-view-map" type="button">🗺️ 地図</button>
+    </div>
+
+    <!-- Leaflet 地図コンテナ -->
+    <div id="leaflet-map-container">
+      <div id="leaflet-map" role="region" aria-label="府中市お出かけ地図"></div>
+      <div class="map-legend">
+        <div class="ml-row">
+          <span class="ml-item"><span class="ml-dot unvisited"></span>未訪問</span>
+          <span class="ml-item"><span class="ml-dot visited"></span>訪問済（スタンプ取得）</span>
+          <span class="ml-item">📌タップで詳細・Googleマップへ</span>
+        </div>
+      </div>
+    </div>
+
     <!-- スポットリスト（JSで動的生成） -->
     <div id="spots-list"></div>
 
@@ -2731,7 +2931,7 @@
         <button class="feedback-top-btn" id="btn-feedback-modal" style="display:block; margin: 10px auto;">💬 フィードバックを送る</button>
 
         <h3>📅 バージョン</h3>
-        <p>v3.3.3 ／ 全161問・78スポット・スタンプラリー対応・8カテゴリ（全問ファクトチェック済）</p>
+        <p>v3.4.4 ／ 全161問・78スポット・8カテゴリ・お出かけマップ(Leaflet)搭載</p>
       </div>
       <button class="modal-close" id="modal-close">閉じる</button>
     </div>
@@ -2741,7 +2941,7 @@
 
 <script>
 /* ============================================================
-   府中ものしりクイズ v3.3.3 - データ（全161問・78スポット・市民タイプ診断・スタンプラリー対応・全問ファクトチェック済）
+   府中ものしりクイズ v3.4.3 - データ（全161問・78スポット・市民タイプ診断・スタンプラリー・お出かけLeafletマップ）
    出典：府中市オープンデータ・大國魂神社公式・府中観光協会・Wikipedia等
    difficulty: 1=初級 2=中級 3=上級
    ============================================================ */
@@ -2752,7 +2952,7 @@ const SOURCES = {
   "ookunitama": {
     "name": "大國魂神社 公式サイト",
     "url": "https://www.ookunitamajinja.or.jp/",
-    "description": "武蔵国の守り神として約1900年の歴史を持つ大國魂神社の公式サイト。神社の由緒や境内の文化財について詳しく紹介されています。"
+    "description": "武蔵国の総社・東京五社の一つとして知られる大國魂神社の公式サイト。由緒・歴史、境内案内、文化財などの一次情報が掲載されています。"
   },
   "ookunitama_matsuri": {
     "name": "大國魂神社 公式サイト（祭事）",
@@ -2772,7 +2972,7 @@ const SOURCES = {
   "suntory": {
     "name": "サントリー〈天然水のビール工場〉東京・武蔵野",
     "url": "https://www.suntory.co.jp/factory/musashino/",
-    "description": "1963年（昭和38年）開設、サントリー初のビール工場。府中市矢崎町にあり、無料の工場見学が人気です。"
+    "description": "府中市瞢崎町にあるサントリー初のビール工場の公式サイト。工場見学・汿取例や沿革・所在地などの一次情報が掲載されています。"
   },
   "rugby": {
     "name": "ラグビーのまち府中（府中市公式）",
@@ -2825,8 +3025,8 @@ const SPOTS = {
     "category": "shrine",
     "categoryLabel": "神社・寺",
     "icon": "⛩️",
-    "description": "約1900年の歴史を持つ武蔵国の総社。くらやみ祭で有名。",
-    "address": "東京都府中市",
+    "description": "約1900年の歴史を持つ武蔵国の総社。本殿は寛文7年(1667)再建の三殿一棟九間社流造で都有形文化財。くらやみ祭で有名。",
+    "address": "東京都府中市宮町3-1",
     "mapsQuery": "大國魂神社 府中",
     "nearestStation": "京王線府中駅 徒歩5分"
   },
@@ -2835,8 +3035,8 @@ const SPOTS = {
     "category": "shrine",
     "categoryLabel": "神社・寺",
     "icon": "🏯",
-    "description": "足利尊氏が再興した曹洞宗の名刹。弁慶硯の井戸が残る。",
-    "address": "東京都府中市",
+    "description": "足利尊氏が市川山見性寺を再興した曹洞宗の名刹。境内に弁慶硯の井戸が残る。",
+    "address": "東京都府中市片町2-4-1",
     "mapsQuery": "高安寺 府中市",
     "nearestStation": "JR分倍河原駅 徒歩8分"
   },
@@ -2846,7 +3046,7 @@ const SPOTS = {
     "categoryLabel": "神社・寺",
     "icon": "🛕",
     "description": "大國魂神社南隣の真言宗豊山派寺院。本覺山妙光院。",
-    "address": "東京都府中市",
+    "address": "東京都府中市本町1-16-13",
     "mapsQuery": "妙光院 府中市本町",
     "nearestStation": "京王線府中駅 徒歩6分"
   },
@@ -2856,7 +3056,7 @@ const SPOTS = {
     "categoryLabel": "神社・寺",
     "icon": "🛕",
     "description": "大國魂神社南側の天台宗寺院。叡光山。",
-    "address": "東京都府中市",
+    "address": "東京都府中市本町1-17-10",
     "mapsQuery": "安養寺 府中市本町",
     "nearestStation": "京王線府中駅 徒歩7分"
   },
@@ -2865,8 +3065,8 @@ const SPOTS = {
     "category": "shrine",
     "categoryLabel": "神社・寺",
     "icon": "🛕",
-    "description": "妙光院の末寺。「目の薬師様」として信仰される真言宗豊山派の寺。毎年9月12日に宮町薬師如来縁日。",
-    "address": "東京都府中市",
+    "description": "妙光院の末寺で真言宗豊山派。眼病平癒の薬師如来を本尊とし「目の薬師様」と信仰される。",
+    "address": "東京都府中市宮町3-17-1",
     "mapsQuery": "普門寺 府中市宮町",
     "nearestStation": "府中競馬正門前駅 徒歩1分"
   },
@@ -2876,7 +3076,7 @@ const SPOTS = {
     "categoryLabel": "神社・寺",
     "icon": "🛕",
     "description": "府中市宮西町にある時宗の寺院。日限子育地蔵尊で知られる。",
-    "address": "東京都府中市宮西町",
+    "address": "東京都府中市宮西町1-9-1",
     "mapsQuery": "称名寺 府中市宮西町",
     "nearestStation": "京王線府中駅 徒歩5分"
   },
@@ -2886,7 +3086,7 @@ const SPOTS = {
     "categoryLabel": "神社・寺",
     "icon": "⛩️",
     "description": "武蔵府中熊野神社古墳の上に鎮座する古社。",
-    "address": "東京都府中市",
+    "address": "東京都府中市西府町2-9-9",
     "mapsQuery": "熊野神社 府中市西府町",
     "nearestStation": "JR西府駅 徒歩7分"
   },
@@ -2896,7 +3096,7 @@ const SPOTS = {
     "categoryLabel": "自然・公園",
     "icon": "🌳",
     "description": "国の天然記念物。1062年、源頼義・義家が苗を寄進したのが起源。約600m。",
-    "address": "東京都府中市",
+    "address": "東京都府中市宮町1-38",
     "mapsQuery": "馬場大門のケヤキ並木",
     "nearestStation": "京王線府中駅 北口すぐ"
   },
@@ -2906,17 +3106,17 @@ const SPOTS = {
     "categoryLabel": "自然・公園",
     "icon": "🚴",
     "description": "多摩川沿いを走る約10kmの散策・サイクリングロード。",
-    "address": "東京都府中市",
+    "address": "東京都府中市是政5・6 (多摩川沿い東西10km)",
     "mapsQuery": "府中多摩川かぜのみち",
-    "nearestStation": "JR分倍河原駅・是政駅から"
+    "nearestStation": "西武是政駅・JR分倍河原駅・京王中河原駅"
   },
   "sengenyama": {
     "name": "都立浅間山公園",
     "category": "nature",
     "categoryLabel": "自然・公園",
     "icon": "⛰️",
-    "description": "標高80mの小高い丘。ムサシノキスゲ唯一の自生地。関東の富士見百景。",
-    "address": "東京都府中市",
+    "description": "標高約80mの低山。ムサシノキスゲ群生地として知られる。",
+    "address": "東京都府中市浅間町四丁目・若松町五丁目",
     "mapsQuery": "都立浅間山公園",
     "nearestStation": "京王線東府中駅 徒歩15分"
   },
@@ -2926,7 +3126,7 @@ const SPOTS = {
     "categoryLabel": "自然・公園",
     "icon": "🌸",
     "description": "博物館を含む広大な公園。梅の名所・あじさい園・BBQ場あり。",
-    "address": "東京都府中市",
+    "address": "東京都府中市南町6-32",
     "mapsQuery": "郷土の森公園 府中市",
     "nearestStation": "JR分倍河原駅 徒歩20分"
   },
@@ -2936,7 +3136,7 @@ const SPOTS = {
     "categoryLabel": "自然・公園",
     "icon": "🌳",
     "description": "芸術劇場に隣接する都立公園。17ha。サクラ・スポーツ施設を備える。",
-    "address": "東京都府中市",
+    "address": "東京都府中市浅間町1-3-1",
     "mapsQuery": "府中の森公園",
     "nearestStation": "京王線東府中駅 徒歩10分"
   },
@@ -2946,7 +3146,7 @@ const SPOTS = {
     "categoryLabel": "自然・公園",
     "icon": "🌲",
     "description": "府中市・小金井市にまたがる雑木林。BBQ場・原っぱ・野球場。",
-    "address": "東京都府中市",
+    "address": "東京都府中市多磨町2-24-1",
     "mapsQuery": "都立武蔵野公園",
     "nearestStation": "JR武蔵境駅からバス"
   },
@@ -2956,7 +3156,7 @@ const SPOTS = {
     "categoryLabel": "自然・公園",
     "icon": "🌳",
     "description": "調布飛行場周辺の都立公園。修景池や芝生広場で憩える。",
-    "address": "東京都府中市",
+    "address": "東京都府中市朝日町3",
     "mapsQuery": "武蔵野の森公園",
     "nearestStation": "西武多摩川線多磨駅 徒歩10分"
   },
@@ -2965,18 +3165,18 @@ const SPOTS = {
     "category": "nature",
     "categoryLabel": "自然・公園",
     "icon": "🌸",
-    "description": "春には桜並木がトンネル状に咲き誇る、市民の桜の名所。",
-    "address": "東京都府中市",
+    "description": "全長約1.1km・約350本の桜並木。府中市民桜まつりの会場。",
+    "address": "東京都府中市寿町1-12 ほか",
     "mapsQuery": "府中市 桜通り",
-    "nearestStation": "京王線府中駅 徒歩10分"
+    "nearestStation": "京王線府中駅 徒歩3分"
   },
   "tamareien": {
     "name": "多磨霊園",
     "category": "nature",
     "categoryLabel": "自然・公園",
     "icon": "🌳",
-    "description": "大正12年開園。日本初の公園墓地。約132万㎡。桜の名所。",
-    "address": "東京都府中市",
+    "description": "大正12年(1923年)4月1日開園、日本初の公園墓地。約128万㎡で都立霊園最大。桜の名所。",
+    "address": "東京都府中市多磨町4-628",
     "mapsQuery": "多磨霊園",
     "nearestStation": "西武多摩川線多磨駅 徒歩5分"
   },
@@ -2986,7 +3186,7 @@ const SPOTS = {
     "categoryLabel": "自然・公園",
     "icon": "🌳",
     "description": "中央線沿線、市民憩いの公園。",
-    "address": "東京都府中市",
+    "address": "東京都府中市日鋼町1-23",
     "mapsQuery": "すずかけ公園 府中市",
     "nearestStation": "JR北府中駅 徒歩7分"
   },
@@ -2996,7 +3196,7 @@ const SPOTS = {
     "categoryLabel": "自然・公園",
     "icon": "🌳",
     "description": "府中駅近くにある住宅街の中央公園。",
-    "address": "東京都府中市",
+    "address": "東京都府中市寿町2-20",
     "mapsQuery": "寿中央公園 府中市",
     "nearestStation": "京王線府中駅 徒歩10分"
   },
@@ -3006,9 +3206,9 @@ const SPOTS = {
     "categoryLabel": "自然・公園",
     "icon": "🪨",
     "description": "国分寺崖線上の遺跡を保存した公園。",
-    "address": "東京都府中市",
+    "address": "東京都府中市武蔵台2-29",
     "mapsQuery": "武蔵台遺跡公園",
-    "nearestStation": "JR西国分寺駅 徒歩12分"
+    "nearestStation": "JR西国分寺駅 徒歩8分"
   },
   "tama-shinsui": {
     "name": "多摩川親水公園",
@@ -3016,9 +3216,9 @@ const SPOTS = {
     "categoryLabel": "自然・公園",
     "icon": "💧",
     "description": "稲城大橋近く、多摩川の親水エリア。子どもの水遊びにも。",
-    "address": "東京都府中市",
+    "address": "東京都府中市小柳町6-479-2",
     "mapsQuery": "多摩川親水公園 府中",
-    "nearestStation": "JR是政駅 徒歩15分"
+    "nearestStation": "西武多摩川線競艇場前駅 徒歩10分"
   },
   "koremasa-ryokuchi": {
     "name": "是政緑地",
@@ -3026,9 +3226,9 @@ const SPOTS = {
     "categoryLabel": "自然・公園",
     "icon": "🌿",
     "description": "多摩川沿いの緑道。",
-    "address": "東京都府中市",
+    "address": "東京都府中市是政5",
     "mapsQuery": "是政緑地 府中",
-    "nearestStation": "JR是政駅 徒歩10分"
+    "nearestStation": "西武是政駅 徒歩5分"
   },
   "bubaigawara": {
     "name": "分倍河原古戦場碑",
@@ -3036,7 +3236,7 @@ const SPOTS = {
     "categoryLabel": "歴史・文化",
     "icon": "📜",
     "description": "1333年、新田義貞が鎌倉幕府軍を破った合戦の地。昭和10年建立。",
-    "address": "東京都府中市",
+    "address": "東京都府中市分梅町2-59-4",
     "mapsQuery": "分倍河原古戦場碑",
     "nearestStation": "JR分倍河原駅 徒歩10分"
   },
@@ -3046,7 +3246,7 @@ const SPOTS = {
     "categoryLabel": "歴史・文化",
     "icon": "📜",
     "description": "江戸時代の公共掲示板。旧甲州街道と府中街道の交差点。都の旧跡。",
-    "address": "東京都府中市",
+    "address": "東京都府中市宮西町5-1-1",
     "mapsQuery": "高札場 府中市",
     "nearestStation": "京王線府中駅 徒歩6分"
   },
@@ -3056,7 +3256,7 @@ const SPOTS = {
     "categoryLabel": "歴史・文化",
     "icon": "🏛️",
     "description": "国指定史跡。古代武蔵国の政庁跡。",
-    "address": "東京都府中市",
+    "address": "東京都府中市宮町2 (大國魂神社東隣)",
     "mapsQuery": "武蔵国府跡 府中",
     "nearestStation": "京王線府中駅 徒歩5分"
   },
@@ -3066,7 +3266,7 @@ const SPOTS = {
     "categoryLabel": "歴史・文化",
     "icon": "🏯",
     "description": "古代の国司館跡と徳川家康の府中御殿跡を整備した史跡広場。",
-    "address": "東京都府中市",
+    "address": "東京都府中市本町1 (府中本町駅北側)",
     "mapsQuery": "国司館と家康御殿史跡広場",
     "nearestStation": "JR府中本町駅 徒歩1分"
   },
@@ -3075,8 +3275,8 @@ const SPOTS = {
     "category": "history",
     "categoryLabel": "歴史・文化",
     "icon": "⛰️",
-    "description": "7世紀の上円下方墳。国指定史跡。展示館併設。",
-    "address": "東京都府中市",
+    "description": "7世紀中頃築造の上円下方墳で国内最大・最古級。2005年国指定史跡。府中市西府町2-9。",
+    "address": "東京都府中市西府町2-9-9",
     "mapsQuery": "武蔵府中熊野神社古墳",
     "nearestStation": "JR西府駅 徒歩7分"
   },
@@ -3085,18 +3285,18 @@ const SPOTS = {
     "category": "history",
     "categoryLabel": "歴史・文化",
     "icon": "⛰️",
-    "description": "高倉古墳群の中心。市指定史跡。多摩川左岸台地に広がる古墳群。",
-    "address": "東京都府中市",
+    "description": "高倉古墳群27基の中心。府中崖線上に分布。市指定史跡。",
+    "address": "東京都府中市分梅町1-11-2",
     "mapsQuery": "高倉塚古墳 府中市",
-    "nearestStation": "JR分倍河原駅 徒歩5分"
+    "nearestStation": "京王線・JR分倍河原駅 徒歩5分"
   },
   "shiraito-kofun": {
     "name": "白糸台古墳群",
     "category": "history",
     "categoryLabel": "歴史・文化",
     "icon": "⛰️",
-    "description": "多摩川左岸域の古墳群。府中崖線沿いに広がる。",
-    "address": "東京都府中市",
+    "description": "白糸台地区に点在する古墳群。",
+    "address": "東京都府中市白糸台4・5・6丁目",
     "mapsQuery": "白糸台古墳群",
     "nearestStation": "西武多摩川線白糸台駅 徒歩6分"
   },
@@ -3106,7 +3306,7 @@ const SPOTS = {
     "categoryLabel": "歴史・文化",
     "icon": "🗿",
     "description": "江戸時代の街道整備で築かれた一里塚。",
-    "address": "東京都府中市",
+    "address": "東京都府中市清水が丘3-15-26",
     "mapsQuery": "甲州街道常久一里塚",
     "nearestStation": "京王線多磨霊園駅 徒歩5分"
   },
@@ -3115,10 +3315,10 @@ const SPOTS = {
     "category": "history",
     "categoryLabel": "歴史・文化",
     "icon": "🏃",
-    "description": "1964年東京五輪、競歩の折返地点を記念する碑。",
-    "address": "東京都府中市",
+    "description": "1964年東京五輪50km競歩の折返点を示す記念碑。",
+    "address": "東京都府中市緑町1-14",
     "mapsQuery": "オリンピック競歩折返記念碑 府中",
-    "nearestStation": "京王線府中駅 徒歩6分"
+    "nearestStation": "京王線府中駅 徒歩約10分"
   },
   "bareito": {
     "name": "馬霊塔",
@@ -3126,7 +3326,7 @@ const SPOTS = {
     "categoryLabel": "歴史・文化",
     "icon": "🐎",
     "description": "競馬の街・府中が建てた馬の供養塔。",
-    "address": "東京都府中市",
+    "address": "東京都府中市宮町3-1 (大國魂神社境内)",
     "mapsQuery": "馬霊塔 府中",
     "nearestStation": "JR府中本町駅 徒歩5分"
   },
@@ -3136,7 +3336,7 @@ const SPOTS = {
     "categoryLabel": "歴史・文化",
     "icon": "🗿",
     "description": "分倍河原駅前。鎌倉幕府を倒した英雄の銅像。",
-    "address": "東京都府中市",
+    "address": "東京都府中市分梅町2-59-4",
     "mapsQuery": "新田義貞公之像 分倍河原",
     "nearestStation": "JR分倍河原駅 北口すぐ"
   },
@@ -3146,7 +3346,7 @@ const SPOTS = {
     "categoryLabel": "歴史・文化",
     "icon": "🏯",
     "description": "江戸後期の名主屋敷長屋門。郷土の森内に移築。",
-    "address": "東京都府中市",
+    "address": "東京都府中市南町6-32",
     "mapsQuery": "旧三岡家長屋門 郷土の森",
     "nearestStation": "郷土の森博物館内"
   },
@@ -3156,7 +3356,7 @@ const SPOTS = {
     "categoryLabel": "歴史・文化",
     "icon": "🏛️",
     "description": "昭和初期の町役場。郷土の森内に保存。",
-    "address": "東京都府中市",
+    "address": "東京都府中市南町6-32",
     "mapsQuery": "旧府中町役場 郷土の森",
     "nearestStation": "郷土の森博物館内"
   },
@@ -3166,7 +3366,7 @@ const SPOTS = {
     "categoryLabel": "歴史・文化",
     "icon": "🏯",
     "description": "江戸期の名家住宅。都指定有形文化財。",
-    "address": "東京都府中市",
+    "address": "東京都府中市美好町3-20-1",
     "mapsQuery": "内藤家住宅 府中市美好町",
     "nearestStation": "京王線府中駅 徒歩15分"
   },
@@ -3175,8 +3375,8 @@ const SPOTS = {
     "category": "museum",
     "categoryLabel": "博物館・記念館",
     "icon": "🏛️",
-    "description": "昭和62年開館。野外を含めた森全体が博物館。プラネタリウムも。",
-    "address": "東京都府中市",
+    "description": "1987年開館。約14万㎡の敷地に梅園(約60品種1100本)・復元建築物・プラネタリウムを擁する野外博物館。",
+    "address": "東京都府中市南町6-32",
     "mapsQuery": "府中市郷土の森博物館",
     "nearestStation": "JR分倍河原駅 徒歩20分"
   },
@@ -3185,8 +3385,8 @@ const SPOTS = {
     "category": "museum",
     "categoryLabel": "博物館・記念館",
     "icon": "🎨",
-    "description": "府中の森公園内。江戸絵画・現代美術の特別展で有名。",
-    "address": "東京都府中市",
+    "description": "2000年10月開館。「生活と美術」をテーマに、企画展・常設展・牛島憲之記念館を展開。",
+    "address": "東京都府中市浅間町1-3",
     "mapsQuery": "府中市美術館",
     "nearestStation": "京王線東府中駅 徒歩17分"
   },
@@ -3196,7 +3396,7 @@ const SPOTS = {
     "categoryLabel": "博物館・記念館",
     "icon": "📚",
     "description": "大國魂神社隣接。府中の歴史を映像と展示で紹介。",
-    "address": "東京都府中市",
+    "address": "東京都府中市宮町3-1",
     "mapsQuery": "ふるさと府中歴史館",
     "nearestStation": "京王線府中駅 徒歩5分"
   },
@@ -3206,7 +3406,7 @@ const SPOTS = {
     "categoryLabel": "博物館・記念館",
     "icon": "ℹ️",
     "description": "大國魂神社隣の観光案内拠点。マップやパンフ配布。",
-    "address": "東京都府中市",
+    "address": "東京都府中市宮町3-1 ふるさと府中歴史館内",
     "mapsQuery": "府中市観光情報センター",
     "nearestStation": "京王線府中駅 徒歩5分"
   },
@@ -3216,7 +3416,7 @@ const SPOTS = {
     "categoryLabel": "博物館・記念館",
     "icon": "🐎",
     "description": "東京競馬場内。日本中央競馬の歴史を学べる無料博物館。",
-    "address": "東京都府中市",
+    "address": "東京都府中市日吉町1-1",
     "mapsQuery": "JRA競馬博物館",
     "nearestStation": "府中競馬正門前駅 徒歩2分"
   },
@@ -3226,7 +3426,7 @@ const SPOTS = {
     "categoryLabel": "博物館・記念館",
     "icon": "🏛️",
     "description": "古墳の出土品と上円下方墳の特徴を紹介する公式展示館。",
-    "address": "東京都府中市",
+    "address": "東京都府中市西府町2-9-9",
     "mapsQuery": "熊野神社古墳展示館 府中",
     "nearestStation": "JR西府駅 徒歩7分"
   },
@@ -3236,7 +3436,7 @@ const SPOTS = {
     "categoryLabel": "博物館・記念館",
     "icon": "🌌",
     "description": "郷土の森博物館内。最新映像で星空を投影。",
-    "address": "東京都府中市",
+    "address": "東京都府中市南町6-32",
     "mapsQuery": "郷土の森博物館 プラネタリウム",
     "nearestStation": "郷土の森博物館内"
   },
@@ -3246,9 +3446,9 @@ const SPOTS = {
     "categoryLabel": "博物館・記念館",
     "icon": "📚",
     "description": "市民の学びと交流の拠点。",
-    "address": "東京都府中市",
+    "address": "東京都府中市浅間町1-7",
     "mapsQuery": "府中市生涯学習センター",
-    "nearestStation": "京王線東府中駅 徒歩17分"
+    "nearestStation": "京王線東府中駅 徒歩15分"
   },
   "tokyo-keiba": {
     "name": "東京競馬場",
@@ -3256,7 +3456,7 @@ const SPOTS = {
     "categoryLabel": "競馬・スポーツ",
     "icon": "🏇",
     "description": "1933年開場。ダービー・ジャパンカップなどG1の聖地。",
-    "address": "東京都府中市",
+    "address": "東京都府中市日吉町1-1",
     "mapsQuery": "東京競馬場",
     "nearestStation": "府中競馬正門前駅 徒歩2分"
   },
@@ -3266,7 +3466,7 @@ const SPOTS = {
     "categoryLabel": "競馬・スポーツ",
     "icon": "🏟️",
     "description": "FC東京・東京ヴェルディの本拠地。府中市にも近接。",
-    "address": "東京都府中市",
+    "address": "東京都調布市西町376-3",
     "mapsQuery": "味の素スタジアム",
     "nearestStation": "京王線飛田給駅 徒歩5分"
   },
@@ -3275,8 +3475,8 @@ const SPOTS = {
     "category": "sports",
     "categoryLabel": "競馬・スポーツ",
     "icon": "🏉",
-    "description": "東京サントリーサンゴリアスの拠点。",
-    "address": "東京都府中市",
+    "description": "東京サントリーサンゴリアスのホームグラウンド。リーグワン強豪チームの練習拠点。",
+    "address": "東京都府中市是政6-22",
     "mapsQuery": "サントリー府中スポーツセンター",
     "nearestStation": "是政駅 徒歩15分"
   },
@@ -3286,19 +3486,19 @@ const SPOTS = {
     "categoryLabel": "競馬・スポーツ",
     "icon": "🏉",
     "description": "東芝ブレイブルーパス東京の本拠地。",
-    "address": "東京都府中市",
+    "address": "東京都府中市東芝町1",
     "mapsQuery": "東芝ラグビー府中グラウンド",
     "nearestStation": "JR北府中駅 徒歩10分"
   },
   "183-fanzone": {
-    "name": "183 FUCHU fan zone",
+    "name": "183 FUCHU FAN ZONE with PRONTO",
     "category": "sports",
     "categoryLabel": "競馬・スポーツ",
     "icon": "🏉",
-    "description": "府中駅北口、ラグビーファン交流拠点。",
-    "address": "東京都府中市",
+    "description": "府中駅北口改札前のラグビーのまち府中の情報発信拠点。PRONTOとの共同運営。",
+    "address": "東京都府中市宮町1-1-10 京王府中ショッピングセンター2F",
     "mapsQuery": "183 FUCHU fan zone",
-    "nearestStation": "京王線府中駅 北口すぐ"
+    "nearestStation": "京王線府中駅 北口直結"
   },
   "tamagawa-boatrace": {
     "name": "ボートレース多摩川",
@@ -3306,7 +3506,7 @@ const SPOTS = {
     "categoryLabel": "競馬・スポーツ",
     "icon": "🚤",
     "description": "多摩川競艇場。府中市是政。「水の宝石箱」と称される。",
-    "address": "東京都府中市",
+    "address": "東京都府中市是政4-11",
     "mapsQuery": "ボートレース多摩川",
     "nearestStation": "競艇場前駅 徒歩6分"
   },
@@ -3315,8 +3515,8 @@ const SPOTS = {
     "category": "sports",
     "categoryLabel": "競馬・スポーツ",
     "icon": "🎣",
-    "description": "へら鮒釣りの専門池。釣り愛好家に人気。",
-    "address": "東京都府中市",
+    "description": "ヘラブナ・コイ・金魚の釣り堀。京王線中河原駅徒歩12分。",
+    "address": "東京都府中市南町2-19-5",
     "mapsQuery": "府中へら鮒センター",
     "nearestStation": "京王線府中駅 徒歩10分"
   },
@@ -3326,7 +3526,7 @@ const SPOTS = {
     "categoryLabel": "競馬・スポーツ",
     "icon": "🌉",
     "description": "多摩川に架かる白い斜張橋。府中と稲城を結ぶ。",
-    "address": "東京都府中市",
+    "address": "東京都府中市是政6",
     "mapsQuery": "是政橋",
     "nearestStation": "JR是政駅 徒歩10分"
   },
@@ -3336,7 +3536,7 @@ const SPOTS = {
     "categoryLabel": "工場見学",
     "icon": "🍺",
     "description": "1963年開設。ビール製造工程の見学と試飲が楽しめる。",
-    "address": "東京都府中市",
+    "address": "東京都府中市矢崎町3-1",
     "mapsQuery": "サントリー武蔵野ビール工場",
     "nearestStation": "JR分倍河原駅 徒歩20分"
   },
@@ -3346,19 +3546,19 @@ const SPOTS = {
     "categoryLabel": "工場見学",
     "icon": "🏭",
     "description": "鉄道車両など重電製品の主要拠点。",
-    "address": "東京都府中市",
+    "address": "東京都府中市東芝町1",
     "mapsQuery": "東芝府中事業所",
     "nearestStation": "JR北府中駅 徒歩3分"
   },
   "ngk-factory": {
-    "name": "NEC府中事業所",
+    "name": "NEC府中事業場",
     "category": "factory",
     "categoryLabel": "工場見学",
     "icon": "🏭",
-    "description": "NECの研究開発・製造拠点。",
-    "address": "東京都府中市",
+    "description": "NECの研究開発・製造拠点。府中市日新町1-10。",
+    "address": "東京都府中市日新町1-10",
     "mapsQuery": "NEC府中事業所",
-    "nearestStation": "JR北府中駅 徒歩7分"
+    "nearestStation": "JR南武線 西府駅 徒歩5分"
   },
   "sando": {
     "name": "大國魂神社参道",
@@ -3366,7 +3566,7 @@ const SPOTS = {
     "categoryLabel": "商業・グルメ",
     "icon": "🍡",
     "description": "ケヤキ並木と老舗の食事処・甘味店が並ぶ。",
-    "address": "東京都府中市",
+    "address": "東京都府中市宮町 (大國魂神社参道)",
     "mapsQuery": "大國魂神社参道",
     "nearestStation": "京王線府中駅 徒歩3分"
   },
@@ -3376,8 +3576,18 @@ const SPOTS = {
     "categoryLabel": "商業・グルメ",
     "icon": "🎹",
     "description": "「くるる府中」2階中央広場に設置されたアップライトピアノ。10：00～20：00誰でも無料で演奏可。",
-    "address": "東京都府中市宮町1-50 くるる府中 2階",
+    "address": "東京都府中市宮町1-50",
     "mapsQuery": "くるる府中 2階",
+    "nearestStation": "京王線府中駅南口 直結"
+  },
+  "kururu": {
+    "name": "くるる府中",
+    "category": "gourmet",
+    "categoryLabel": "商業・グルメ",
+    "icon": "🎬",
+    "description": "2005年3月17日開業、府中駅南口直結の複合商業施設。地下2階～地上10階。TOHOシネマズ府中・タイトーステーションを核に、ファッション・雑貨・飲食店等が入居。",
+    "address": "東京都府中市宮町1-50",
+    "mapsQuery": "くるる府中",
     "nearestStation": "京王線府中駅南口 直結"
   },
   "fuchu-mori-gekijo": {
@@ -3385,18 +3595,18 @@ const SPOTS = {
     "category": "gourmet",
     "categoryLabel": "商業・グルメ",
     "icon": "🎭",
-    "description": "府中の森公園内。コンサート・オペラ・演劇の拠点。",
-    "address": "東京都府中市",
+    "description": "1991年開館。どりーむホール(2,027席)・ウィーンホール・ふるさとホールを擁する複合文化施設。",
+    "address": "東京都府中市浅間町1-2",
     "mapsQuery": "府中の森芸術劇場",
     "nearestStation": "京王線東府中駅 徒歩10分"
   },
   "hibari-hall": {
-    "name": "ひばりホール",
+    "name": "ひばりホール（中央文化センター）",
     "category": "gourmet",
     "categoryLabel": "商業・グルメ",
     "icon": "🎤",
-    "description": "アンフィニシアター東京府中。多目的ホール。",
-    "address": "東京都府中市",
+    "description": "府中市立中央文化センター内にある160席の多目的ホール。1969年4月開館。",
+    "address": "東京都府中市府中町2-25",
     "mapsQuery": "ひばりホール 府中",
     "nearestStation": "京王線府中駅 徒歩5分"
   },
@@ -3406,7 +3616,7 @@ const SPOTS = {
     "categoryLabel": "商業・グルメ",
     "icon": "🛍️",
     "description": "府中駅前の商業施設。グルメ・ショッピングの拠点。",
-    "address": "東京都府中市",
+    "address": "東京都府中市宮町1-100",
     "mapsQuery": "ル・シーニュ 府中",
     "nearestStation": "京王線府中駅 直結"
   },
@@ -3416,27 +3626,17 @@ const SPOTS = {
     "categoryLabel": "商業・グルメ",
     "icon": "🛍️",
     "description": "府中駅南口の大型ショッピングモール。",
-    "address": "東京都府中市",
+    "address": "東京都府中市宮町1-41-1",
     "mapsQuery": "府中フォーリス",
     "nearestStation": "京王線府中駅 徒歩2分"
-  },
-  "art-beans": {
-    "name": "くるる府中",
-    "category": "gourmet",
-    "categoryLabel": "商業・グルメ",
-    "icon": "🎬",
-    "description": "2005年開業、府中駅南口直結の複合商業施設。TOHOシネマズ・タイトーステーションを含む。10階建て。2階にストリートピアノスポットもあり。",
-    "address": "東京都府中市宮町1-50",
-    "mapsQuery": "くるる府中",
-    "nearestStation": "京王線府中駅南口 直結"
   },
   "bussankan": {
     "name": "郷土の森観光物産館",
     "category": "gourmet",
     "categoryLabel": "商業・グルメ",
     "icon": "🎁",
-    "description": "郷土の森隣接。府中の特産品や観光情報の拠点。",
-    "address": "東京都府中市",
+    "description": "郷土の森博物館正門横。府中の特産品販売と観光情報の発信拠点。",
+    "address": "東京都府中市是政6-32-10",
     "mapsQuery": "郷土の森観光物産館",
     "nearestStation": "JR分倍河原駅 徒歩20分"
   },
@@ -3445,8 +3645,8 @@ const SPOTS = {
     "category": "gourmet",
     "categoryLabel": "商業・グルメ",
     "icon": "♨️",
-    "description": "旧「縄文の湯」をリニューアル。天然温泉「黒湯」とサウナ。",
-    "address": "東京都府中市",
+    "description": "2024年12月に極楽湯がリニューアル開業した天然温泉施設。黒湯とサウナ。",
+    "address": "東京都府中市宮西町1-5-1",
     "mapsQuery": "RAKU SPA Station 府中",
     "nearestStation": "京王線府中駅 徒歩2分"
   },
@@ -3455,8 +3655,8 @@ const SPOTS = {
     "category": "gourmet",
     "categoryLabel": "商業・グルメ",
     "icon": "📚",
-    "description": "駅前の大型書店。雑誌・コミック・文具。",
-    "address": "東京都府中市",
+    "description": "府中駅徒歩1分の大型書店。9:00-21:00営業。",
+    "address": "東京都府中市府中町1-1-4",
     "mapsQuery": "TSUTAYA 府中駅前店",
     "nearestStation": "京王線府中駅 徒歩1分"
   },
@@ -3465,30 +3665,30 @@ const SPOTS = {
     "category": "gourmet",
     "categoryLabel": "商業・グルメ",
     "icon": "🛍️",
-    "description": "駅直結の生活雑貨・文房具の専門店。",
-    "address": "東京都府中市",
+    "description": "ぷらりと京王府中内の生活雑貨・文房具の大型専門店。",
+    "address": "東京都府中市府中町1-2-1 ぷらりと京王府中 2F・3F・4F",
     "mapsQuery": "京王アートマン 府中店",
-    "nearestStation": "京王線府中駅 直結"
+    "nearestStation": "京王線府中駅 徒歩1分"
   },
   "ichigo-gari": {
     "name": "府中いちご狩り園",
     "category": "gourmet",
     "categoryLabel": "商業・グルメ",
     "icon": "🍓",
-    "description": "春のいちご狩りが楽しめる観光農園。",
-    "address": "東京都府中市",
+    "description": "春のいちご狩りが楽しめる観光農園。美好町3-16-2。",
+    "address": "東京都府中市美好町3-16-2",
     "mapsQuery": "府中いちご狩り園",
-    "nearestStation": "JR北府中駅から"
+    "nearestStation": "JR・京王線分倍河原駅 徒歩8分"
   },
   "sora-tobu-ichigo": {
     "name": "空飛ぶいちご東京",
     "category": "gourmet",
     "categoryLabel": "商業・グルメ",
     "icon": "🍓",
-    "description": "高架式栽培の最新いちご狩り施設。",
-    "address": "東京都府中市",
+    "description": "高架式栽培の最新いちご狩り施設。分梅町3-43。",
+    "address": "東京都府中市分梅町3-43",
     "mapsQuery": "空飛ぶいちご東京",
-    "nearestStation": "京王線府中駅から"
+    "nearestStation": "JR南武線西府駅 徒歩7分"
   },
   "fuchu-station": {
     "name": "京王線 府中駅",
@@ -3496,7 +3696,7 @@ const SPOTS = {
     "categoryLabel": "駅",
     "icon": "🚉",
     "description": "市の中心駅。京王本線と京王競馬場線が交わる。",
-    "address": "東京都府中市",
+    "address": "東京都府中市宮町1-1-10",
     "mapsQuery": "京王線 府中駅",
     "nearestStation": "京王線"
   },
@@ -3506,7 +3706,7 @@ const SPOTS = {
     "categoryLabel": "駅",
     "icon": "🚉",
     "description": "京王線とJR南武線が交わる結節駅。",
-    "address": "東京都府中市",
+    "address": "東京都府中市片町2-21-18",
     "mapsQuery": "分倍河原駅",
     "nearestStation": "京王線・JR南武線"
   },
@@ -3516,7 +3716,7 @@ const SPOTS = {
     "categoryLabel": "駅",
     "icon": "🚉",
     "description": "西武多摩川線の終点。多摩川に近い。",
-    "address": "東京都府中市",
+    "address": "東京都府中市是政5-8-2",
     "mapsQuery": "是政駅",
     "nearestStation": "西武多摩川線"
   },
@@ -3526,7 +3726,7 @@ const SPOTS = {
     "categoryLabel": "駅",
     "icon": "🚉",
     "description": "JR南武線・武蔵野線の結節駅。競馬場直結。",
-    "address": "東京都府中市",
+    "address": "東京都府中市本町1-29",
     "mapsQuery": "JR府中本町駅",
     "nearestStation": "JR南武線・武蔵野線"
   },
@@ -3536,7 +3736,7 @@ const SPOTS = {
     "categoryLabel": "駅",
     "icon": "🚉",
     "description": "JR武蔵野線。東芝府中事業所最寄り。",
-    "address": "東京都府中市",
+    "address": "東京都府中市晴見町2-27-2",
     "mapsQuery": "JR北府中駅",
     "nearestStation": "JR武蔵野線"
   },
@@ -3546,7 +3746,7 @@ const SPOTS = {
     "categoryLabel": "駅",
     "icon": "🚉",
     "description": "JR南武線。武蔵府中熊野神社古墳最寄り。",
-    "address": "東京都府中市",
+    "address": "東京都府中市本宿町1-50",
     "mapsQuery": "JR西府駅",
     "nearestStation": "JR南武線"
   },
@@ -3556,7 +3756,7 @@ const SPOTS = {
     "categoryLabel": "駅",
     "icon": "🚉",
     "description": "京王本線。府中の森公園・芸術劇場の最寄駅。",
-    "address": "東京都府中市",
+    "address": "東京都府中市清水が丘3",
     "mapsQuery": "京王線 東府中駅",
     "nearestStation": "京王線"
   },
@@ -3566,7 +3766,7 @@ const SPOTS = {
     "categoryLabel": "駅",
     "icon": "🚉",
     "description": "京王競馬場線。東京競馬場直結。",
-    "address": "東京都府中市",
+    "address": "東京都府中市八幡町1-18",
     "mapsQuery": "府中競馬正門前駅",
     "nearestStation": "京王競馬場線"
   },
@@ -3576,7 +3776,7 @@ const SPOTS = {
     "categoryLabel": "駅",
     "icon": "🚉",
     "description": "京王線。多磨霊園の最寄駅。",
-    "address": "東京都府中市",
+    "address": "東京都府中市清水が丘3-26-11",
     "mapsQuery": "多磨霊園駅 京王",
     "nearestStation": "京王線"
   },
@@ -3585,8 +3785,8 @@ const SPOTS = {
     "category": "station",
     "categoryLabel": "駅",
     "icon": "🚉",
-    "description": "西武多摩川線。武蔵野の森公園の最寄駅。",
-    "address": "東京都府中市",
+    "description": "西武多摩川線の駅。武蔵野の森公園・警察大学校への玄関口。",
+    "address": "東京都府中市紅葉丘3",
     "mapsQuery": "西武多磨駅",
     "nearestStation": "西武多摩川線"
   },
@@ -3596,1063 +3796,2987 @@ const SPOTS = {
     "categoryLabel": "駅",
     "icon": "🚉",
     "description": "西武多摩川線。白糸台古墳群の最寄駅。",
-    "address": "東京都府中市",
+    "address": "東京都府中市白糸台2-71-6",
     "mapsQuery": "西武白糸台駅",
     "nearestStation": "西武多摩川線"
   }
 };
 
 const QUIZ_DATA = [
-  // ============================================================
-  // === 歴史カテゴリー（30問）===
-  // ============================================================
-  {
-    category: 'history', catLabel: '歴史', difficulty: 1,
-    question: '府中市にある大國魂神社は、およそ何年の歴史を持つ神社でしょう？',
-    choices: ['約500年', '約1000年', '約1900年', '約2500年'],
-    answer: 2,
-    explanation: '大國魂神社は<strong>約1900年</strong>の歴史を持つ古社で、武蔵国の守り神として古くから祀られてきました。景行天皇41年（西暦111年）の創建と伝えられています。',
-    keyapi: 'ケヤキ並木よりも、ずっとずっと長い歴史なんだよ〜🌱',
-    source: 'ookunitama',
-    spots: ['ookunitama']
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 1,
-    question: '古代、府中市には現在の都道府県でいうと「武蔵国」の何が置かれていた？',
-    choices: ['天守閣', '国府（こくふ）', '関所', '宿場町'],
-    answer: 1,
-    explanation: '大化の改新後、武蔵国（現在の埼玉県・東京都・神奈川県の一部）の政治の中心地である<strong>国府（こくふ）</strong>が府中に置かれました。「府中」という地名の由来でもあります。',
-    keyapi: '「府中」という地名そのものが、この歴史から来てるんだよ！',
-    source: 'fuchu_official'
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 1,
-    question: '府中のシンボル「馬場大門のケヤキ並木」が国の天然記念物に指定されたのは何年？',
-    choices: ['1924年（大正13年）', '1955年（昭和30年）', '1980年（昭和55年）', '2000年（平成12年）'],
-    answer: 0,
-    explanation: '馬場大門のケヤキ並木は<strong>1924年（大正13年）</strong>に国の天然記念物に指定されました。けやき並木として唯一の国指定天然記念物です。2024年に指定100周年を迎えました。',
-    keyapi: '100周年だなんて、ぼくたちケヤキも長生きだね〜！',
-    source: 'keyaki',
-    spots: ['keyaki-namiki']
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 1,
-    question: '大國魂神社の例大祭「くらやみ祭」は何月に行われる？',
-    choices: ['3月', '5月（GW期間）', '7月', '10月'],
-    answer: 1,
-    explanation: 'くらやみ祭は毎年<strong>4月30日から5月6日</strong>にかけて行われる大國魂神社最大の例大祭で、ゴールデンウィークの風物詩。都指定無形民俗文化財に指定されています。',
-    keyapi: 'GWのお祭りといえばこれ！22台の山車が圧巻だよ〜',
-    source: 'ookunitama_matsuri',
-    spots: ['ookunitama']
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 1,
-    question: '「府中」という地名の由来は何でしょう？',
-    choices: ['府がたくさんあったから', '武蔵国の国府が置かれた中心地だから', '富士山が中央に見えるから', '武士が集まる中心地だったから'],
-    answer: 1,
-    explanation: '「府中」とは、古代に<strong>国府が置かれた中心地</strong>を指す言葉。武蔵国の国府がここに置かれたことから「府中」と呼ばれるようになりました。全国にも「府中」の地名がいくつかあります。',
-    keyapi: '広島にも「府中市」があるよ！同じ由来なんだ〜',
-    source: 'fuchu_official'
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 2,
-    question: '府中市が市制を施行（市になった）したのは何年？',
-    choices: ['1925年（大正14年）', '1954年（昭和29年）', '1970年（昭和45年）', '1989年（平成元年）'],
-    answer: 1,
-    explanation: '府中市は<strong>1954年（昭和29年）4月1日</strong>に、府中町・多磨村・西府村が合併して誕生しました。2024年に市制施行70周年を迎えました。',
-    keyapi: '昭和29年生まれの府中市は、ぼくたちより若いかも？',
-    source: 'fuchu_official'
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 2,
-    question: '大國魂神社の本殿が造営されたのは何時代？',
-    choices: ['鎌倉時代', '江戸時代（寛文年間）', '明治時代', '昭和時代'],
-    answer: 1,
-    explanation: '大國魂神社の本殿は<strong>江戸時代の寛文年間（1661〜73年）</strong>に造営されました。慶応・昭和年間に修復されています。境内には嘉永7年（1854年）再建の鼓楼など、貴重な建造物が並びます。',
-    keyapi: '江戸時代の建物が今も残ってるなんてすごいよね〜',
-    source: 'ookunitama',
-    spots: ['ookunitama']
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 2,
-    question: '府中市の姉妹都市はどこ？',
-    choices: ['長野県佐久穂町', '北海道函館市', '京都府宇治市', '沖縄県石垣市'],
-    answer: 0,
-    explanation: '府中市の姉妹都市は<strong>長野県佐久穂町</strong>。1979年に旧八千穂村と姉妹都市提携、合併後の2005年にあらためて佐久穂町と提携しました。海外友好都市はオーストリア・ウィーン市ヘルナルス区。',
-    keyapi: '長野と東京、自然の豊かさでつながってるよ〜🌳',
-    source: 'fuchu_official'
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 2,
-    question: '府中市の海外友好都市はどこの国の都市？',
-    choices: ['ドイツ', 'フランス', 'オーストリア', 'イタリア'],
-    answer: 2,
-    explanation: '府中市は<strong>オーストリア・ウィーン市ヘルナルス区</strong>と1992年に友好都市提携を結んでいます。文化・教育分野を中心とした交流が続いています。',
-    keyapi: 'ヨーロッパとも繋がっているんだ〜！意外でしょ？',
-    source: 'fuchu_official'
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 2,
-    question: 'くらやみ祭の起源と関係が深い、平安時代の武将は誰？',
-    choices: ['源頼朝', '源頼義・義家父子', '平清盛', '坂上田村麻呂'],
-    answer: 1,
-    explanation: 'くらやみ祭と並ぶ大國魂神社の祭事「すもも祭」は、<strong>源頼義・義家父子</strong>が奥州安倍氏平定（前九年の役）の戦勝祈願をしたことが起源と伝えられています。',
-    keyapi: '武将も訪れた歴史ある神社なんだ〜⚔️',
-    source: 'ookunitama_matsuri',
-    spots: ['ookunitama']
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 3,
-    question: '府中市の隔り・国分寺市にあり、武蔵国府と関係が深い「武蔵国分寺跡」を建立したのはどの天皇？',
-    choices: ['天智天皇', '聖武天皇', '桓武天皇', '後醍醐天皇'],
-    answer: 1,
-    explanation: '<strong>聖武天皇</strong>が国分寺建立の詔（みことのり）（741年）を発し、全国に国分寺・国分尼寺が建てられました。武蔵国分寺跡は府中市の隣・国分寺市にありますが、武蔵国府との関係が深い遺跡です。',
-    keyapi: '聖武天皇は奈良の大仏も造った天皇さまだよ〜',
-    source: 'fuchu_history'
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 3,
-    question: 'ケヤキ並木の中で、最も古いケヤキの樹齢はおよそ何年？',
-    choices: ['約100年', '約200年', '約400年', '約600年'],
-    answer: 2,
-    explanation: 'ケヤキ並木最古の木は<strong>樹齢約400年</strong>と言われています。拝殿よりケヤキ並木に向かい旧甲州街道手前にあり、長い時代を見守ってきました。',
-    keyapi: '400年！江戸時代から見守ってきた大先輩のケヤキだね〜👴',
-    source: 'keyaki',
-    spots: ['keyaki-namiki']
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 3,
-    question: 'ケヤキ並木は、源頼義・義家父子が植えた苗木が始まりとされていますが、何の戦の際？',
-    choices: ['平将門の乱', '前九年の役', '承久の乱', '応仁の乱'],
-    answer: 1,
-    explanation: '<strong>前九年の役</strong>（1051～62）に戦勝祈願のため大國魂神社に参拝し、凱旋時に苗木1000本を奉樹したと伝えられています。これが府中のケヤキ並木の始まりとされています。',
-    keyapi: 'ぼくたちの先祖は、1000年近く前に植えられたんだ…！',
-    source: 'ookunitama',
-    spots: ['ookunitama', 'keyaki-namiki']
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 3,
-    question: '府中市の人口はおよそ何人？（2024年時点）',
-    choices: ['約13万人', '約26万人', '約40万人', '約60万人'],
-    answer: 1,
-    explanation: '府中市の人口は<strong>約26万人</strong>（2024年時点で約260,232人）。東京多摩地域の主要都市の一つです。面積は29.43平方キロメートル。',
-    keyapi: '東京都の市の中でもしっかり大きな街なんだよ〜',
-    source: 'fuchu_official'
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 3,
-    question: 'ケヤキ並木は、徳川家のどの将軍が補植したと伝えられている？',
-    choices: ['徳川家康', '徳川綱吉', '徳川吉宗', '徳川慶喜'],
-    answer: 0,
-    explanation: '<strong>徳川家康</strong>が関ヶ原の戦いの戦勝祈願に大國魂神社を訪れた際にケヤキ苗を寄進し、補植したと伝えられています。江戸時代を通じて街道筋として整備されました。',
-    keyapi: '家康公もぼくたちの先祖を見ていたかも〜👀',
-    source: 'ookunitama',
-    spots: ['ookunitama', 'keyaki-namiki']
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 2,
-    question: '府中市内にある古代の遺跡「国史跡武蔵国府跡」の中心エリアは？',
-    choices: ['国衙地区', '関所地区', '城下地区', '商家地区'],
-    answer: 0,
-    explanation: '<strong>国衙（こくが）地区</strong>は、武蔵国の役所が置かれた中心エリア。大國魂神社の境内および東側一帯に広がり、現在も発掘調査・整備が続けられています。',
-    keyapi: '神社の下に古代の役所が眠ってるなんてロマンだよね〜',
-    source: 'ookunitama',
-    spots: ['ookunitama', 'musashi-kokufu']
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 1,
-    question: '大國魂神社で行われる「すもも祭」は何月に開催される？',
-    choices: ['5月', '7月', '9月', '11月'],
-    answer: 1,
-    explanation: 'すもも祭は毎年<strong>7月20日</strong>に行われる夏の風物詩。約120軒の露店が並び、約7万人の参拝客で賑わいます。この日のみ授与される「からす団扇・からす扇子」が有名です。',
-    keyapi: '夏のお祭り！からす団扇でひと夏を涼しく〜🍧',
-    source: 'ookunitama_matsuri',
-    spots: ['ookunitama']
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 3,
-    question: 'すもも祭で授与される「からす団扇・からす扇子」のご利益は？',
-    choices: ['縁結び', '学業成就', '五穀豊穣・悪疫防除', '勝負運'],
-    answer: 2,
-    explanation: 'からす団扇・からす扇子は<strong>五穀豊穣・悪疫防除（あくえきぼうじょ）</strong>を祈願するもの。源頼義が奥州安倍氏平定の戦勝祈願をした際、カラスが瑞兆として現れたことに由来します。',
-    keyapi: 'カラスが幸せを運ぶなんて、素敵な伝説だね〜🐦',
-    source: 'ookunitama_matsuri'
-  },
-
-  // ============================================================
-  // === 名所カテゴリー（35問）===
-  // ============================================================
-  {
-    category: 'spot', catLabel: '名所', difficulty: 1,
-    question: '府中市にある、日本でも有数の競馬場の正式名称は？',
-    choices: ['府中競馬場', '東京競馬場', '武蔵野競馬場', '関東中央競馬場'],
-    answer: 1,
-    explanation: '府中市にある競馬場の正式名称は<strong>「東京競馬場」</strong>です。JRA最大級の競馬場で、日本ダービーやジャパンカップなどG1レースが開催されます。「府中競馬場」と呼ばれることも多いですね。',
-    keyapi: '愛称は「府中競馬場」、正式には「東京競馬場」だよ〜🐎',
-    source: 'jra',
-    spots: ['tokyo-keiba']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 1,
-    question: '馬場大門のケヤキ並木は、およそ何メートル続いている？',
-    choices: ['約150m', '約500m', '約1km', '約2km'],
-    answer: 1,
-    explanation: '馬場大門のケヤキ並木は、京王線府中駅西側を中心に南北に<strong>約500〜600m</strong>続き、約120本のケヤキが並んでいます。大國魂神社の参道としての役割も持っています。',
-    keyapi: 'ぼくたちの仲間が約120本！壮観でしょ〜🌳🌳🌳',
-    source: 'ookunitama',
-    spots: ['ookunitama', 'keyaki-namiki']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 1,
-    question: '府中市郷土の森博物館の特徴を表すのに最も近いものは？',
-    choices: ['屋内展示だけの近代的な博物館', '野外を含めた「森」全体が博物館', 'スポーツ専門博物館', '水族館を併設した博物館'],
-    answer: 1,
-    explanation: '府中市郷土の森博物館は、<strong>野外を含めた「森」全体を博物館</strong>とするフィールドミュージアム。府中の歴史や文化を体感でき、梅まつり・あじさいまつり・プラネタリウムなど四季折々の楽しみがあります。',
-    keyapi: '梅・あじさい・桜・紅葉、季節ごとに楽しいよ〜🌸',
-    source: 'kanko_spot',
-    spots: ['kyodo-museum']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 1,
-    question: '府中市郷土の森公園に隣接する、自然豊かな川はどれ？',
-    choices: ['荒川', '多摩川', '隅田川', '江戸川'],
-    answer: 1,
-    explanation: '府中市郷土の森公園は<strong>多摩川</strong>沿いに広がっています。緑道や豊かな自然に囲まれ、市民の憩いの場として親しまれています。郷土の森観光物産館もここにあります。',
-    keyapi: '多摩川沿いはお散歩にもぴったり〜🚶',
-    source: 'kanko_spot',
-    spots: ['kyodonomori-park', 'bussankan']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 1,
-    question: '府中市内にある、ビールの工場見学ができる人気スポットは？',
-    choices: ['サントリー〈天然水のビール工場〉東京・武蔵野', 'アサヒ府中工場', 'キリン東京ビール園', 'サッポロ多摩工場'],
-    answer: 0,
-    explanation: '<strong>サントリー〈天然水のビール工場〉東京・武蔵野</strong>は府中市矢崎町にあり、1963年に建てられたサントリー初のビール工場。ザ・プレミアム・モルツもここで誕生しました。無料で工場見学（要予約）ができます。',
-    keyapi: '見学のあとはビールが3杯試飲できるんだって〜🍺',
-    source: 'suntory',
-    spots: ['suntory-factory']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 2,
-    question: '馬場大門のケヤキ並木には、ケヤキ以外にもどんな木が植えられている？',
-    choices: ['イチョウ', 'イヌシデ・エノキ', 'ソメイヨシノだけ', 'スギ'],
-    answer: 1,
-    explanation: 'ケヤキ並木には、ケヤキ約120本に加え<strong>イヌシデ・エノキ</strong>などの大木も生育しています。特にイヌシデは全て50年以上前から生育する貴重な木です。',
-    keyapi: 'ぼくの仲間がたくさんいるんだよ〜！実は多様な森なんだ',
-    source: 'keyaki',
-    spots: ['keyaki-namiki']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 2,
-    question: '東京競馬場の最寄り駅として正しいのは？',
-    choices: ['府中駅', '府中本町駅・府中競馬正門前駅', '分倍河原駅', '武蔵野台駅'],
-    answer: 1,
-    explanation: '東京競馬場の最寄り駅は、JR<strong>府中本町駅</strong>と京王線<strong>府中競馬正門前駅</strong>。レース開催日は多くの来場者で賑わいます。',
-    keyapi: '京王線にはレース専用駅まであるよ〜🚃',
-    source: 'jra',
-    spots: ['tokyo-keiba', 'fuchu-honmachi-station']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 2,
-    question: '東京競馬場で開催される、世界的に有名な国際G1レースは？',
-    choices: ['有馬記念', 'ジャパンカップ', '皐月賞', '菊花賞'],
-    answer: 1,
-    explanation: '<strong>ジャパンカップ</strong>は世界のトップホースが集う国際G1レース。日本ダービー、天皇賞（秋）、オークスなど数々のビッグレースが東京競馬場で開催されます。',
-    keyapi: '世界中の名馬が府中に集結するんだよ〜🌏🐎',
-    source: 'jra',
-    spots: ['tokyo-keiba']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 2,
-    question: '府中市にある複合商業施設で、けやき並木に面したショッピングモールは？',
-    choices: ['ルミネ府中', 'ミッテン府中・フォーリス', 'マルイ府中', '府中PARCO'],
-    answer: 1,
-    explanation: '<strong>ミッテン府中・専門店街フォーリス</strong>は京王線府中駅南口の府中けやき並木通りに面した複合商業施設。映画館も併設され、市民の集いの場となっています。',
-    keyapi: 'お買い物も府中駅近くで楽しめるよ〜🛍️',
-    source: 'keyaki',
-    spots: ['keyaki-namiki', 'foris']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 2,
-    question: '府中市美術館があるのはどの公園内？',
-    choices: ['郷土の森公園', '府中の森公園', '武蔵野公園', '浅間山公園'],
-    answer: 1,
-    explanation: '府中市美術館は<strong>府中の森公園</strong>内にあります。府中の森公園は旧米軍施設跡地に整備された公園で、芸術劇場や図書館・スポーツ施設なども集まる文化エリアです。',
-    keyapi: '芸術もスポーツも一度に楽しめる素敵な公園だよ〜🎨',
-    source: 'kanko_spot',
-    spots: ['fuchu-no-mori-park', 'fuchu-art-museum']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 3,
-    question: 'サントリー武蔵野ビール工場が建てられたのは何年？',
-    choices: ['1955年', '1963年', '1978年', '1990年'],
-    answer: 1,
-    explanation: 'サントリー武蔵野ビール工場は<strong>1963年（昭和38年）</strong>に竣工。サントリーが本格的にビールの製造販売を開始した記念すべき工場です。',
-    keyapi: '60年以上の歴史あるビール工場なんだよ〜🍺',
-    source: 'suntory',
-    spots: ['suntory-factory']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 3,
-    question: '大國魂神社の境内にある、東京都内最大規模の樹齢を誇るご神木は？',
-    choices: ['大銀杏', '巨樹のケヤキ', '神社椨（タブノキ）', '夫婦楠'],
-    answer: 0,
-    explanation: '大國魂神社境内の<strong>大銀杏</strong>は東京都の天然記念物に指定されており、樹齢推定1000年とも言われる巨樹です。秋には黄金色に染まり圧巻の景色になります。',
-    keyapi: 'ぼくたちケヤキも長生きだけど、銀杏はもっと長生きさん〜',
-    source: 'ookunitama',
-    spots: ['ookunitama']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 2,
-    question: '府中市内にある、競馬の歴史が学べる博物館の名前は？',
-    choices: ['JRA競馬博物館', '府中サラブレッド館', '東京ホースミュージアム', '武蔵野競馬記念館'],
-    answer: 0,
-    explanation: '<strong>JRA競馬博物館</strong>は東京競馬場内にある競馬専門博物館。映像ホールでのドラマ上映や、メモリアルホースの展示、競走馬シミュレーターで騎手気分が味わえます。',
-    keyapi: '騎手気分が味わえるなんてワクワクだね〜🏇',
-    source: 'jra',
-    spots: ['tokyo-keiba', 'jra-museum']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 3,
-    question: '府中市内の歴史散策コース、「ハケの道」とは何のこと？',
-    choices: ['古い宿場街道', '国分寺崖線（武蔵野台地の段丘）沿いの道', '商店街のメインストリート', '神社の参道'],
-    answer: 1,
-    explanation: '「<strong>ハケの道</strong>」は<strong>国分寺崖線（こくぶんじがいせん）</strong>沿いの道のこと。「ハケ」とは武蔵野台地と多摩川低地の境にある崖（段丘）を指す言葉で、湧水や緑豊かな道として知られます。',
-    keyapi: 'ハケってカワイイ呼び名だけど、地形の名前なんだよ〜',
-    source: 'kanko_spot'
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 2,
-    question: '府中市の中心エリアにある複合文化施設の名前は？',
-    choices: ['府中フォーラム', '府中の森芸術劇場', 'サントリーホール府中', '武蔵野文化センター'],
-    answer: 1,
-    explanation: '<strong>府中の森芸術劇場</strong>は府中の森公園内にある複合文化施設。コンサート・演劇・各種イベントが開催され、市内最大級の文化発信拠点となっています。',
-    keyapi: 'クラシックも演劇も楽しめる素敵な劇場だよ〜🎭',
-    source: 'kanko_spot',
-    spots: ['fuchu-no-mori-park']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 1,
-    question: '府中市郷土の森博物館で楽しめる、星空の鑑賞施設は？',
-    choices: ['天体ドーム', 'プラネタリウム', '展望台', '天文台'],
-    answer: 1,
-    explanation: '郷土の森博物館には<strong>プラネタリウム</strong>があり、季節ごとに様々なプログラムが楽しめます。野外の歴史的建造物の見学と合わせて1日楽しめるスポットです。',
-    keyapi: '星空とお散歩、両方たのしめるよ〜⭐',
-    source: 'kanko_spot',
-    spots: ['kyodo-museum']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 3,
-    question: '府中市にある「東京農工大学」の府中キャンパスは何学部？',
-    choices: ['工学部', '農学部', '医学部', '文学部'],
-    answer: 1,
-    explanation: '東京農工大学の府中キャンパスは<strong>農学部</strong>。広大な敷地に農場や演習林があり、府中市の文教エリアの一翼を担っています。工学部キャンパスは小金井市にあります。',
-    keyapi: 'お隣の大学では、お米や野菜が育てられているんだ〜🌾',
-    source: 'fuchu_official'
-  },
-
-  // ============================================================
-  // === グルメ・文化カテゴリー（35問）===
-  // ============================================================
-  {
-    category: 'gourmet', catLabel: 'グルメ', difficulty: 1,
-    question: '府中駅周辺にある老舗「魚元（うおもと）」の名物料理は？',
-    choices: ['そば', 'うなぎ', '寿司', '天ぷら'],
-    answer: 1,
-    explanation: '<strong>「魚元」</strong>は京王線府中駅から徒歩5分の<strong>うなぎ・日本料理の老舗</strong>。浜名湖産のうなぎを使った上品な鰻重が名物で、長年地元で愛されています。',
-    keyapi: '老舗のうなぎ、一度は味わいたい贅沢だね〜🍱',
-    source: 'kanko_product',
-    spots: ['sando', 'fuchu-station']
-  },
-  {
-    category: 'gourmet', catLabel: 'グルメ', difficulty: 1,
-    question: '府中の特産品「黒米うどん」の特徴は？',
-    choices: ['イカ墨を使っている', '古代米を使っている', '海苔を練り込んでいる', '黒胡麻が入っている'],
-    answer: 1,
-    explanation: '黒米うどんは<strong>古代米（黒米）</strong>を使った珍しい黒色のうどんで、府中の特産品として販売されています。郷土の森観光物産館などで購入できます。',
-    keyapi: '古代米って、なんだか歴史を感じる味わいだね〜🌾',
-    source: 'kanko_spot',
-    spots: ['bussankan']
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 1,
-    question: 'くらやみ祭で行われる、国内最大級と言われるものは？',
-    choices: ['花火', '大太鼓と山車（だし）の行列', '相撲', '弓道大会'],
-    answer: 1,
-    explanation: 'くらやみ祭では、国内最大級の<strong>6張の大太鼓と22台もの山車（だし）の行列</strong>が見どころです。神輿8基も登場し、迫力満点。都指定無形民俗文化財に指定されています。',
-    keyapi: 'お腹に響く大太鼓の音、一度聴くと忘れられないよ〜🥁',
-    source: 'ookunitama_matsuri'
-  },
-  {
-    category: 'gourmet', catLabel: 'グルメ', difficulty: 1,
-    question: '府中市内のお店で買える、競馬場の街ならではのお菓子は？',
-    choices: ['レーシングサラブレッドサブレ', '蹄鉄まんじゅう', '騎手プリン', 'ダービードーナツ'],
-    answer: 0,
-    explanation: '<strong>レーシングサラブレッドサブレ</strong>は、府中観光協会推奨品「府中太鼓判」に選ばれているお菓子。東京競馬場のお膝元・府中ならではのユニークなお土産です。',
-    keyapi: '可愛いサラブレッド型のサブレで、お土産にぴったり〜🐎',
-    source: 'jra',
-    spots: ['tokyo-keiba']
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 1,
-    question: '府中市の「市の鳥」に指定されているのは？',
-    choices: ['ツバメ', 'ひばり', 'カラス', 'スズメ'],
-    answer: 1,
-    explanation: '府中市の市の鳥は<strong>「ひばり」</strong>。澄みきった青空に真一文字に舞い上がるひばりは、「住みたくなる都市」を目指して進展を続ける府中市を象徴しています。',
-    keyapi: 'ひばりの歌声、聞こえると元気が出るよ〜🎵',
-    source: 'fuchu_official'
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 1,
-    question: '府中市の「市の木」に指定されているのは？',
-    choices: ['サクラ', 'ケヤキ', 'イチョウ', 'マツ'],
-    answer: 1,
-    explanation: '府中市の市の木は当然ながら<strong>「ケヤキ」</strong>！馬場大門のケヤキ並木は市のシンボルそのものです。市の花は「ウメ」と「サツキ」が指定されています。',
-    keyapi: 'やったー！ぼくたちケヤキは市の木なんだよ〜🌳✨',
-    source: 'keyaki',
-    spots: ['keyaki-namiki']
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 2,
-    question: '府中市の「市の花」に指定されているのは？',
-    choices: ['サクラ', 'ウメ', 'バラ', 'コスモス'],
-    answer: 1,
-    explanation: '府中市の市の花は<strong>「ウメ」と「サツキ」</strong>。郷土の森博物館の梅まつりは関東でも有名で、約60品種・1100本の梅が咲き誇ります。',
-    keyapi: '梅まつりは2月から3月！花の香りに包まれるよ〜🌸',
-    source: 'kanko_spot',
-    spots: ['kyodo-museum']
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 2,
-    question: 'すもも祭の日のみ授与される、災い除けの縁起物は？',
-    choices: ['からす団扇・からす扇子', 'すもも守り', '雷除け絵馬', '鈴守り'],
-    answer: 0,
-    explanation: 'すもも祭の日（7月20日）のみ授与される<strong>「からす団扇・からす扇子」</strong>は、五穀豊穣・悪疫防除を祈願する縁起物。家に飾ると魔除けになると言われます。',
-    keyapi: '一年に一日だけのレアアイテム！要チェックだよ〜🌟',
-    source: 'ookunitama_matsuri'
-  },
-  {
-    category: 'gourmet', catLabel: 'グルメ', difficulty: 2,
-    question: '府中市内で楽しめる、麺創研紅（こう）の名物は？',
-    choices: ['塩らーめん', '濃厚辛みそラーメン', '醤油らーめん', '冷やし中華'],
-    answer: 1,
-    explanation: '<strong>麺創研紅の「紅らーめん」</strong>は、濃厚辛みそラーメンで人気のメニュー。府中市のふるさと納税返礼品にもなっており、ラーメン好きから愛されています。',
-    keyapi: 'ピリッと辛い、クセになる味なんだって〜🌶️',
-    source: 'kanko_product'
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 2,
-    question: 'くらやみ祭の名前の由来は？',
-    choices: ['夜に行われるから', 'かつて街の灯りを消して行われたから', '祭神が暗闇の神様だから', '森の中で行われるから'],
-    answer: 1,
-    explanation: 'くらやみ祭の名前は、かつて<strong>街の灯りをすべて消して暗闇の中で神事を行った</strong>ことに由来します。現在は安全のため照明がありますが、伝統の名前が今も受け継がれています。',
-    keyapi: '昔は本当に真っ暗な中でやってたんだって！神秘的〜🌃',
-    source: 'ookunitama_matsuri'
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 3,
-    question: 'すもも祭で約120軒並ぶ露店で売られる、府中名物の果物は？',
-    choices: ['さくらんぼ', 'すもも', '梅', 'ぶどう'],
-    answer: 1,
-    explanation: '<strong>すもも（プラム）</strong>がお祭りの名前の由来。源頼義が戦勝祈願の御礼にすももを奉納したのが始まりとされ、今も7月20日に約120軒の露店が並びます。',
-    keyapi: '夏の風物詩！すももかき氷も人気だよ〜🍧',
-    source: 'ookunitama_matsuri'
-  },
-  {
-    category: 'gourmet', catLabel: 'グルメ', difficulty: 3,
-    question: '「TOKYO府中アイス」に使われている、府中市産の果物は？',
-    choices: ['いちご', 'ブルーベリー', '柿', 'キウイ'],
-    answer: 1,
-    explanation: '<strong>TOKYO府中アイス</strong>は、市内の農家が栽培した<strong>ブルーベリー</strong>と阿蘇産ジャージー牛乳を使用したヨーグルト風味のご当地アイス。ブルーベリーの鮮やかな紫色が特徴です。',
-    keyapi: 'ブルーベリーの鮮やかな紫、見ただけでも美味しそう〜💜',
-    source: 'kanko_product'
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 3,
-    question: '府中市公式マスコットキャラクター「ふちゅこま」のモチーフは？',
-    choices: ['多摩川の鯉', '大國魂神社の木造狛犬', 'ひばり', 'けやきの妖精'],
-    answer: 1,
-    explanation: 'ふちゅこまは大國魂神社所蔵の<strong>国指定重要文化財「木造狛犬」</strong>をベースにしたキャラクター。しっぽにケヤキの葉があしらわれています。2014年市制施行60周年記念で誕生しました。',
-    keyapi: 'ぼくのお友達かな？でもぼくはケヤキの妖精だよ〜🌱',
-    source: 'ookunitama',
-    spots: ['ookunitama']
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 3,
-    question: '府中市出身で、女子サッカー日本代表として活躍した有名選手は？',
-    choices: ['澤穂希', '宮間あや', '川澄奈穂美', '岩渕真奈'],
-    answer: 0,
-    explanation: '<strong>澤穂希（さわ ほまれ）</strong>選手は府中市出身。2011年女子W杯優勝の立役者で、府中市市民栄誉賞も受賞しています。',
-    keyapi: '世界一になった澤さんは府中の誇り〜⚽✨',
-    source: 'fuchu_people'
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 3,
-    question: '府中市内にあるラグビーの強豪チームは？',
-    choices: ['東芝ブレイブルーパス東京', 'パナソニックワイルドナイツ', 'NTTドコモレッドハリケーンズ', 'コカ・コーラレッドスパークス'],
-    answer: 0,
-    explanation: '府中市は<strong>「ラグビーのまち」</strong>として知られ、東芝ブレイブルーパス東京とサントリーサンゴリアスの2チームがホームタウンとしています。',
-    keyapi: 'ラグビーの試合観戦も府中の楽しみの一つだよ〜🏉',
-    source: 'suntory',
-    spots: ['suntory-rugby', 'suntory-factory']
-  },
-
-  // ============================================================
-  // === 歴史カテゴリー追加問題（+12問）===
-  // ============================================================
-  {
-    category: 'history', catLabel: '歴史', difficulty: 2,
-    question: '鎌倉幕府滅亡のきっかけとなった、府中市で行われた合戦は？',
-    choices: ['桶狭間の戦い', '分倍河原の戦い', '川中島の戦い', '関ヶ原の戦い'],
-    answer: 1,
-    explanation: '<strong>分倍河原の戦い</strong>（1333年）は、新田義貞率いる反幕府軍と北条泰家率いる鎌倉幕府軍が激突した合戦。新田軍の勝利が鎌倉幕府滅亡の決定的な節目となりました。',
-    keyapi: '府中が日本史の舞台になった大きな出来事だよ〜⚔️',
-    source: 'fuchu_history',
-    spots: ['bubaigawara']
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 2,
-    question: '分倍河原の戦いで、反幕府軍を率いた武将は？',
-    choices: ['足利尊氏', '楠木正成', '新田義貞', '後醍醐天皇'],
-    answer: 2,
-    explanation: '<strong>新田義貞</strong>が率いる反幕府軍が、北条泰家率いる鎌倉幕府軍を破った合戦。分倍河原駅前のロータリーには新田義貞の騎馬像が設置されています。',
-    keyapi: '分倍河原駅前で凛々しい義貞さまの像に会えるよ〜🐴',
-    source: 'fuchu_history',
-    spots: ['bubaigawara', 'bubai-station']
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 3,
-    question: '分倍河原古戦場碑が建てられたのは何年？',
-    choices: ['明治5年', '昭和10年', '昭和35年', '平成元年'],
-    answer: 1,
-    explanation: '分倍河原古戦場碑は<strong>昭和10年（1935年）</strong>、新田氏の子孫である元男爵・新田義美の筆によって建立されました。府中市分梅町2-59-4にあります。',
-    keyapi: '90年近く前に建てられた歴史の証人だね〜📜',
-    source: 'fuchu_history',
-    spots: ['bubaigawara']
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 3,
-    question: '府中市内にある「高安寺」は、どの武将が再興したお寺と伝えられている？',
-    choices: ['源頼朝', '足利尊氏', '徳川家康', '武田信玄'],
-    answer: 1,
-    explanation: '高安寺は<strong>足利尊氏</strong>が安国寺の一つとして再興したと伝えられる古刹。分倍河原の戦いとも関わりが深く、府中の歴史を物語る重要な寺院です。',
-    keyapi: 'お寺巡りも府中の楽しみの一つだよ〜🏛️',
-    source: 'fuchu_history',
-    spots: ['takaanji', 'bubaigawara']
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 3,
-    question: '府中市域に存在した古墳群の一つで、6世紀～7世紀の古墳群は？',
-    choices: ['白糸台古墳群', '稲荷山古墳群', '高松塚古墳', '大塚山古墳群'],
-    answer: 0,
-    explanation: '<strong>白糸台古墳群</strong>は、京王線多磨霊園駅西側から飛田給駅手前にかけて広がる古墳群。立川段丘の縁端に築造され、6世紀初頭から7世紀にかけて造られました。',
-    keyapi: '古墳時代から人が住んでいた、長い歴史の街なんだね〜🏺',
-    source: 'fuchu_history'
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 2,
-    question: '府中市内には国・都・市指定の文化財が合計で何件ある？',
-    choices: ['約30件', '約50件', '約77件', '約120件'],
-    answer: 2,
-    explanation: '府中市には<strong>国の文化財14件、都の文化財18件、市の文化財45件の計77件</strong>の指定文化財があります（2024年時点）。1900年の歴史にふさわしい文化財の宝庫です。',
-    keyapi: '77件もの文化財！歩いて回るだけでもタイムトラベルだね〜⏰',
-    source: 'fuchu_official'
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 1,
-    question: '江戸時代、府中宿は何街道の宿場町だった？',
-    choices: ['東海道', '中山道', '甲州街道', '日光街道'],
-    answer: 2,
-    explanation: '府中宿は江戸時代の<strong>甲州街道</strong>の宿場町。江戸（日本橋）から数えて第4の宿場で、武蔵国の中心として大いに栄えました。けやき並木は旧甲州街道沿いに位置します。',
-    keyapi: '江戸時代の主要街道の重要拠点だったんだ〜🛤️',
-    source: 'keyaki',
-    spots: ['keyaki-namiki']
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 2,
-    question: '大國魂神社の創建は西暦何年と伝えられている？',
-    choices: ['西暦41年', '西暦111年', '西暦500年', '西暦794年'],
-    answer: 1,
-    explanation: '大國魂神社の創建は<strong>景行天皇41年（西暦111年）</strong>と伝えられています。約1900年の歴史を持つ古社です。',
-    keyapi: '西暦100年代ってどんな時代だろう？想像つかないね〜⛩️',
-    source: 'ookunitama',
-    spots: ['ookunitama']
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 3,
-    question: '武蔵国に置かれた古代の役所「武蔵国府」の中心建物群があったとされる地区は、現在の何という地名？',
-    choices: ['本町', '宮町', '寿町', '矢崎町'],
-    answer: 1,
-    explanation: '<strong>宮町</strong>を中心に、大國魂神社境内および東側一帯に武蔵国府の中枢「国衙（こくが）」がありました。発掘調査により当時の建物跡が確認されています。',
-    keyapi: '足元に古代のロマンが眠っているんだよ〜🏛️',
-    source: 'ookunitama',
-    spots: ['ookunitama', 'musashi-kokufu']
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 2,
-    question: '府中市の市制施行70周年は何年だった？',
-    choices: ['2014年', '2019年', '2024年', '2030年'],
-    answer: 2,
-    explanation: '1954年（昭和29年）に市制施行した府中市は、<strong>2024年に市制施行70周年</strong>を迎えました。記念事業が市を挙げて行われました。',
-    keyapi: '70歳のお誕生日おめでとう、府中市〜🎂',
-    source: 'fuchu_official'
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 1,
-    question: 'けやき並木の景観は、何のシンボルとして親しまれている？',
-    choices: ['国会議事堂のシンボル', '府中市のシンボル', '東京都のシンボル', '日本のシンボル'],
-    answer: 1,
-    explanation: 'けやき並木は<strong>府中市のシンボル</strong>として、市民から愛され続けています。市の木にもケヤキが指定されています。',
-    keyapi: 'ぼくたちの仲間が街のシンボル！誇らしいな〜🌳✨',
-    source: 'keyaki',
-    spots: ['keyaki-namiki']
-  },
-  {
-    category: 'history', catLabel: '歴史', difficulty: 3,
-    question: '府中市域から発掘された、武蔵国府の遺跡で見つかった代表的な遺物は？',
-    choices: ['銅鏡', '土器・瓦', '甲冑', '石器'],
-    answer: 1,
-    explanation: '武蔵国府跡からは<strong>土器・瓦・木簡</strong>など、古代官衙（役所）に関する貴重な遺物が多数出土しています。これらは郷土の森博物館などで展示・研究されています。',
-    keyapi: '昔の人の暮らしが土の中から蘇ってくるんだ〜🏺',
-    source: 'fuchu_history',
-    spots: ['musashi-kokufu', 'kyodo-museum']
-  },
-
-  // ============================================================
-  // === 名所カテゴリー追加問題（+18問）===
-  // ============================================================
-  {
-    category: 'spot', catLabel: '名所', difficulty: 1,
-    question: '府中市内にあり、多摩川沿いに東西約10kmにわたって続く歩行者・自転車専用道路は？',
-    choices: ['府中多摩川かぜのみち', '多摩サイクリングロード', '武蔵野グリーンライン', '甲州街道緑道'],
-    answer: 0,
-    explanation: '<strong>「府中多摩川かぜのみち」</strong>は市の南側を流れる多摩川沿いの堤防上、東西約10kmに及ぶ歩行者・自転車専用道。市立公園として管理され、ジョギングやサイクリングが楽しめます。',
-    keyapi: '川風を感じながら10km！気持ちいいだろうね〜🚴',
-    source: 'kanko_spot',
-    spots: ['kazenomichi']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 2,
-    question: '府中市内の公園の数は約何ヶ所？',
-    choices: ['約50ヶ所', '約100ヶ所', '約200ヶ所', '約400ヶ所'],
-    answer: 3,
-    explanation: '府中市内の公園は<strong>約400ヶ所</strong>もあり、市民が身近に自然と触れ合える環境が整っています。子育て世代に人気の街でもあります。',
-    keyapi: '400ヶ所！毎日違う公園で遊べちゃう〜🌳🌳🌳',
-    source: 'kanko_spot'
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 2,
-    question: '府中市内にある、多摩川の流れをミニチュア化したせせらぎで水遊びができる公園は？',
-    choices: ['府中の森公園', '郷土の森公園', '多摩川親水公園', '浅間山公園'],
-    answer: 2,
-    explanation: '<strong>多摩川親水公園</strong>は稲城大橋近くの河川敷にあり、源流から東京湾までの流れをイメージしたミニチュア多摩川が整備されています。夏は子どもたちの水遊びの場として人気です。',
-    keyapi: '夏は水遊び！多摩川の旅をミニチュアで体験〜💧',
-    source: 'kanko_spot',
-    spots: ['tama-shinsui']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 2,
-    question: '府中市内の自然豊かな山で、桜の名所としても知られるのは？',
-    choices: ['高尾山', '浅間山（せんげんやま）', '陣馬山', '御岳山'],
-    answer: 1,
-    explanation: '<strong>浅間山（せんげんやま）</strong>は府中市内にある標高約80mの低山。武蔵野の自然が残り、桜やムサシノキスゲの群生地として知られています。',
-    keyapi: '東京に「浅間山」があるなんて意外でしょ？🌸',
-    source: 'kanko_spot',
-    spots: ['sengenyama']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 1,
-    question: '京王線府中駅から新宿駅までは特急で約何分？',
-    choices: ['約12分', '約24分', '約35分', '約50分'],
-    answer: 1,
-    explanation: '京王線府中駅から新宿駅までは特急で<strong>約24分</strong>。都心へのアクセスがとても良いことから、住みたい街としても人気があります。',
-    keyapi: '都心にすぐ出られて自然も豊か、府中はいいとこ取り〜🚃',
-    source: 'transport',
-    spots: ['fuchu-station']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 2,
-    question: 'JR南武線で府中本町駅から川崎駅まではおよそ何分かかる？',
-    choices: ['約20分', '約30分', '約44分', '約60分'],
-    answer: 2,
-    explanation: 'JR南武線で府中本町駅から川崎駅までは各驛で<strong>約44分</strong>。多方面へのアクセスが良好な街です。',
-    keyapi: '南武線で川崎まで一本！神奈川方面にも便利〜🚆',
-    source: 'transport',
-    spots: ['fuchu-honmachi-station']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 2,
-    question: 'JR府中本町駅に乗り入れている、ない路線はどれ？',
-    choices: ['JR南武線', 'JR武蔵野線', 'JR中央線', 'JR南武線・武蔵野線（の両方）'],
-    answer: 2,
-    explanation: 'JR府中本町駅には<strong>JR南武線とJR武蔵野線</strong>が乗り入れています。中央線は通っていません。武蔵野線は東京競馬場開催日には臨時列車も運行されます。',
-    keyapi: '2路線が交わる便利な駅なんだ〜🚉',
-    source: 'jra',
-    spots: ['tokyo-keiba', 'fuchu-honmachi-station']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 3,
-    question: '府中市内にある京王電鉄の駅で、ないものは？',
-    choices: ['府中駅', '東府中駅', '武蔵野台駅', '飛田給駅'],
-    answer: 3,
-    explanation: '飛田給駅は<strong>調布市</strong>にある京王線の駅です。府中市内には府中駅・東府中駅・武蔵野台駅・多磨霊園駅・分倍河原駅・中河原駅・府中競馬正門前駅などがあります。',
-    keyapi: '府中市内には京王線の駅がたくさんあるよ〜🚃',
-    source: 'fuchu_history',
-    spots: ['fuchu-station', 'bubai-station']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 1,
-    question: '府中駅南口直結「くるる府中」２階中央広場に設置されている、誰でも演奏できる楽器は？',
-    choices: ['ストリートバンド', 'ストリートピアノ', 'ストリート太鼓', 'ストリートギター'],
-    answer: 1,
-    explanation: '<strong>くるる府中のストリートピアノ</strong>は府中駅南口直結の複合商業施設「くるる府中」2階広場に設置されています。演奏可能時間は10：00〜20：00。プロアマ問わず誰でも演奏できます。',
-    keyapi: 'けやき並木に音楽が流れる、素敵な街だね〜🎹',
-    source: 'keyaki',
-    spots: ['keyaki-namiki']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 2,
-    question: '府中駅南口直結の複合商業施設「くるる府中」の特徴は？',
-    choices: ['駅直結、映画館併設の商業施設', '純和風の老舗百貨店', 'スポーツ専門施設', '都立美術館'],
-    answer: 0,
-    explanation: '<strong>「くるる府中」</strong>は2005年開業、京王線府中駅南口直結の複合商業施設。TOHOシネマズ・タイトーステーションを併設し、2階にはストリートピアノもあります。',
-    keyapi: '映画もショッピングもピアノも、一箇所で楽しめるよ〜🎬',
-    source: 'transport',
-    spots: ['art-beans', 'fuchu-station']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 2,
-    question: '府中市の面積は約何平方キロメートル？',
-    choices: ['約15km²', '約29km²', '約45km²', '約60km²'],
-    answer: 1,
-    explanation: '府中市の面積は<strong>約29.43平方キロメートル</strong>。約26万人がコンパクトに暮らす、密度のある都市です。',
-    keyapi: 'コンパクトだけど見どころ満載の街なんだよ〜🗾',
-    source: 'fuchu_official'
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 3,
-    question: '府中市内にある、農業大学のキャンパスは？',
-    choices: ['東京大学農学部', '東京農工大学農学部', '日本大学農獣医学部', '東京農業大学'],
-    answer: 1,
-    explanation: '<strong>東京農工大学農学部</strong>の府中キャンパスがあります（住所：東京都府中市晴見町3-8-1）。広大な敷地と農場・演習林を持ち、府中の文教エリアの一翼を担います。',
-    keyapi: '広い農場やお花畑があって学生さんも素敵だよ〜🌾',
-    source: 'fuchu_official'
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 2,
-    question: '東京競馬場で開催される、日本ダービーの正式名称は？',
-    choices: ['東京優駿', '皐月賞', '菊花賞', '天皇賞'],
-    answer: 0,
-    explanation: '日本ダービーの正式名称は<strong>「東京優駿（とうきょうゆうしゅん）」</strong>。3歳馬の頂点を決める、競馬界最高峰のレースです。毎年5月末に府中で開催されます。',
-    keyapi: '世代最強の3歳馬が府中に集まる、夢のレースだよ〜🐴',
-    source: 'jra',
-    spots: ['tokyo-keiba']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 3,
-    question: '府中市内にある、府中市役所の最寄り駅は？',
-    choices: ['京王線府中駅', 'JR分倍河原駅', '京王線東府中駅', 'JR西府駅'],
-    answer: 0,
-    explanation: '府中市役所の最寄り駅は<strong>京王線府中駅</strong>。徒歩約5分の場所にあります。市役所はけやき並木からも近い場所に位置しています。',
-    keyapi: '駅から歩いてすぐ！便利な場所にあるんだ〜🏛️',
-    source: 'keyaki',
-    spots: ['keyaki-namiki', 'fuchu-station']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 3,
-    question: '府中市内にある、武蔵野の雑木林を保存した自然公園は？',
-    choices: ['府中の森公園', '浅間山公園', '武蔵野公園', '郷土の森公園'],
-    answer: 1,
-    explanation: '<strong>浅間山公園</strong>は、武蔵野の雑木林を保存した自然公園。希少な野草「ムサシノキスゲ」の群生地として知られ、5月の花期にはハイカーで賑わいます。',
-    keyapi: 'ムサシノキスゲは府中の宝物だよ〜🌼',
-    source: 'kanko_spot',
-    spots: ['sengenyama']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 2,
-    question: '府中市の郷土の森公園内にある、観光案内・物産販売の拠点は？',
-    choices: ['郷土の森博物館', '郷土の森観光物産館', '府中観光センター', 'けやき観光案内所'],
-    answer: 1,
-    explanation: '<strong>郷土の森観光物産館</strong>は、地元野菜・お土産・観光情報を発信する施設。郷土の森博物館と隣接し、多摩川の自然に囲まれた癒しスポットです。',
-    keyapi: 'お土産選びはここがおすすめ〜🛍️',
-    source: 'kanko_spot',
-    spots: ['kyodonomori-park', 'kyodo-museum']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 2,
-    question: '東京競馬場の最初の競馬開催はいつ？',
-    choices: ['明治40年', '昭和8年', '昭和25年', '昭和40年'],
-    answer: 1,
-    explanation: '東京競馬場は<strong>昭和8年（1933年）</strong>11月に開設されました。現在では年間多数のG1レースが開催される日本競馬の中心地です。',
-    keyapi: '90年以上の歴史ある競馬場、ロマンを感じるね〜🐎',
-    source: 'jra',
-    spots: ['tokyo-keiba']
-  },
-  {
-    category: 'spot', catLabel: '名所', difficulty: 1,
-    question: 'けやき並木通りで毎年開催される、行列ができることで有名なイベントは？',
-    choices: ['桜まつり', 'けやき市', '紅葉まつり', '盆踊り'],
-    answer: 1,
-    explanation: '<strong>「府中けやき市」</strong>は秋に開催される人気イベント。けやき並木通りに地元の店や手作り市の屋台が並び、多くの人で賑わいます。',
-    keyapi: 'ぼくたちの並木の下で楽しいお店がいっぱい〜🎪',
-    source: 'keyaki',
-    spots: ['keyaki-namiki']
-  },
-
-  // ============================================================
-  // === グルメ・文化カテゴリー追加問題（+20問）===
-  // ============================================================
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 1,
-    question: '府中市内でラグビーを本拠地とする、もう一つの強豪チームは？',
-    choices: ['東京サントリーサンゴリアス', '横浜キヤノンイーグルス', '埼玉ワイルドナイツ', 'クボタスピアーズ'],
-    answer: 0,
-    explanation: '<strong>東京サントリーサンゴリアス</strong>は府中市矢崎町に本拠地を持つラグビートップリーグの強豪。東芝ブレイブルーパス東京とのダービー戦は「府中ダービー」と呼ばれ盛り上がります。',
-    keyapi: '府中ダービーは大盛り上がり！熱気がすごいよ〜🏉',
-    source: 'suntory',
-    spots: ['suntory-rugby', 'suntory-factory']
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 2,
-    question: '府中市と2チームのラグビーチームが2018年に締結したのは？',
-    choices: ['競技協力協定', '友好都市協定', 'パートナーシップ協定', '販売契約'],
-    answer: 2,
-    explanation: '2018年、府中市は東芝ブレイブルーパスとサントリーサンゴリアスと<strong>パートナーシップ協定</strong>を締結。市民交流イベントや子ども向けラグビー教室などを共同で実施しています。',
-    keyapi: '街とチームが一緒に盛り上げる、いい関係だね〜🤝',
-    source: 'suntory',
-    spots: ['suntory-rugby', 'suntory-factory']
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 1,
-    question: '府中市で毎年7月頃に大國魂神社で行われる夏の風物詩は？',
-    choices: ['くらやみ祭', 'すもも祭', '府中納涼大盆踊り大会', '桜まつり'],
-    answer: 2,
-    explanation: '<strong>府中納涼大盆踊り大会</strong>は7月初旬に大國魂神社境内で開催される夏の風物詩。子どもから大人まで楽しめ、踊り方が分からなくても飛び入り参加可能です。',
-    keyapi: '浴衣を着て踊りに行きたいね〜🎐',
-    source: 'ookunitama',
-    spots: ['ookunitama']
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 3,
-    question: '府中市出身の女子サッカー選手・澤穂希さんが受賞した、市の最高栄誉は？',
-    choices: ['府中市民勲章', '府中市市民栄誉賞', '府中市文化大賞', '府中市スポーツ栄光賞'],
-    answer: 1,
-    explanation: '澤穂希選手は2011年女子W杯優勝を機に、府中市から<strong>「市民栄誉賞」</strong>を贈呈されました。府中市の誇りとして語り継がれています。',
-    keyapi: '世界一の選手が府中出身なんて本当にすごい！⚽',
-    source: 'fuchu_people'
-  },
-  {
-    category: 'gourmet', catLabel: 'グルメ', difficulty: 2,
-    question: '府中観光協会が府中の魅力あるお土産品を選定する推奨品制度の名前は？',
-    choices: ['府中ブランド', '府中太鼓判', '府中印', '府中名物'],
-    answer: 1,
-    explanation: '<strong>「府中太鼓判（たいこばん）」</strong>は<strong>府中観光協会の推奨品認定制度</strong>。お菓子・お酒・農産物・伝統工芸品など、府中ならではの優れた商品が認定されています。',
-    keyapi: '太鼓判マークを見つけたら間違いなしの逸品〜🥁',
-    source: 'kanko_product'
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 2,
-    question: 'くらやみ祭で5月5日午後6時から行われる、最も荘厳な神事は？',
-    choices: ['御綱祭', '大太鼓送り込み', '神輿渡御', '萬燈大会'],
-    answer: 2,
-    explanation: 'くらやみ祭のクライマックスは5月5日の<strong>「神輿渡御（みこしとぎょ）」</strong>。8基の神輿が大鳥居前から御旅所まで渡御する、最も荘厳な神事です。',
-    keyapi: 'お神輿が地響きを立てて進む様子は圧巻だよ〜🏯',
-    source: 'ookunitama_matsuri'
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 3,
-    question: 'すもも祭で奉納される、源頼義・義家親子ゆかりの行事は？',
-    choices: ['流鏑馬（やぶさめ）', '相撲奉納', '田植え舞', '神楽'],
-    answer: 0,
-    explanation: '大國魂神社では時折<strong>流鏑馬（やぶさめ）</strong>などの古式神事が奉納されます。源義家ゆかりの武家文化が今に残ります。',
-    keyapi: '弓と馬の伝統技、見たら忘れられないよ〜🏹',
-    source: 'ookunitama_matsuri',
-    spots: ['ookunitama']
-  },
-  {
-    category: 'gourmet', catLabel: 'グルメ', difficulty: 2,
-    question: '府中名物として知られる青木屋の「武蔵野日誌」とは？',
-    choices: ['ぜんざい', 'ミニバームクーヘンにチョコクリーム', 'もなか', 'ようかん'],
-    answer: 1,
-    explanation: '<strong>「武蔵野日誌」</strong>は、武蔵野の雑木林の小枝をイメージした<strong>ミニバームクーヘンにチョコレートクリームを詰めた青木屋のロングセラー菓子</strong>。発売55周年を超える名菓で、府中市のふるさと納税返礼品にもなっています。',
-    keyapi: 'バームクーヘンにクリームが詰まった名菓だよ〜🍫',
-    source: 'kanko_product'
-  },
-  {
-    category: 'gourmet', catLabel: 'グルメ', difficulty: 3,
-    question: '府中市内で歴史ある老舗で、和菓子の名店として知られるのは？',
-    choices: ['御菓子司 亀田屋', '虎屋 府中店', '舟和 府中支店', '岡埜栄泉府中店'],
-    answer: 0,
-    explanation: '<strong>御菓子司 亀田屋</strong>は府中市内の老舗和菓子店。府中太鼓判にも選ばれ、地元で長く愛されています。',
-    keyapi: '老舗の和菓子、お茶と一緒にいただきたいね〜🍵',
-    source: 'kanko_product',
-    spots: ['sando']
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 1,
-    question: '府中市の市の鳥「ひばり」を題材にした府中市民の歌詞・歌があるのは何という体操？',
-    choices: ['府中ラジオ体操', '元気一番!!ふちゅう体操', 'ひばり体操', 'けやき体操'],
-    answer: 1,
-    explanation: '<strong>「元気一番!!ふちゅう体操」</strong>のイメージキャラクターは「ひばピー」というひばりの子ども。府中市の鳥にちなんだ、健康増進のための市民体操です。',
-    keyapi: 'ひばピーかわいい！ぼくも体操したくなっちゃう〜🐤',
-    source: 'fuchu_mascot'
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 2,
-    question: '府中市公式マスコット「ふちゅこま」が誕生したのは市制施行何周年？',
-    choices: ['50周年', '60周年', '70周年', '80周年'],
-    answer: 1,
-    explanation: 'ふちゅこまは<strong>市制施行60周年（2014年）</strong>記念の市民提案事業で誕生。市民から愛されるマスコットとして活躍しています。',
-    keyapi: 'ぼくの先輩マスコットだね〜よろしくこま〜🐺',
-    source: 'fuchu_mascot'
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 3,
-    question: '「ふちゅこま」キャラクターのデザインに協力した、府中市出身の有名人は？',
-    choices: ['指原莉乃', '河西智美（元AKB48）', '大島優子', '小嶋陽菜'],
-    answer: 1,
-    explanation: '<strong>河西智美</strong>さん（元AKB48・府中市出身）がデザインに協力しました。市制施行60周年の市民提案事業として2015年に誕生しました。',
-    keyapi: '地元出身の方が関わるなんて素敵だね〜🌟',
-    source: 'fuchu_mascot'
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 1,
-    question: '府中市で「ラグビーのまち」を象徴する場所として活用されている、駅前の施設は？',
-    choices: ['183 FUCHU', 'ラグビープラザ', 'ラグビーパーク', 'FUCHUドーム'],
-    answer: 0,
-    explanation: '<strong>「183 FUCHU」</strong>は府中駅北口にあるラグビーのまち府中の情報発信拠点。「183」は府中市の郵便番号（183-0000）から付けられています。',
-    keyapi: '駅前で府中のラグビー文化に触れられるよ〜🏉',
-    source: 'rugby',
-    spots: ['183-fanzone', 'fuchu-station']
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 2,
-    question: 'けやき並木の現在の本数は約何本？（2024年時点）',
-    choices: ['約60本', '約120本', '約250本', '約400本'],
-    answer: 1,
-    explanation: '馬場大門のケヤキ並木は<strong>約120本</strong>のケヤキで構成されています（2024年3月時点で127本）。樹齢約400年の古木から比較的新しい補植まで、世代を越えて並木を守っています。',
-    keyapi: '120本の大家族！世代を越えて見守ってるよ〜🌳🌳',
-    source: 'keyaki',
-    spots: ['keyaki-namiki']
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 3,
-    question: '府中市出身のソウル・バルセロナ両五輪の体操メダリストは？',
-    choices: ['梶原悠太郎', '千家始一', '代本中生', '池谷幸雄'],
-    answer: 3,
-    explanation: '<strong>池谷幸雄（いけたにゆきお）</strong>選手は1970年東京都府中市出身の元体操選手。1988年ソウル、1992年バルセロナ両五輪でメダルを獲得した名選手です。',
-    keyapi: 'オリンピックメダリストも府中出身なんだね〜🤸',
-    source: 'fuchu_people'
-  },
-  {
-    category: 'gourmet', catLabel: 'グルメ', difficulty: 3,
-    question: '府中市古代米研究会が栽培し、「黒米うどん」の原材料にも使われている、府中の特産哤は？',
-    choices: ['コシヒカリ', '古代米（黒米・赤米）', 'タカキ', 'ミルキークイーン'],
-    answer: 1,
-    explanation: '府中市古代米研究会と養う農家が府中市内で栽培する<strong>古代米（黒米・赤米）</strong>が府中の特産哤。黒米は「黒米うどん」の原料としてブランド化されています。',
-    keyapi: '白米に少し混ぜると、お赤飯みたいなピンク色のご飯になるよ〜🍚',
-    source: 'fuchu_history'
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 2,
-    question: '府中市の介護予防推進センターで普及される、「府中小唄」をアレンジした介護予防体操は？',
-    choices: ['ふちゅう体操', '元気一番!!ふちゅう体操', 'けやき体操', '大國魂体操'],
-    answer: 1,
-    explanation: '<strong>「元気一番!!ふちゅう体操」</strong>は、「府中小唄」を体操用にアレンジした曲に合わせ、运動機能と口腔機能の向上を目的として製作された介護予防体操です。部分的にケヤキのポーズや東京競馬場をイメージした動きもあります。',
-    keyapi: '府中ノ名所を踊りで表現した、ユニークな体操だよ〜💪',
-    source: 'fuchu_official'
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 3,
-    question: '府中市がデジタル化を進める分野として注目されている取り組みは？',
-    choices: ['ICTスマートシティ', 'デジタル市民参加プラットフォーム', 'AI市政', 'メタバース府中'],
-    answer: 1,
-    explanation: '府中市は<strong>参加型合意形成プラットフォーム「Liqlid」</strong>を活用し、デジタル市民参加の仕組みを推進。市民協働の新しい形を実現しています。',
-    keyapi: 'デジタル時代でも市民の声を大切にする街〜📱',
-    source: 'fuchu_official'
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 2,
-    question: '府中市内で開催される、地元の野菜や手作り品を販売する人気のマルシェは？',
-    choices: ['キテキテ府中マルシェ', '武蔵野市場', '多摩川マーケット', '府中ふれあい市'],
-    answer: 0,
-    explanation: '<strong>「キテキテ府中マルシェ」</strong>は、地元の農家や手作り職人が集まる人気イベント。府中の地産地消を象徴するマルシェとして定期開催されています。',
-    keyapi: '地元の野菜や手作り品、選ぶのが楽しいよ〜🥕',
-    source: 'fuchu_official'
-  },
-  {
-    category: 'gourmet', catLabel: '文化', difficulty: 1,
-    question: '府中市民が誇る、ケヤキ並木に関する2024年の記念すべき出来事は？',
-    choices: ['ユネスコ世界遺産登録', '国天然記念物指定100周年', '東京都指定文化財追加', '万葉集に詠まれた発見'],
-    answer: 1,
-    explanation: '<strong>2024年12月9日に国天然記念物指定100周年</strong>を迎えました。1924年（大正13年）の指定以来、長きにわたって府中市民とともに歩んできた歴史を持ちます。',
-    keyapi: '100周年！おめでとう、ケヤキ並木の仲間たち〜🎊🌳',
-    source: 'keyaki',
-    spots: ['keyaki-namiki']
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 1,
+    "question": "府中市にある大國魂神社は、およそ何年の歴史を持つ神社でしょう？",
+    "choices": [
+      "約500年",
+      "約1000年",
+      "約1900年",
+      "約2500年"
+    ],
+    "answer": 2,
+    "explanation": "大國魂神社は<strong>約1900年</strong>の歴史を持つ古社で、武蔵国の守り神として古くから祀られてきました。景行天皇41年（西暦111年）の創建と伝えられています。",
+    "keyapi": "ケヤキ並木よりも、ずっとずっと長い歴史なんだよ〜🌱",
+    "source": "ookunitama",
+    "spots": [
+      "ookunitama"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 1,
+    "question": "古代、府中市には現在の都道府県でいうと「武蔵国」の何が置かれていた？",
+    "choices": [
+      "天守閣",
+      "国府（こくふ）",
+      "関所",
+      "宿場町"
+    ],
+    "answer": 1,
+    "explanation": "大化の改新後、武蔵国（現在の埼玉県・東京都・神奈川県の一部）の政治の中心地である<strong>国府（こくふ）</strong>が府中に置かれました。「府中」という地名の由来でもあります。",
+    "keyapi": "「府中」という地名そのものが、この歴史から来てるんだよ！",
+    "source": "fuchu_official"
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 1,
+    "question": "府中のシンボル「馬場大門のケヤキ並木」が国の天然記念物に指定されたのは何年？",
+    "choices": [
+      "1924年（大正13年）",
+      "1955年（昭和30年）",
+      "1980年（昭和55年）",
+      "2000年（平成12年）"
+    ],
+    "answer": 0,
+    "explanation": "馬場大門のケヤキ並木は<strong>1924年（大正13年）</strong>に国の天然記念物に指定されました。けやき並木として唯一の国指定天然記念物です。2024年に指定100周年を迎えました。",
+    "keyapi": "100周年だなんて、ぼくたちケヤキも長生きだね〜！",
+    "source": "keyaki",
+    "spots": [
+      "keyaki-namiki"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 1,
+    "question": "大國魂神社の例大祭「くらやみ祭」は何月に行われる？",
+    "choices": [
+      "3月",
+      "5月（GW期間）",
+      "7月",
+      "10月"
+    ],
+    "answer": 1,
+    "explanation": "くらやみ祭は毎年<strong>4月30日から5月6日</strong>にかけて行われる大國魂神社最大の例大祭で、ゴールデンウィークの風物詩。都指定無形民俗文化財に指定されています。",
+    "keyapi": "GWのお祭りといえばこれ！22台の山車が圧巻だよ〜",
+    "source": "ookunitama_matsuri",
+    "spots": [
+      "ookunitama"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 1,
+    "question": "「府中」という地名の由来は何でしょう？",
+    "choices": [
+      "府がたくさんあったから",
+      "武蔵国の国府が置かれた中心地だから",
+      "富士山が中央に見えるから",
+      "武士が集まる中心地だったから"
+    ],
+    "answer": 1,
+    "explanation": "「府中」とは、古代に<strong>国府が置かれた中心地</strong>を指す言葉。武蔵国の国府がここに置かれたことから「府中」と呼ばれるようになりました。全国にも「府中」の地名がいくつかあります。",
+    "keyapi": "広島にも「府中市」があるよ！同じ由来なんだ〜",
+    "source": "fuchu_official"
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 2,
+    "question": "府中市が市制を施行（市になった）したのは何年？",
+    "choices": [
+      "1925年（大正14年）",
+      "1954年（昭和29年）",
+      "1970年（昭和45年）",
+      "1989年（平成元年）"
+    ],
+    "answer": 1,
+    "explanation": "府中市は<strong>1954年（昭和29年）4月1日</strong>に、府中町・多磨村・西府村が合併して誕生しました。2024年に市制施行70周年を迎えました。",
+    "keyapi": "昭和29年生まれの府中市は、ぼくたちより若いかも？",
+    "source": "fuchu_official"
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 2,
+    "question": "大國魂神社の本殿が造営されたのは何時代？",
+    "choices": [
+      "鎌倉時代",
+      "江戸時代（寛文年間）",
+      "明治時代",
+      "昭和時代"
+    ],
+    "answer": 1,
+    "explanation": "大國魂神社の本殿は<strong>江戸時代の寛文年間（1661〜73年）</strong>に造営されました。慶応・昭和年間に修復されています。境内には嘉永7年（1854年）再建の鼓楼など、貴重な建造物が並びます。",
+    "keyapi": "江戸時代の建物が今も残ってるなんてすごいよね〜",
+    "source": "ookunitama",
+    "spots": [
+      "ookunitama"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 2,
+    "question": "府中市の姉妹都市はどこ？",
+    "choices": [
+      "長野県佐久穂町",
+      "北海道函館市",
+      "京都府宇治市",
+      "沖縄県石垣市"
+    ],
+    "answer": 0,
+    "explanation": "府中市の姉妹都市は<strong>長野県佐久穂町</strong>。1979年に旧八千穂村と姉妹都市提携、合併後の2005年にあらためて佐久穂町と提携しました。海外友好都市はオーストリア・ウィーン市ヘルナルス区。",
+    "keyapi": "長野と東京、自然の豊かさでつながってるよ〜🌳",
+    "source": "fuchu_official"
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 2,
+    "question": "府中市の海外友好都市はどこの国の都市？",
+    "choices": [
+      "ドイツ",
+      "フランス",
+      "オーストリア",
+      "イタリア"
+    ],
+    "answer": 2,
+    "explanation": "府中市は<strong>オーストリア・ウィーン市ヘルナルス区</strong>と1992年に友好都市提携を結んでいます。文化・教育分野を中心とした交流が続いています。",
+    "keyapi": "ヨーロッパとも繋がっているんだ〜！意外でしょ？",
+    "source": "fuchu_official"
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 2,
+    "question": "くらやみ祭の起源と関係が深い、平安時代の武将は誰？",
+    "choices": [
+      "源頼朝",
+      "源頼義・義家父子",
+      "平清盛",
+      "坂上田村麻呂"
+    ],
+    "answer": 1,
+    "explanation": "くらやみ祭と並ぶ大國魂神社の祭事「すもも祭」は、<strong>源頼義・義家父子</strong>が奥州安倍氏平定（前九年の役）の戦勝祈願をしたことが起源と伝えられています。",
+    "keyapi": "武将も訪れた歴史ある神社なんだ〜⚔️",
+    "source": "ookunitama_matsuri",
+    "spots": [
+      "ookunitama"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "府中市の隔り・国分寺市にあり、武蔵国府と関係が深い「武蔵国分寺跡」を建立したのはどの天皇？",
+    "choices": [
+      "天智天皇",
+      "聖武天皇",
+      "桓武天皇",
+      "後醍醐天皇"
+    ],
+    "answer": 1,
+    "explanation": "<strong>聖武天皇</strong>が国分寺建立の詔（みことのり）（741年）を発し、全国に国分寺・国分尼寺が建てられました。武蔵国分寺跡は府中市の隣・国分寺市にありますが、武蔵国府との関係が深い遺跡です。",
+    "keyapi": "聖武天皇は奈良の大仏も造った天皇さまだよ〜",
+    "source": "fuchu_history"
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "ケヤキ並木の中で、最も古いケヤキの樹齢はおよそ何年？",
+    "choices": [
+      "約100年",
+      "約200年",
+      "約400年",
+      "約600年"
+    ],
+    "answer": 2,
+    "explanation": "ケヤキ並木最古の木は<strong>樹齢約400年</strong>と言われています。拝殿よりケヤキ並木に向かい旧甲州街道手前にあり、長い時代を見守ってきました。",
+    "keyapi": "400年！江戸時代から見守ってきた大先輩のケヤキだね〜👴",
+    "source": "keyaki",
+    "spots": [
+      "keyaki-namiki"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "ケヤキ並木は、源頼義・義家父子が植えた苗木が始まりとされていますが、何の戦の際？",
+    "choices": [
+      "平将門の乱",
+      "前九年の役",
+      "承久の乱",
+      "応仁の乱"
+    ],
+    "answer": 1,
+    "explanation": "<strong>前九年の役</strong>（1051～62）に戦勝祈願のため大國魂神社に参拝し、凱旋時に苗木1000本を奉樹したと伝えられています。これが府中のケヤキ並木の始まりとされています。",
+    "keyapi": "ぼくたちの先祖は、1000年近く前に植えられたんだ…！",
+    "source": "ookunitama",
+    "spots": [
+      "ookunitama",
+      "keyaki-namiki"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "府中市の人口はおよそ何人？（2024年時点）",
+    "choices": [
+      "約13万人",
+      "約26万人",
+      "約40万人",
+      "約60万人"
+    ],
+    "answer": 1,
+    "explanation": "府中市の人口は<strong>約26万人</strong>（2024年時点で約260,232人）。東京多摩地域の主要都市の一つです。面積は29.43平方キロメートル。",
+    "keyapi": "東京都の市の中でもしっかり大きな街なんだよ〜",
+    "source": "fuchu_official"
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "ケヤキ並木は、徳川家のどの将軍が補植したと伝えられている？",
+    "choices": [
+      "徳川家康",
+      "徳川綱吉",
+      "徳川吉宗",
+      "徳川慶喜"
+    ],
+    "answer": 0,
+    "explanation": "<strong>徳川家康</strong>が関ヶ原の戦いの戦勝祈願に大國魂神社を訪れた際にケヤキ苗を寄進し、補植したと伝えられています。江戸時代を通じて街道筋として整備されました。",
+    "keyapi": "家康公もぼくたちの先祖を見ていたかも〜👀",
+    "source": "ookunitama",
+    "spots": [
+      "ookunitama",
+      "keyaki-namiki"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 2,
+    "question": "府中市内にある古代の遺跡「国史跡武蔵国府跡」の中心エリアは？",
+    "choices": [
+      "国衙地区",
+      "関所地区",
+      "城下地区",
+      "商家地区"
+    ],
+    "answer": 0,
+    "explanation": "<strong>国衙（こくが）地区</strong>は、武蔵国の役所が置かれた中心エリア。大國魂神社の境内および東側一帯に広がり、現在も発掘調査・整備が続けられています。",
+    "keyapi": "神社の下に古代の役所が眠ってるなんてロマンだよね〜",
+    "source": "ookunitama",
+    "spots": [
+      "ookunitama",
+      "musashi-kokufu"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 1,
+    "question": "大國魂神社で行われる「すもも祭」は何月に開催される？",
+    "choices": [
+      "5月",
+      "7月",
+      "9月",
+      "11月"
+    ],
+    "answer": 1,
+    "explanation": "すもも祭は毎年<strong>7月20日</strong>に行われる夏の風物詩。約120軒の露店が並び、約7万人の参拝客で賑わいます。この日のみ授与される「からす団扇・からす扇子」が有名です。",
+    "keyapi": "夏のお祭り！からす団扇でひと夏を涼しく〜🍧",
+    "source": "ookunitama_matsuri",
+    "spots": [
+      "ookunitama"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "すもも祭で授与される「からす団扇・からす扇子」のご利益は？",
+    "choices": [
+      "縁結び",
+      "学業成就",
+      "五穀豊穣・悪疫防除",
+      "勝負運"
+    ],
+    "answer": 2,
+    "explanation": "からす団扇・からす扇子は<strong>五穀豊穣・悪疫防除（あくえきぼうじょ）</strong>を祈願するもの。源頼義が奥州安倍氏平定の戦勝祈願をした際、カラスが瑞兆として現れたことに由来します。",
+    "keyapi": "カラスが幸せを運ぶなんて、素敵な伝説だね〜🐦",
+    "source": "ookunitama_matsuri"
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 1,
+    "question": "府中市にある、日本でも有数の競馬場の正式名称は？",
+    "choices": [
+      "府中競馬場",
+      "東京競馬場",
+      "武蔵野競馬場",
+      "関東中央競馬場"
+    ],
+    "answer": 1,
+    "explanation": "府中市にある競馬場の正式名称は<strong>「東京競馬場」</strong>です。JRA最大級の競馬場で、日本ダービーやジャパンカップなどG1レースが開催されます。「府中競馬場」と呼ばれることも多いですね。",
+    "keyapi": "愛称は「府中競馬場」、正式には「東京競馬場」だよ〜🐎",
+    "source": "jra",
+    "spots": [
+      "tokyo-keiba"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 1,
+    "question": "馬場大門のケヤキ並木は、およそ何メートル続いている？",
+    "choices": [
+      "約150m",
+      "約500m",
+      "約1km",
+      "約2km"
+    ],
+    "answer": 1,
+    "explanation": "馬場大門のケヤキ並木は、京王線府中駅西側を中心に南北に<strong>約500〜600m</strong>続き、約120本のケヤキが並んでいます。大國魂神社の参道としての役割も持っています。",
+    "keyapi": "ぼくたちの仲間が約120本！壮観でしょ〜🌳🌳🌳",
+    "source": "ookunitama",
+    "spots": [
+      "ookunitama",
+      "keyaki-namiki"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 1,
+    "question": "府中市郷土の森博物館の特徴を表すのに最も近いものは？",
+    "choices": [
+      "屋内展示だけの近代的な博物館",
+      "野外を含めた「森」全体が博物館",
+      "スポーツ専門博物館",
+      "水族館を併設した博物館"
+    ],
+    "answer": 1,
+    "explanation": "府中市郷土の森博物館は、<strong>野外を含めた「森」全体を博物館</strong>とするフィールドミュージアム。府中の歴史や文化を体感でき、梅まつり・あじさいまつり・プラネタリウムなど四季折々の楽しみがあります。",
+    "keyapi": "梅・あじさい・桜・紅葉、季節ごとに楽しいよ〜🌸",
+    "source": "kanko_spot",
+    "spots": [
+      "kyodo-museum"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 1,
+    "question": "府中市郷土の森公園に隣接する、自然豊かな川はどれ？",
+    "choices": [
+      "荒川",
+      "多摩川",
+      "隅田川",
+      "江戸川"
+    ],
+    "answer": 1,
+    "explanation": "府中市郷土の森公園は<strong>多摩川</strong>沿いに広がっています。緑道や豊かな自然に囲まれ、市民の憩いの場として親しまれています。郷土の森観光物産館もここにあります。",
+    "keyapi": "多摩川沿いはお散歩にもぴったり〜🚶",
+    "source": "kanko_spot",
+    "spots": [
+      "kyodonomori-park",
+      "bussankan"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 1,
+    "question": "府中市内にある、ビールの工場見学ができる人気スポットは？",
+    "choices": [
+      "サントリー〈天然水のビール工場〉東京・武蔵野",
+      "アサヒ府中工場",
+      "キリン東京ビール園",
+      "サッポロ多摩工場"
+    ],
+    "answer": 0,
+    "explanation": "<strong>サントリー〈天然水のビール工場〉東京・武蔵野</strong>は府中市矢崎町にあり、1963年に建てられたサントリー初のビール工場。ザ・プレミアム・モルツもここで誕生しました。無料で工場見学（要予約）ができます。",
+    "keyapi": "見学のあとはビールが3杯試飲できるんだって〜🍺",
+    "source": "suntory",
+    "spots": [
+      "suntory-factory"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "馬場大門のケヤキ並木には、ケヤキ以外にもどんな木が植えられている？",
+    "choices": [
+      "イチョウ",
+      "イヌシデ・エノキ",
+      "ソメイヨシノだけ",
+      "スギ"
+    ],
+    "answer": 1,
+    "explanation": "ケヤキ並木には、ケヤキ約120本に加え<strong>イヌシデ・エノキ</strong>などの大木も生育しています。特にイヌシデは全て50年以上前から生育する貴重な木です。",
+    "keyapi": "ぼくの仲間がたくさんいるんだよ〜！実は多様な森なんだ",
+    "source": "keyaki",
+    "spots": [
+      "keyaki-namiki"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "東京競馬場の最寄り駅として正しいのは？",
+    "choices": [
+      "府中駅",
+      "府中本町駅・府中競馬正門前駅",
+      "分倍河原駅",
+      "武蔵野台駅"
+    ],
+    "answer": 1,
+    "explanation": "東京競馬場の最寄り駅は、JR<strong>府中本町駅</strong>と京王線<strong>府中競馬正門前駅</strong>。レース開催日は多くの来場者で賑わいます。",
+    "keyapi": "京王線にはレース専用駅まであるよ〜🚃",
+    "source": "jra",
+    "spots": [
+      "tokyo-keiba",
+      "fuchu-honmachi-station"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "東京競馬場で開催される、世界的に有名な国際G1レースは？",
+    "choices": [
+      "有馬記念",
+      "ジャパンカップ",
+      "皐月賞",
+      "菊花賞"
+    ],
+    "answer": 1,
+    "explanation": "<strong>ジャパンカップ</strong>は世界のトップホースが集う国際G1レース。日本ダービー、天皇賞（秋）、オークスなど数々のビッグレースが東京競馬場で開催されます。",
+    "keyapi": "世界中の名馬が府中に集結するんだよ〜🌏🐎",
+    "source": "jra",
+    "spots": [
+      "tokyo-keiba"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "府中市にある複合商業施設で、けやき並木に面したショッピングモールは？",
+    "choices": [
+      "ルミネ府中",
+      "ミッテン府中・フォーリス",
+      "マルイ府中",
+      "府中PARCO"
+    ],
+    "answer": 1,
+    "explanation": "<strong>ミッテン府中・専門店街フォーリス</strong>は京王線府中駅南口の府中けやき並木通りに面した複合商業施設。映画館も併設され、市民の集いの場となっています。",
+    "keyapi": "お買い物も府中駅近くで楽しめるよ〜🛍️",
+    "source": "keyaki",
+    "spots": [
+      "keyaki-namiki",
+      "foris"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "府中市美術館があるのはどの公園内？",
+    "choices": [
+      "郷土の森公園",
+      "府中の森公園",
+      "武蔵野公園",
+      "浅間山公園"
+    ],
+    "answer": 1,
+    "explanation": "府中市美術館は<strong>府中の森公園</strong>内にあります。府中の森公園は旧米軍施設跡地に整備された公園で、芸術劇場や図書館・スポーツ施設なども集まる文化エリアです。",
+    "keyapi": "芸術もスポーツも一度に楽しめる素敵な公園だよ〜🎨",
+    "source": "kanko_spot",
+    "spots": [
+      "fuchu-no-mori-park",
+      "fuchu-art-museum"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 3,
+    "question": "サントリー武蔵野ビール工場が建てられたのは何年？",
+    "choices": [
+      "1955年",
+      "1963年",
+      "1978年",
+      "1990年"
+    ],
+    "answer": 1,
+    "explanation": "サントリー武蔵野ビール工場は<strong>1963年（昭和38年）</strong>に竣工。サントリーが本格的にビールの製造販売を開始した記念すべき工場です。",
+    "keyapi": "60年以上の歴史あるビール工場なんだよ〜🍺",
+    "source": "suntory",
+    "spots": [
+      "suntory-factory"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 3,
+    "question": "大國魂神社の境内にある、東京都内最大規模の樹齢を誇るご神木は？",
+    "choices": [
+      "大銀杏",
+      "巨樹のケヤキ",
+      "神社椨（タブノキ）",
+      "夫婦楠"
+    ],
+    "answer": 0,
+    "explanation": "大國魂神社境内の<strong>大銀杏</strong>は東京都の天然記念物に指定されており、樹齢推定1000年とも言われる巨樹です。秋には黄金色に染まり圧巻の景色になります。",
+    "keyapi": "ぼくたちケヤキも長生きだけど、銀杏はもっと長生きさん〜",
+    "source": "ookunitama",
+    "spots": [
+      "ookunitama"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "府中市内にある、競馬の歴史が学べる博物館の名前は？",
+    "choices": [
+      "JRA競馬博物館",
+      "府中サラブレッド館",
+      "東京ホースミュージアム",
+      "武蔵野競馬記念館"
+    ],
+    "answer": 0,
+    "explanation": "<strong>JRA競馬博物館</strong>は東京競馬場内にある競馬専門博物館。映像ホールでのドラマ上映や、メモリアルホースの展示、競走馬シミュレーターで騎手気分が味わえます。",
+    "keyapi": "騎手気分が味わえるなんてワクワクだね〜🏇",
+    "source": "jra",
+    "spots": [
+      "tokyo-keiba",
+      "jra-museum"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 3,
+    "question": "府中市内の歴史散策コース、「ハケの道」とは何のこと？",
+    "choices": [
+      "古い宿場街道",
+      "国分寺崖線（武蔵野台地の段丘）沿いの道",
+      "商店街のメインストリート",
+      "神社の参道"
+    ],
+    "answer": 1,
+    "explanation": "「<strong>ハケの道</strong>」は<strong>国分寺崖線（こくぶんじがいせん）</strong>沿いの道のこと。「ハケ」とは武蔵野台地と多摩川低地の境にある崖（段丘）を指す言葉で、湧水や緑豊かな道として知られます。",
+    "keyapi": "ハケってカワイイ呼び名だけど、地形の名前なんだよ〜",
+    "source": "kanko_spot"
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "府中市の中心エリアにある複合文化施設の名前は？",
+    "choices": [
+      "府中フォーラム",
+      "府中の森芸術劇場",
+      "サントリーホール府中",
+      "武蔵野文化センター"
+    ],
+    "answer": 1,
+    "explanation": "<strong>府中の森芸術劇場</strong>は府中の森公園内にある複合文化施設。コンサート・演劇・各種イベントが開催され、市内最大級の文化発信拠点となっています。",
+    "keyapi": "クラシックも演劇も楽しめる素敵な劇場だよ〜🎭",
+    "source": "kanko_spot",
+    "spots": [
+      "fuchu-no-mori-park"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 1,
+    "question": "府中市郷土の森博物館で楽しめる、星空の鑑賞施設は？",
+    "choices": [
+      "天体ドーム",
+      "プラネタリウム",
+      "展望台",
+      "天文台"
+    ],
+    "answer": 1,
+    "explanation": "郷土の森博物館には<strong>プラネタリウム</strong>があり、季節ごとに様々なプログラムが楽しめます。野外の歴史的建造物の見学と合わせて1日楽しめるスポットです。",
+    "keyapi": "星空とお散歩、両方たのしめるよ〜⭐",
+    "source": "kanko_spot",
+    "spots": [
+      "kyodo-museum"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 3,
+    "question": "府中市にある「東京農工大学」の府中キャンパスは何学部？",
+    "choices": [
+      "工学部",
+      "農学部",
+      "医学部",
+      "文学部"
+    ],
+    "answer": 1,
+    "explanation": "東京農工大学の府中キャンパスは<strong>農学部</strong>。広大な敷地に農場や演習林があり、府中市の文教エリアの一翼を担っています。工学部キャンパスは小金井市にあります。",
+    "keyapi": "お隣の大学では、お米や野菜が育てられているんだ〜🌾",
+    "source": "fuchu_official"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "グルメ",
+    "difficulty": 1,
+    "question": "府中駅周辺にある老舗「魚元（うおもと）」の名物料理は？",
+    "choices": [
+      "そば",
+      "うなぎ",
+      "寿司",
+      "天ぷら"
+    ],
+    "answer": 1,
+    "explanation": "<strong>「魚元」</strong>は京王線府中駅から徒歩5分の<strong>うなぎ・日本料理の老舗</strong>。愛知県産のうなぎを使った上品な鰻重が名物で、長年地元で愛されています。",
+    "keyapi": "老舗のうなぎ、一度は味わいたい贅沢だね〜🍱",
+    "source": "kanko_product",
+    "spots": [
+      "sando",
+      "fuchu-station"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "グルメ",
+    "difficulty": 1,
+    "question": "府中の特産品「黒米うどん」の特徴は？",
+    "choices": [
+      "イカ墨を使っている",
+      "古代米を使っている",
+      "海苔を練り込んでいる",
+      "黒胡麻が入っている"
+    ],
+    "answer": 1,
+    "explanation": "黒米うどんは<strong>古代米（黒米）</strong>を使った珍しい黒色のうどんで、府中の特産品として販売されています。郷土の森観光物産館などで購入できます。",
+    "keyapi": "古代米って、なんだか歴史を感じる味わいだね〜🌾",
+    "source": "kanko_spot",
+    "spots": [
+      "bussankan"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 1,
+    "question": "くらやみ祭で行われる、国内最大級と言われるものは？",
+    "choices": [
+      "花火",
+      "大太鼓と山車（だし）の行列",
+      "相撲",
+      "弓道大会"
+    ],
+    "answer": 1,
+    "explanation": "くらやみ祭では、国内最大級の<strong>6張の大太鼓と22台もの山車（だし）の行列</strong>が見どころです。神輿8基も登場し、迫力満点。都指定無形民俗文化財に指定されています。",
+    "keyapi": "お腹に響く大太鼓の音、一度聴くと忘れられないよ〜🥁",
+    "source": "ookunitama_matsuri"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "グルメ",
+    "difficulty": 1,
+    "question": "府中市内のお店で買える、競馬場の街ならではのお菓子は？",
+    "choices": [
+      "レーシングサラブレッドサブレ",
+      "蹄鉄まんじゅう",
+      "騎手プリン",
+      "ダービードーナツ"
+    ],
+    "answer": 0,
+    "explanation": "<strong>レーシングサラブレッドサブレ</strong>は、府中観光協会推奨品「府中太鼓判」に選ばれているお菓子。東京競馬場のお膝元・府中ならではのユニークなお土産です。",
+    "keyapi": "可愛いサラブレッド型のサブレで、お土産にぴったり〜🐎",
+    "source": "jra",
+    "spots": [
+      "tokyo-keiba"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 1,
+    "question": "府中市の「市の鳥」に指定されているのは？",
+    "choices": [
+      "ツバメ",
+      "ひばり",
+      "カラス",
+      "スズメ"
+    ],
+    "answer": 1,
+    "explanation": "府中市の市の鳥は<strong>「ひばり」</strong>。澄みきった青空に真一文字に舞い上がるひばりは、「住みたくなる都市」を目指して進展を続ける府中市を象徴しています。",
+    "keyapi": "ひばりの歌声、聞こえると元気が出るよ〜🎵",
+    "source": "fuchu_official"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 1,
+    "question": "府中市の「市の木」に指定されているのは？",
+    "choices": [
+      "サクラ",
+      "ケヤキ",
+      "イチョウ",
+      "マツ"
+    ],
+    "answer": 1,
+    "explanation": "府中市の市の木は当然ながら<strong>「ケヤキ」</strong>！馬場大門のケヤキ並木は市のシンボルそのものです。市の花は「ウメ」が指定されています。",
+    "keyapi": "やったー！ぼくたちケヤキは市の木なんだよ〜🌳✨",
+    "source": "keyaki",
+    "spots": [
+      "keyaki-namiki"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 2,
+    "question": "府中市の「市の花」に指定されているのは？",
+    "choices": [
+      "サクラ",
+      "ウメ",
+      "バラ",
+      "コスモス"
+    ],
+    "answer": 1,
+    "explanation": "府中市の市の花は<strong>「ウメ」</strong>。郷土の森博物館の梅園は関東でも有名で、約60品種・1100本の梅が咲き誇ります。",
+    "keyapi": "梅まつりは2月から3月！花の香りに包まれるよ〜🌸",
+    "source": "kanko_spot",
+    "spots": [
+      "kyodo-museum"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 2,
+    "question": "すもも祭の日のみ授与される、災い除けの縁起物は？",
+    "choices": [
+      "からす団扇・からす扇子",
+      "すもも守り",
+      "雷除け絵馬",
+      "鈴守り"
+    ],
+    "answer": 0,
+    "explanation": "すもも祭の日（7月20日）のみ授与される<strong>「からす団扇・からす扇子」</strong>は、五穀豊穣・悪疫防除を祈願する縁起物。家に飾ると魔除けになると言われます。",
+    "keyapi": "一年に一日だけのレアアイテム！要チェックだよ〜🌟",
+    "source": "ookunitama_matsuri"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "グルメ",
+    "difficulty": 2,
+    "question": "府中市内で楽しめる、麺創研紅（こう）の名物は？",
+    "choices": [
+      "塩らーめん",
+      "濃厚辛みそラーメン",
+      "醤油らーめん",
+      "冷やし中華"
+    ],
+    "answer": 1,
+    "explanation": "<strong>麺創研紅の「紅らーめん」</strong>は、濃厚辛みそラーメンで人気のメニュー。府中市のふるさと納税返礼品にもなっており、ラーメン好きから愛されています。",
+    "keyapi": "ピリッと辛い、クセになる味なんだって〜🌶️",
+    "source": "kanko_product"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 2,
+    "question": "くらやみ祭の名前の由来は？",
+    "choices": [
+      "夜に行われるから",
+      "かつて街の灯りを消して行われたから",
+      "祭神が暗闇の神様だから",
+      "森の中で行われるから"
+    ],
+    "answer": 1,
+    "explanation": "くらやみ祭の名前は、かつて<strong>街の灯りをすべて消して暗闇の中で神事を行った</strong>ことに由来します。現在は安全のため照明がありますが、伝統の名前が今も受け継がれています。",
+    "keyapi": "昔は本当に真っ暗な中でやってたんだって！神秘的〜🌃",
+    "source": "ookunitama_matsuri"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 3,
+    "question": "すもも祭で約120軒並ぶ露店で売られる、府中名物の果物は？",
+    "choices": [
+      "さくらんぼ",
+      "すもも",
+      "梅",
+      "ぶどう"
+    ],
+    "answer": 1,
+    "explanation": "<strong>すもも（プラム）</strong>がお祭りの名前の由来。源頼義が戦勝祈願の御礼にすももを奉納したのが始まりとされ、今も7月20日に約120軒の露店が並びます。",
+    "keyapi": "夏の風物詩！すももかき氷も人気だよ〜🍧",
+    "source": "ookunitama_matsuri"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "グルメ",
+    "difficulty": 3,
+    "question": "「TOKYO府中アイス」に使われている、府中市産の果物は？",
+    "choices": [
+      "いちご",
+      "ブルーベリー",
+      "柿",
+      "キウイ"
+    ],
+    "answer": 1,
+    "explanation": "<strong>TOKYO府中アイス</strong>は、市内の農家が栽培した<strong>ブルーベリー</strong>と阿蘇産ジャージー牛乳を使用したヨーグルト風味のご当地アイス。ブルーベリーの鮮やかな紫色が特徴です。",
+    "keyapi": "ブルーベリーの鮮やかな紫、見ただけでも美味しそう〜💜",
+    "source": "kanko_product"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 3,
+    "question": "府中市公式マスコットキャラクター「ふちゅこま」のモチーフは？",
+    "choices": [
+      "多摩川の鯉",
+      "大國魂神社の木造狛犬",
+      "ひばり",
+      "けやきの妖精"
+    ],
+    "answer": 1,
+    "explanation": "ふちゅこまは大國魂神社所蔵の<strong>国指定重要文化財「木造狛犬」</strong>をベースにしたキャラクター。しっぽにケヤキの葉があしらわれています。2014年市制施行60周年記念で誕生しました。",
+    "keyapi": "ぼくのお友達かな？でもぼくはケヤキの妖精だよ〜🌱",
+    "source": "ookunitama",
+    "spots": [
+      "ookunitama"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 3,
+    "question": "府中市出身で、女子サッカー日本代表として活躍した有名選手は？",
+    "choices": [
+      "澤穂希",
+      "宮間あや",
+      "川澄奈穂美",
+      "岩渕真奈"
+    ],
+    "answer": 0,
+    "explanation": "<strong>澤穂希（さわ ほまれ）</strong>選手は府中市出身。2011年女子W杯優勝の立役者で、府中市市民栄誉賞も受賞しています。",
+    "keyapi": "世界一になった澤さんは府中の誇り〜⚽✨",
+    "source": "fuchu_people"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 3,
+    "question": "府中市内にあるラグビーの強豪チームは？",
+    "choices": [
+      "東芝ブレイブルーパス東京",
+      "パナソニックワイルドナイツ",
+      "NTTドコモレッドハリケーンズ",
+      "コカ・コーラレッドスパークス"
+    ],
+    "answer": 0,
+    "explanation": "府中市は<strong>「ラグビーのまち」</strong>として知られ、東芝ブレイブルーパス東京とサントリーサンゴリアスの2チームがホームタウンとしています。",
+    "keyapi": "ラグビーの試合観戦も府中の楽しみの一つだよ〜🏉",
+    "source": "suntory",
+    "spots": [
+      "suntory-rugby",
+      "suntory-factory"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 2,
+    "question": "鎌倉幕府滅亡のきっかけとなった、府中市で行われた合戦は？",
+    "choices": [
+      "桶狭間の戦い",
+      "分倍河原の戦い",
+      "川中島の戦い",
+      "関ヶ原の戦い"
+    ],
+    "answer": 1,
+    "explanation": "<strong>分倍河原の戦い</strong>（1333年）は、新田義貞率いる反幕府軍と北条泰家率いる鎌倉幕府軍が激突した合戦。新田軍の勝利が鎌倉幕府滅亡の決定的な節目となりました。",
+    "keyapi": "府中が日本史の舞台になった大きな出来事だよ〜⚔️",
+    "source": "fuchu_history",
+    "spots": [
+      "bubaigawara"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 2,
+    "question": "分倍河原の戦いで、反幕府軍を率いた武将は？",
+    "choices": [
+      "足利尊氏",
+      "楠木正成",
+      "新田義貞",
+      "後醍醐天皇"
+    ],
+    "answer": 2,
+    "explanation": "<strong>新田義貞</strong>が率いる反幕府軍が、北条泰家率いる鎌倉幕府軍を破った合戦。分倍河原駅前のロータリーには新田義貞の騎馬像が設置されています。",
+    "keyapi": "分倍河原駅前で凛々しい義貞さまの像に会えるよ〜🐴",
+    "source": "fuchu_history",
+    "spots": [
+      "bubaigawara",
+      "bubai-station"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "分倍河原古戦場碑が建てられたのは何年？",
+    "choices": [
+      "明治5年",
+      "昭和10年",
+      "昭和35年",
+      "平成元年"
+    ],
+    "answer": 1,
+    "explanation": "分倍河原古戦場碑は<strong>昭和10年（1935年）</strong>、新田氏の子孫である元男爵・新田義美の筆によって建立されました。府中市分梅町2-59-4にあります。",
+    "keyapi": "90年近く前に建てられた歴史の証人だね〜📜",
+    "source": "fuchu_history",
+    "spots": [
+      "bubaigawara"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "府中市内にある「高安寺」は、どの武将が再興したお寺と伝えられている？",
+    "choices": [
+      "源頼朝",
+      "足利尊氏",
+      "徳川家康",
+      "武田信玄"
+    ],
+    "answer": 1,
+    "explanation": "高安寺は<strong>足利尊氏</strong>が安国寺の一つとして再興したと伝えられる古刹。分倍河原の戦いとも関わりが深く、府中の歴史を物語る重要な寺院です。",
+    "keyapi": "お寺巡りも府中の楽しみの一つだよ〜🏛️",
+    "source": "fuchu_history",
+    "spots": [
+      "takaanji",
+      "bubaigawara"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "府中市域に存在した古墳群の一つで、6世紀～7世紀の古墳群は？",
+    "choices": [
+      "白糸台古墳群",
+      "稲荷山古墳群",
+      "高松塚古墳",
+      "大塚山古墳群"
+    ],
+    "answer": 0,
+    "explanation": "<strong>白糸台古墳群</strong>は、京王線多磨霊園駅西側から飛田給駅手前にかけて広がる古墳群。立川段丘の縁端に築造され、6世紀初頭から7世紀にかけて造られました。",
+    "keyapi": "古墳時代から人が住んでいた、長い歴史の街なんだね〜🏺",
+    "source": "fuchu_history"
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 2,
+    "question": "府中市内には国・都・市指定の文化財が合計で何件ある？",
+    "choices": [
+      "約30件",
+      "約50件",
+      "約77件",
+      "約120件"
+    ],
+    "answer": 2,
+    "explanation": "府中市には<strong>国の文化財14件、都の文化財18件、市の文化財45件の計77件</strong>の指定文化財があります（2024年時点）。1900年の歴史にふさわしい文化財の宝庫です。",
+    "keyapi": "77件もの文化財！歩いて回るだけでもタイムトラベルだね〜⏰",
+    "source": "fuchu_official"
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 1,
+    "question": "江戸時代、府中宿は何街道の宿場町だった？",
+    "choices": [
+      "東海道",
+      "中山道",
+      "甲州街道",
+      "日光街道"
+    ],
+    "answer": 2,
+    "explanation": "府中宿は江戸時代の<strong>甲州街道</strong>の宿場町。江戸（日本橋）から数えて第4の宿場で、武蔵国の中心として大いに栄えました。けやき並木は旧甲州街道沿いに位置します。",
+    "keyapi": "江戸時代の主要街道の重要拠点だったんだ〜🛤️",
+    "source": "keyaki",
+    "spots": [
+      "keyaki-namiki"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 2,
+    "question": "大國魂神社の創建は西暦何年と伝えられている？",
+    "choices": [
+      "西暦41年",
+      "西暦111年",
+      "西暦500年",
+      "西暦794年"
+    ],
+    "answer": 1,
+    "explanation": "大國魂神社の創建は<strong>景行天皇41年（西暦111年）</strong>と伝えられています。約1900年の歴史を持つ古社です。",
+    "keyapi": "西暦100年代ってどんな時代だろう？想像つかないね〜⛩️",
+    "source": "ookunitama",
+    "spots": [
+      "ookunitama"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "武蔵国に置かれた古代の役所「武蔵国府」の中心建物群があったとされる地区は、現在の何という地名？",
+    "choices": [
+      "本町",
+      "宮町",
+      "寿町",
+      "矢崎町"
+    ],
+    "answer": 1,
+    "explanation": "<strong>宮町</strong>を中心に、大國魂神社境内および東側一帯に武蔵国府の中枢「国衙（こくが）」がありました。発掘調査により当時の建物跡が確認されています。",
+    "keyapi": "足元に古代のロマンが眠っているんだよ〜🏛️",
+    "source": "ookunitama",
+    "spots": [
+      "ookunitama",
+      "musashi-kokufu"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 2,
+    "question": "府中市の市制施行70周年は何年だった？",
+    "choices": [
+      "2014年",
+      "2019年",
+      "2024年",
+      "2030年"
+    ],
+    "answer": 2,
+    "explanation": "1954年（昭和29年）に市制施行した府中市は、<strong>2024年に市制施行70周年</strong>を迎えました。記念事業が市を挙げて行われました。",
+    "keyapi": "70歳のお誕生日おめでとう、府中市〜🎂",
+    "source": "fuchu_official"
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 1,
+    "question": "けやき並木の景観は、何のシンボルとして親しまれている？",
+    "choices": [
+      "国会議事堂のシンボル",
+      "府中市のシンボル",
+      "東京都のシンボル",
+      "日本のシンボル"
+    ],
+    "answer": 1,
+    "explanation": "けやき並木は<strong>府中市のシンボル</strong>として、市民から愛され続けています。市の木にもケヤキが指定されています。",
+    "keyapi": "ぼくたちの仲間が街のシンボル！誇らしいな〜🌳✨",
+    "source": "keyaki",
+    "spots": [
+      "keyaki-namiki"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "府中市域から発掘された、武蔵国府の遺跡で見つかった代表的な遺物は？",
+    "choices": [
+      "銅鏡",
+      "土器・瓦",
+      "甲冑",
+      "石器"
+    ],
+    "answer": 1,
+    "explanation": "武蔵国府跡からは<strong>土器・瓦・木簡</strong>など、古代官衙（役所）に関する貴重な遺物が多数出土しています。これらは郷土の森博物館などで展示・研究されています。",
+    "keyapi": "昔の人の暮らしが土の中から蘇ってくるんだ〜🏺",
+    "source": "fuchu_history",
+    "spots": [
+      "musashi-kokufu",
+      "kyodo-museum"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 1,
+    "question": "府中市内にあり、多摩川沿いに東西約10kmにわたって続く歩行者・自転車専用道路は？",
+    "choices": [
+      "府中多摩川かぜのみち",
+      "多摩サイクリングロード",
+      "武蔵野グリーンライン",
+      "甲州街道緑道"
+    ],
+    "answer": 0,
+    "explanation": "<strong>「府中多摩川かぜのみち」</strong>は市の南側を流れる多摩川沿いの堤防上、東西約10kmに及ぶ歩行者・自転車専用道。市立公園として管理され、ジョギングやサイクリングが楽しめます。",
+    "keyapi": "川風を感じながら10km！気持ちいいだろうね〜🚴",
+    "source": "kanko_spot",
+    "spots": [
+      "kazenomichi"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "府中市内の公園の数は約何ヶ所？",
+    "choices": [
+      "約50ヶ所",
+      "約100ヶ所",
+      "約200ヶ所",
+      "約400ヶ所"
+    ],
+    "answer": 3,
+    "explanation": "府中市内の公園は<strong>約400ヶ所</strong>もあり、市民が身近に自然と触れ合える環境が整っています。子育て世代に人気の街でもあります。",
+    "keyapi": "400ヶ所！毎日違う公園で遊べちゃう〜🌳🌳🌳",
+    "source": "kanko_spot"
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "府中市内にある、多摩川の流れをミニチュア化したせせらぎで水遊びができる公園は？",
+    "choices": [
+      "府中の森公園",
+      "郷土の森公園",
+      "多摩川親水公園",
+      "浅間山公園"
+    ],
+    "answer": 2,
+    "explanation": "<strong>多摩川親水公園</strong>は稲城大橋近くの河川敷にあり、源流から東京湾までの流れをイメージしたミニチュア多摩川が整備されています。夏は子どもたちの水遊びの場として人気です。",
+    "keyapi": "夏は水遊び！多摩川の旅をミニチュアで体験〜💧",
+    "source": "kanko_spot",
+    "spots": [
+      "tama-shinsui"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "府中市内の自然豊かな山で、桜の名所としても知られるのは？",
+    "choices": [
+      "高尾山",
+      "浅間山（せんげんやま）",
+      "陣馬山",
+      "御岳山"
+    ],
+    "answer": 1,
+    "explanation": "<strong>浅間山（せんげんやま）</strong>は府中市内にある標高約80mの低山。武蔵野の自然が残り、桜やムサシノキスゲの群生地として知られています。",
+    "keyapi": "東京に「浅間山」があるなんて意外でしょ？🌸",
+    "source": "kanko_spot",
+    "spots": [
+      "sengenyama"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 1,
+    "question": "京王線府中駅から新宿駅までは特急で約何分？",
+    "choices": [
+      "約12分",
+      "約24分",
+      "約35分",
+      "約50分"
+    ],
+    "answer": 1,
+    "explanation": "京王線府中駅から新宿駅までは特急で<strong>約24分</strong>。都心へのアクセスがとても良いことから、住みたい街としても人気があります。",
+    "keyapi": "都心にすぐ出られて自然も豊か、府中はいいとこ取り〜🚃",
+    "source": "transport",
+    "spots": [
+      "fuchu-station"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "JR南武線で府中本町駅から川崎駅まではおよそ何分かかる？",
+    "choices": [
+      "約20分",
+      "約30分",
+      "約44分",
+      "約60分"
+    ],
+    "answer": 2,
+    "explanation": "JR南武線で府中本町駅から川崎駅までは各驛で<strong>約44分</strong>。多方面へのアクセスが良好な街です。",
+    "keyapi": "南武線で川崎まで一本！神奈川方面にも便利〜🚆",
+    "source": "transport",
+    "spots": [
+      "fuchu-honmachi-station"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "JR府中本町駅に乗り入れている、ない路線はどれ？",
+    "choices": [
+      "JR南武線",
+      "JR武蔵野線",
+      "JR中央線",
+      "JR南武線・武蔵野線（の両方）"
+    ],
+    "answer": 2,
+    "explanation": "JR府中本町駅には<strong>JR南武線とJR武蔵野線</strong>が乗り入れています。中央線は通っていません。武蔵野線は東京競馬場開催日には臨時列車も運行されます。",
+    "keyapi": "2路線が交わる便利な駅なんだ〜🚉",
+    "source": "jra",
+    "spots": [
+      "tokyo-keiba",
+      "fuchu-honmachi-station"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 3,
+    "question": "府中市内にある京王電鉄の駅で、ないものは？",
+    "choices": [
+      "府中駅",
+      "東府中駅",
+      "武蔵野台駅",
+      "飛田給駅"
+    ],
+    "answer": 3,
+    "explanation": "飛田給駅は<strong>調布市</strong>にある京王線の駅です。府中市内には府中駅・東府中駅・武蔵野台駅・多磨霊園駅・分倍河原駅・中河原駅・府中競馬正門前駅などがあります。",
+    "keyapi": "府中市内には京王線の駅がたくさんあるよ〜🚃",
+    "source": "fuchu_history",
+    "spots": [
+      "fuchu-station",
+      "bubai-station"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 1,
+    "question": "府中駅南口直結「くるる府中」２階中央広場に設置されている、誰でも演奏できる楽器は？",
+    "choices": [
+      "ストリートバンド",
+      "ストリートピアノ",
+      "ストリート太鼓",
+      "ストリートギター"
+    ],
+    "answer": 1,
+    "explanation": "<strong>くるる府中のストリートピアノ</strong>は府中駅南口直結の複合商業施設「くるる府中」2階広場に設置されています。演奏可能時間は10：00〜20：00。プロアマ問わず誰でも演奏できます。",
+    "keyapi": "けやき並木に音楽が流れる、素敵な街だね〜🎹",
+    "source": "keyaki",
+    "spots": [
+      "keyaki-namiki"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "府中駅南口直結の複合商業施設「くるる府中」の特徴は？",
+    "choices": [
+      "駅直結、映画館併設の商業施設",
+      "純和風の老舗百貨店",
+      "スポーツ専門施設",
+      "都立美術館"
+    ],
+    "answer": 0,
+    "explanation": "<strong>「くるる府中」</strong>は2005年開業、京王線府中駅南口直結の複合商業施設。TOHOシネマズ・タイトーステーションを併設し、2階にはストリートピアノもあります。",
+    "keyapi": "映画もショッピングもピアノも、一箇所で楽しめるよ〜🎬",
+    "source": "transport",
+    "spots": [
+      "kururu",
+      "fuchu-station"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "府中市の面積は約何平方キロメートル？",
+    "choices": [
+      "約15km²",
+      "約29km²",
+      "約45km²",
+      "約60km²"
+    ],
+    "answer": 1,
+    "explanation": "府中市の面積は<strong>約29.43平方キロメートル</strong>。約26万人がコンパクトに暮らす、密度のある都市です。",
+    "keyapi": "コンパクトだけど見どころ満載の街なんだよ〜🗾",
+    "source": "fuchu_official"
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 3,
+    "question": "府中市内にある、農業大学のキャンパスは？",
+    "choices": [
+      "東京大学農学部",
+      "東京農工大学農学部",
+      "日本大学農獣医学部",
+      "東京農業大学"
+    ],
+    "answer": 1,
+    "explanation": "<strong>東京農工大学農学部</strong>の府中キャンパスがあります（住所：東京都府中市晴見町3-8-1）。広大な敷地と農場・演習林を持ち、府中の文教エリアの一翼を担います。",
+    "keyapi": "広い農場やお花畑があって学生さんも素敵だよ〜🌾",
+    "source": "fuchu_official"
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "東京競馬場で開催される、日本ダービーの正式名称は？",
+    "choices": [
+      "東京優駿",
+      "皐月賞",
+      "菊花賞",
+      "天皇賞"
+    ],
+    "answer": 0,
+    "explanation": "日本ダービーの正式名称は<strong>「東京優駿（とうきょうゆうしゅん）」</strong>。3歳馬の頂点を決める、競馬界最高峰のレースです。毎年5月末に府中で開催されます。",
+    "keyapi": "世代最強の3歳馬が府中に集まる、夢のレースだよ〜🐴",
+    "source": "jra",
+    "spots": [
+      "tokyo-keiba"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 3,
+    "question": "府中市内にある、府中市役所の最寄り駅は？",
+    "choices": [
+      "京王線府中駅",
+      "JR分倍河原駅",
+      "京王線東府中駅",
+      "JR西府駅"
+    ],
+    "answer": 0,
+    "explanation": "府中市役所の最寄り駅は<strong>京王線府中駅</strong>。徒歩約5分の場所にあります。市役所はけやき並木からも近い場所に位置しています。",
+    "keyapi": "駅から歩いてすぐ！便利な場所にあるんだ〜🏛️",
+    "source": "keyaki",
+    "spots": [
+      "keyaki-namiki",
+      "fuchu-station"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 3,
+    "question": "府中市内にある、武蔵野の雑木林を保存した自然公園は？",
+    "choices": [
+      "府中の森公園",
+      "浅間山公園",
+      "武蔵野公園",
+      "郷土の森公園"
+    ],
+    "answer": 1,
+    "explanation": "<strong>浅間山公園</strong>は、武蔵野の雑木林を保存した自然公園。希少な野草「ムサシノキスゲ」の群生地として知られ、5月の花期にはハイカーで賑わいます。",
+    "keyapi": "ムサシノキスゲは府中の宝物だよ〜🌼",
+    "source": "kanko_spot",
+    "spots": [
+      "sengenyama"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "府中市の郷土の森公園内にある、観光案内・物産販売の拠点は？",
+    "choices": [
+      "郷土の森博物館",
+      "郷土の森観光物産館",
+      "府中観光センター",
+      "けやき観光案内所"
+    ],
+    "answer": 1,
+    "explanation": "<strong>郷土の森観光物産館</strong>は、地元野菜・お土産・観光情報を発信する施設。郷土の森博物館と隣接し、多摩川の自然に囲まれた癒しスポットです。",
+    "keyapi": "お土産選びはここがおすすめ〜🛍️",
+    "source": "kanko_spot",
+    "spots": [
+      "kyodonomori-park",
+      "kyodo-museum"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "東京競馬場の最初の競馬開催はいつ？",
+    "choices": [
+      "明治40年",
+      "昭和8年",
+      "昭和25年",
+      "昭和40年"
+    ],
+    "answer": 1,
+    "explanation": "東京競馬場は<strong>昭和8年（1933年）</strong>11月に開設されました。現在では年間多数のG1レースが開催される日本競馬の中心地です。",
+    "keyapi": "90年以上の歴史ある競馬場、ロマンを感じるね〜🐎",
+    "source": "jra",
+    "spots": [
+      "tokyo-keiba"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 1,
+    "question": "けやき並木通りで毎年開催される、行列ができることで有名なイベントは？",
+    "choices": [
+      "桜まつり",
+      "けやき市",
+      "紅葉まつり",
+      "盆踊り"
+    ],
+    "answer": 1,
+    "explanation": "<strong>「府中けやき市」</strong>は秋に開催される人気イベント。けやき並木通りに地元の店や手作り市の屋台が並び、多くの人で賑わいます。",
+    "keyapi": "ぼくたちの並木の下で楽しいお店がいっぱい〜🎪",
+    "source": "keyaki",
+    "spots": [
+      "keyaki-namiki"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 1,
+    "question": "府中市内でラグビーを本拠地とする、もう一つの強豪チームは？",
+    "choices": [
+      "東京サントリーサンゴリアス",
+      "横浜キヤノンイーグルス",
+      "埼玉ワイルドナイツ",
+      "クボタスピアーズ"
+    ],
+    "answer": 0,
+    "explanation": "<strong>東京サントリーサンゴリアス</strong>は府中市是政に本拠地（サントリー府中スポーツセンター）を持つラグビートップリーグの強豪。東芝ブレイブルーパス東京とのダービー戦は「府中ダービー」と呼ばれ盛り上がります。",
+    "keyapi": "府中ダービーは大盛り上がり！熱気がすごいよ〜🏉",
+    "source": "suntory",
+    "spots": [
+      "suntory-rugby",
+      "suntory-factory"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 2,
+    "question": "府中市と2チームのラグビーチームが2018年に締結したのは？",
+    "choices": [
+      "競技協力協定",
+      "友好都市協定",
+      "パートナーシップ協定",
+      "販売契約"
+    ],
+    "answer": 2,
+    "explanation": "2018年4月、府中市・調布市・三鷹市は東芝ブレイブルーパスとサントリーサンゴリアスと<strong>5者連携協定（パートナーシップ協定）</strong>を締結。市民交流イベントや子ども向けラグビー教室などを共同で実施しています。",
+    "keyapi": "街とチームが一緒に盛り上げる、いい関係だね〜🤝",
+    "source": "suntory",
+    "spots": [
+      "suntory-rugby",
+      "suntory-factory"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 1,
+    "question": "府中市で毎年7月頃に大國魂神社で行われる夏の風物詩は？",
+    "choices": [
+      "くらやみ祭",
+      "すもも祭",
+      "府中納涼大盆踊り大会",
+      "桜まつり"
+    ],
+    "answer": 2,
+    "explanation": "<strong>府中納涼大盆踊り大会</strong>は7月初旬に大國魂神社境内で開催される夏の風物詩。子どもから大人まで楽しめ、踊り方が分からなくても飛び入り参加可能です。",
+    "keyapi": "浴衣を着て踊りに行きたいね〜🎐",
+    "source": "ookunitama",
+    "spots": [
+      "ookunitama"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 3,
+    "question": "府中市出身の女子サッカー選手・澤穂希さんが受賞した、市の最高栄誉は？",
+    "choices": [
+      "府中市民勲章",
+      "府中市市民栄誉賞",
+      "府中市文化大賞",
+      "府中市スポーツ栄光賞"
+    ],
+    "answer": 1,
+    "explanation": "澤穂希選手は2011年女子W杯優勝を機に、府中市から<strong>「市民栄誉賞」</strong>を贈呈されました。府中市の誇りとして語り継がれています。",
+    "keyapi": "世界一の選手が府中出身なんて本当にすごい！⚽",
+    "source": "fuchu_people"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "グルメ",
+    "difficulty": 2,
+    "question": "府中観光協会が府中の魅力あるお土産品を選定する推奨品制度の名前は？",
+    "choices": [
+      "府中ブランド",
+      "府中太鼓判",
+      "府中印",
+      "府中名物"
+    ],
+    "answer": 1,
+    "explanation": "<strong>「府中太鼓判（たいこばん）」</strong>は<strong>府中観光協会の推奨品認定制度</strong>。お菓子・お酒・農産物・伝統工芸品など、府中ならではの優れた商品が認定されています。",
+    "keyapi": "太鼓判マークを見つけたら間違いなしの逸品〜🥁",
+    "source": "kanko_product"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 2,
+    "question": "くらやみ祭で5月5日午後6時から行われる、最も荘厳な神事は？",
+    "choices": [
+      "御綱祭",
+      "大太鼓送り込み",
+      "神輿渡御",
+      "萬燈大会"
+    ],
+    "answer": 2,
+    "explanation": "くらやみ祭のクライマックスは5月5日の<strong>「神輿渡御（みこしとぎょ）」</strong>。8基の神輿が大鳥居前から御旅所まで渡御する、最も荘厳な神事です。",
+    "keyapi": "お神輿が地響きを立てて進む様子は圧巻だよ〜🏯",
+    "source": "ookunitama_matsuri"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 3,
+    "question": "すもも祭で奉納される、源頼義・義家親子ゆかりの行事は？",
+    "choices": [
+      "流鏑馬（やぶさめ）",
+      "相撲奉納",
+      "田植え舞",
+      "神楽"
+    ],
+    "answer": 0,
+    "explanation": "大國魂神社では時折<strong>流鏑馬（やぶさめ）</strong>などの古式神事が奉納されます。源義家ゆかりの武家文化が今に残ります。",
+    "keyapi": "弓と馬の伝統技、見たら忘れられないよ〜🏹",
+    "source": "ookunitama_matsuri",
+    "spots": [
+      "ookunitama"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "グルメ",
+    "difficulty": 2,
+    "question": "府中名物として知られる青木屋の「武蔵野日誌」とは？",
+    "choices": [
+      "ぜんざい",
+      "ミニバームクーヘンにチョコクリーム",
+      "もなか",
+      "ようかん"
+    ],
+    "answer": 1,
+    "explanation": "<strong>「武蔵野日誌」</strong>は、武蔵野の雑木林の小枝をイメージした<strong>ミニバームクーヘンにチョコレートクリームを詰めた青木屋のロングセラー菓子</strong>。発売55周年を超える名菓で、府中市のふるさと納税返礼品にもなっています。",
+    "keyapi": "バームクーヘンにクリームが詰まった名菓だよ〜🍫",
+    "source": "kanko_product"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "グルメ",
+    "difficulty": 3,
+    "question": "府中市内で歴史ある老舗で、和菓子の名店として知られるのは？",
+    "choices": [
+      "御菓子司 亀田屋",
+      "虎屋 府中店",
+      "舟和 府中支店",
+      "岡埜栄泉府中店"
+    ],
+    "answer": 0,
+    "explanation": "<strong>御菓子司 亀田屋</strong>は府中市内の老舗和菓子店。府中太鼓判にも選ばれ、地元で長く愛されています。",
+    "keyapi": "老舗の和菓子、お茶と一緒にいただきたいね〜🍵",
+    "source": "kanko_product",
+    "spots": [
+      "sando"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 1,
+    "question": "府中市の市の鳥「ひばり」を題材にした府中市民の歌詞・歌があるのは何という体操？",
+    "choices": [
+      "府中ラジオ体操",
+      "元気一番!!ふちゅう体操",
+      "ひばり体操",
+      "けやき体操"
+    ],
+    "answer": 1,
+    "explanation": "<strong>「元気一番!!ふちゅう体操」</strong>のイメージキャラクターは「ひばピー」というひばりの子ども。府中市の鳥にちなんだ、健康増進のための市民体操です。",
+    "keyapi": "ひばピーかわいい！ぼくも体操したくなっちゃう〜🐤",
+    "source": "fuchu_mascot"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 2,
+    "question": "府中市公式マスコット「ふちゅこま」が誕生したのは市制施行何周年？",
+    "choices": [
+      "50周年",
+      "60周年",
+      "70周年",
+      "80周年"
+    ],
+    "answer": 1,
+    "explanation": "ふちゅこまは<strong>市制施行60周年（2014年）</strong>記念の市民提案事業で誕生。市民から愛されるマスコットとして活躍しています。",
+    "keyapi": "ぼくの先輩マスコットだね〜よろしくこま〜🐺",
+    "source": "fuchu_mascot"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 3,
+    "question": "「ふちゅこま」キャラクターのデザインに協力した、府中市出身の有名人は？",
+    "choices": [
+      "指原莉乃",
+      "河西智美（元AKB48）",
+      "大島優子",
+      "小嶋陽菜"
+    ],
+    "answer": 1,
+    "explanation": "<strong>河西智美</strong>さん（元AKB48・府中市出身）がデザインに協力しました。市制施行60周年の市民提案事業として2015年に誕生しました。",
+    "keyapi": "地元出身の方が関わるなんて素敵だね〜🌟",
+    "source": "fuchu_mascot"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 1,
+    "question": "府中市で「ラグビーのまち」を象徴する場所として活用されている、駅前の施設は？",
+    "choices": [
+      "183 FUCHU",
+      "ラグビープラザ",
+      "ラグビーパーク",
+      "FUCHUドーム"
+    ],
+    "answer": 0,
+    "explanation": "<strong>「183 FUCHU」</strong>は府中駅北口にあるラグビーのまち府中の情報発信拠点。「183」は府中市の郵便番号（183-0000）から付けられています。",
+    "keyapi": "駅前で府中のラグビー文化に触れられるよ〜🏉",
+    "source": "rugby",
+    "spots": [
+      "183-fanzone",
+      "fuchu-station"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 2,
+    "question": "けやき並木の現在の本数は約何本？（2024年時点）",
+    "choices": [
+      "約60本",
+      "約120本",
+      "約250本",
+      "約400本"
+    ],
+    "answer": 1,
+    "explanation": "馬場大門のケヤキ並木は<strong>約120本</strong>のケヤキで構成されています（2024年3月時点で127本）。樹齢約400年の古木から比較的新しい補植まで、世代を越えて並木を守っています。",
+    "keyapi": "120本の大家族！世代を越えて見守ってるよ〜🌳🌳",
+    "source": "keyaki",
+    "spots": [
+      "keyaki-namiki"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 3,
+    "question": "府中市出身のソウル・バルセロナ両五輪の体操メダリストは？",
+    "choices": [
+      "梶原悠太郎",
+      "千家始一",
+      "代本中生",
+      "池谷幸雄"
+    ],
+    "answer": 3,
+    "explanation": "<strong>池谷幸雄（いけたにゆきお）</strong>選手は1970年東京都府中市出身の元体操選手。1988年ソウル、1992年バルセロナ両五輪でメダルを獲得した名選手です。",
+    "keyapi": "オリンピックメダリストも府中出身なんだね〜🤸",
+    "source": "fuchu_people"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "グルメ",
+    "difficulty": 3,
+    "question": "府中市古代米研究会が栽培し、「黒米うどん」の原材料にも使われている、府中の特産哤は？",
+    "choices": [
+      "コシヒカリ",
+      "古代米（黒米・赤米）",
+      "タカキ",
+      "ミルキークイーン"
+    ],
+    "answer": 1,
+    "explanation": "府中市古代米研究会と養う農家が府中市内で栽培する<strong>古代米（黒米・赤米）</strong>が府中の特産哤。黒米は「黒米うどん」の原料としてブランド化されています。",
+    "keyapi": "白米に少し混ぜると、お赤飯みたいなピンク色のご飯になるよ〜🍚",
+    "source": "fuchu_history"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 2,
+    "question": "府中市の介護予防推進センターで普及される、「府中小唄」をアレンジした介護予防体操は？",
+    "choices": [
+      "ふちゅう体操",
+      "元気一番!!ふちゅう体操",
+      "けやき体操",
+      "大國魂体操"
+    ],
+    "answer": 1,
+    "explanation": "<strong>「元気一番!!ふちゅう体操」</strong>は、「府中小唄」を体操用にアレンジした曲に合わせ、运動機能と口腔機能の向上を目的として製作された介護予防体操です。部分的にケヤキのポーズや東京競馬場をイメージした動きもあります。",
+    "keyapi": "府中ノ名所を踊りで表現した、ユニークな体操だよ〜💪",
+    "source": "fuchu_official"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 3,
+    "question": "府中市がデジタル化を進める分野として注目されている取り組みは？",
+    "choices": [
+      "ICTスマートシティ",
+      "デジタル市民参加プラットフォーム",
+      "AI市政",
+      "メタバース府中"
+    ],
+    "answer": 1,
+    "explanation": "府中市は<strong>参加型合意形成プラットフォーム「Liqlid」</strong>を活用し、デジタル市民参加の仕組みを推進。市民協働の新しい形を実現しています。",
+    "keyapi": "デジタル時代でも市民の声を大切にする街〜📱",
+    "source": "fuchu_official"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 2,
+    "question": "府中市内で開催される、地元の野菜や手作り品を販売する人気のマルシェは？",
+    "choices": [
+      "キテキテ府中マルシェ",
+      "武蔵野市場",
+      "多摩川マーケット",
+      "府中ふれあい市"
+    ],
+    "answer": 0,
+    "explanation": "<strong>「キテキテ府中マルシェ」</strong>は、地元の農家や手作り職人が集まる人気イベント。府中の地産地消を象徴するマルシェとして定期開催されています。",
+    "keyapi": "地元の野菜や手作り品、選ぶのが楽しいよ〜🥕",
+    "source": "fuchu_official"
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 1,
+    "question": "府中市民が誇る、ケヤキ並木に関する2024年の記念すべき出来事は？",
+    "choices": [
+      "ユネスコ世界遺産登録",
+      "国天然記念物指定100周年",
+      "東京都指定文化財追加",
+      "万葉集に詠まれた発見"
+    ],
+    "answer": 1,
+    "explanation": "<strong>2024年12月9日に国天然記念物指定100周年</strong>を迎えました。1924年（大正13年）の指定以来、長きにわたって府中市民とともに歩んできた歴史を持ちます。",
+    "keyapi": "100周年！おめでとう、ケヤキ並木の仲間たち〜🎊🌳",
+    "source": "keyaki",
+    "spots": [
+      "keyaki-namiki"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 2,
+    "question": "大國魂神社の南隣にある真言宗豊山派の寺院は？",
+    "choices": [
+      "妙光院",
+      "延暦寺",
+      "本願寺",
+      "清水寺"
+    ],
+    "answer": 0,
+    "explanation": "<strong>妙光院（みょうこういん）</strong>は大國魂神社の南側に位置する真言宗豊山派の寺院。山号は本覺山。安養寺とともに府中市本町に並んでいます。",
+    "keyapi": "知っている人だけ知ってる、静かなお寺だよ〜🌿",
+    "source": "sando",
+    "spots": [
+      "myokoin"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 2,
+    "question": "大國魂神社のすぐ南に妙光院と並んで建つ天台宗の寺院は？",
+    "choices": [
+      "安養寺",
+      "高安寺",
+      "金剛寺",
+      "円覚寺"
+    ],
+    "answer": 0,
+    "explanation": "<strong>安養寺（あんようじ）</strong>は天台宗の寺院で、山号は叡光山。妙光院とともに大國魂神社南側の歴史的な寺院群を成しています。",
+    "keyapi": "妙光院とお隣どうしだよ〜🛕",
+    "source": "shrine",
+    "spots": [
+      "anyoji"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "府中競馬正門前駅近くにある「目の薬師様」として知られる寺は？",
+    "choices": [
+      "普門寺",
+      "観音寺",
+      "薬師寺",
+      "仁王寺"
+    ],
+    "answer": 0,
+    "explanation": "<strong>普門寺</strong>は妙光院の末寺で真言宗豊山派。眼病平癒の薬師如来を本尊とすることから「目の薬師様」として信仰されています。毎年9月12日には縁日が開かれます。",
+    "keyapi": "「お目玉」のお供えものお下りをいただくと、眼病がよくなるとされるよ〜👁️",
+    "source": "shrine",
+    "spots": [
+      "fumonji"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 2,
+    "question": "府中市西府町にある熊野神社の境内には何が保存されている？",
+    "choices": [
+      "上円下方墳",
+      "三重塔",
+      "古井戸",
+      "巨石"
+    ],
+    "answer": 0,
+    "explanation": "<strong>武蔵府中熊野神社古墳</strong>は7世紀中頃から後半の上円下方墳で、国の史跡。展示館も併設されています。",
+    "keyapi": "古墳の上に神社が建ってる、めずらしいパターンだよ〜⛰️",
+    "source": "shrine",
+    "spots": [
+      "kumanojinja"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 1,
+    "question": "府中の森芸術劇場に隣接する、約17ヘクタールの都立公園は？",
+    "choices": [
+      "府中の森公園",
+      "郷土の森公園",
+      "武蔵野公園",
+      "浅間山公園"
+    ],
+    "answer": 0,
+    "explanation": "<strong>府中の森公園</strong>は1991年開園の都立公園。約17ヘクタールの広大な敷地に芸術劇場・美術館などを内包します。",
+    "keyapi": "芸術劇場や美術館があって、お散歩も楽しい〜🌳",
+    "source": "spot",
+    "spots": [
+      "fuchu-no-mori-park"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "府中市と小金井市にまたがる、BBQ場のある都立公園は？",
+    "choices": [
+      "都立武蔵野公園",
+      "府中の森公園",
+      "郷土の森公園",
+      "浅間山公園"
+    ],
+    "answer": 0,
+    "explanation": "<strong>都立武蔵野公園</strong>は雑木林や原っぱ、BBQ場、野球場などがある府中市と小金井市にまたがる都立公園です。",
+    "keyapi": "バーベキューもできて、ファミリーに大人気〜🍖",
+    "source": "spot",
+    "spots": [
+      "musashino-park"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "春になると桜並木のトンネルが楽しめる、府中の名所通りは？",
+    "choices": [
+      "桜通り・公園通り",
+      "ケヤキ通り",
+      "欅道",
+      "梅園街道"
+    ],
+    "answer": 0,
+    "explanation": "<strong>府中桜通り・公園通り</strong>は春に桜並木のトンネルが楽しめる、府中市民にとっての桜の名所です。",
+    "keyapi": "春になるとピンクのトンネルになるよ〜🌸",
+    "source": "spot",
+    "spots": [
+      "sakura-dori"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "大正12年（1923年）に開園した、日本初の公園墓地は？",
+    "choices": [
+      "多磨霊園",
+      "青山霊園",
+      "染井霊園",
+      "小金井公園"
+    ],
+    "answer": 0,
+    "explanation": "<strong>多磨霊園</strong>は大正12年（1923年）4月1日に開園した日本初の公園墓地。約128万㎡（東京ドーム27個分）の広大な敷地で、桜の名所としても知られます。",
+    "keyapi": "日本で最初の公園墓地で、桜の季節がとってもキレイなんだ〜🌸",
+    "source": "spot",
+    "spots": [
+      "tamareien"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 3,
+    "question": "府中市内の市民憩いの公園で、JR北府中駅近くにあるのは？",
+    "choices": [
+      "すずかけ公園",
+      "府中公園",
+      "本宿公園",
+      "清水が丘公園"
+    ],
+    "answer": 0,
+    "explanation": "<strong>すずかけ公園</strong>はJR北府中駅近くの市民公園です。",
+    "keyapi": "地元の人にお馴染みの憩いスポットだよ〜🌳",
+    "source": "spot",
+    "spots": [
+      "suzukake-park"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 3,
+    "question": "府中駅から徒歩10分、寿町にある中央公園は？",
+    "choices": [
+      "寿中央公園",
+      "府中公園",
+      "桜通り公園",
+      "新町公園"
+    ],
+    "answer": 0,
+    "explanation": "<strong>寿中央公園</strong>は府中駅から徒歩約10分、寿町2丁目にある住宅街の中央公園です。",
+    "keyapi": "駅から歩ける距離にあるよ〜🌳",
+    "source": "spot",
+    "spots": [
+      "kotobuki-park"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "国分寺崖線上にある府中市の遺跡公園は？",
+    "choices": [
+      "武蔵台遺跡公園",
+      "白糸台遺跡公園",
+      "高倉古墳公園",
+      "府中遺跡公園"
+    ],
+    "answer": 0,
+    "explanation": "<strong>武蔵台遺跡公園</strong>は府中市武蔵台にある遺跡を保存した公園です。",
+    "keyapi": "古代の暮らしが偲ばれる、ロマンあふれる公園〜🪨",
+    "source": "history",
+    "spots": [
+      "musashidai-iseki-park"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 3,
+    "question": "是政駅近くの多摩川沿いに広がる緑道は？",
+    "choices": [
+      "是政緑地",
+      "府中緑地",
+      "本町緑道",
+      "清水緑道"
+    ],
+    "answer": 0,
+    "explanation": "<strong>是政緑地</strong>は多摩川沿いに広がる緑道で、サイクリングや散策に最適です。",
+    "keyapi": "川風が気持ちいい緑の道だよ〜🌿",
+    "source": "spot",
+    "spots": [
+      "koremasa-ryokuchi"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 2,
+    "question": "府中本町駅に隣接する、国司館と家康御殿の跡を整備した史跡は？",
+    "choices": [
+      "国司館と家康御殿史跡広場",
+      "府中御殿史跡",
+      "武蔵国府跡",
+      "府中本町遺跡"
+    ],
+    "answer": 0,
+    "explanation": "<strong>国司館と家康御殿史跡広場</strong>は、古代武蔵国府の国司館と、徳川家康が利用した府中御殿の跡を整備した史跡広場です。",
+    "keyapi": "府中本町駅の真横にある、古代と江戸が交わる場所〜🏯",
+    "source": "history",
+    "spots": [
+      "kokufu-yakata"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 2,
+    "question": "7世紀中頃の上円下方墳で、国指定史跡となっている府中市の古墳は？",
+    "choices": [
+      "武蔵府中熊野神社古墳",
+      "白糸台古墳",
+      "高倉塚古墳",
+      "船形古墳"
+    ],
+    "answer": 0,
+    "explanation": "<strong>武蔵府中熊野神社古墳</strong>は7世紀中頃の上円下方墳。2005年に国の史跡に指定され、展示館も併設。古代日本の謎を秘めた重要遺跡です。",
+    "keyapi": "上が円、下が四角という珍しい形のお墓だよ〜⛰️",
+    "source": "history",
+    "spots": [
+      "kumano-kofun"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 2,
+    "question": "分倍河原駅近くの高倉古墳群の中心古墳は？",
+    "choices": [
+      "高倉塚古墳",
+      "白糸台古墳",
+      "熊野古墳",
+      "御殿山古墳"
+    ],
+    "answer": 0,
+    "explanation": "<strong>高倉塚古墳</strong>は府中市分梅町1-11-2にあり、多摩川左岸の台地に広がる高倉古墳群（27基）の中心となる古墳。市指定史跡です。",
+    "keyapi": "分倍河原駅から歩いてすぐ、古墳がいっぱい〜🪨",
+    "source": "history",
+    "spots": [
+      "takakura-kofun"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "府中市白糸台から調布市境にかけて広がる、多摩川左岸域の古墳群は？",
+    "choices": [
+      "白糸台古墳群",
+      "高倉古墳群",
+      "武蔵台古墳群",
+      "西府古墳群"
+    ],
+    "answer": 0,
+    "explanation": "<strong>白糸台古墳群</strong>は府中市白糸台から調布市境にかけて広がる古墳群。多摩川左岸域に存在し、これまでに複数の古墳が確認されています。",
+    "keyapi": "多摩川を見下ろす古代人たちの遺跡だね〜⛰️",
+    "source": "history",
+    "spots": [
+      "shiraito-kofun"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "江戸時代の街道に設置された一里塚で、府中市多磨霊園駅近くにあるのは？",
+    "choices": [
+      "甲州街道常久一里塚",
+      "府中宿一里塚",
+      "本町一里塚",
+      "白糸台一里塚"
+    ],
+    "answer": 0,
+    "explanation": "<strong>甲州街道常久一里塚</strong>は江戸時代初期に整備された甲州街道の里程標。府中市清水が丘3-15-26にあり、日本橋から七里目にあたります。京王線多磨霊園駅から徒歩4分。",
+    "keyapi": "江戸時代のマイルストーンだね〜🗿",
+    "source": "history",
+    "spots": [
+      "tsunehisa-ichirizuka"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 2,
+    "question": "1964年東京オリンピックの競歩種目の折り返し地点を記念する碑は？",
+    "choices": [
+      "オリンピック競歩折返記念碑",
+      "東京五輪マラソン記念碑",
+      "府中オリンピック碑",
+      "五輪折返地点"
+    ],
+    "answer": 0,
+    "explanation": "<strong>オリンピック競歩折返記念碑</strong>は1964年東京オリンピックの競歩競技の折り返し地点を記念する碑。緑町にあります。",
+    "keyapi": "1964年のオリンピックの歴史が刻まれてる〜🏃",
+    "source": "history",
+    "spots": [
+      "olympic-kyoho"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "競馬の街・府中が建てた、馬の供養のための塔は？",
+    "choices": [
+      "馬霊塔",
+      "馬頭観音",
+      "祠塚",
+      "競馬碑"
+    ],
+    "answer": 0,
+    "explanation": "<strong>馬霊塔（ばれいとう）</strong>は競馬で活躍した馬たちの霊を慰めるための供養塔。大國魂神社境内にあります。",
+    "keyapi": "競馬の街ならではの、馬への感謝の塔だね〜🐎",
+    "source": "history",
+    "spots": [
+      "bareito"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 1,
+    "question": "分倍河原駅前にある銅像は誰の像？",
+    "choices": [
+      "新田義貞",
+      "足利尊氏",
+      "源頼朝",
+      "北条時宗"
+    ],
+    "answer": 0,
+    "explanation": "<strong>新田義貞公之像</strong>は分倍河原の戦いで鎌倉幕府を破った武将・新田義貞の銅像。分倍河原駅前にあります。",
+    "keyapi": "分倍河原駅で待ち合わせに使われる、有名な銅像〜🗿",
+    "source": "history",
+    "spots": [
+      "nitta-zo"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "郷土の森博物館内に移築された、江戸後期の長屋門は？",
+    "choices": [
+      "旧三岡家長屋門",
+      "旧府中役場庁舎",
+      "旧内藤家長屋門",
+      "旧府中宿本陣"
+    ],
+    "answer": 0,
+    "explanation": "<strong>旧三岡家長屋門</strong>は江戸後期の文政12年（1829年）築とされる、旧是政村の村役人を務めた三岡家分家の長屋門。郷土の森博物館内に移築保存され、都指定有形文化財です。",
+    "keyapi": "江戸時代のお屋敷の正面玄関が残っているよ〜🏯",
+    "source": "history",
+    "spots": [
+      "mitoshima-nagayamon"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "郷土の森博物館内に保存されている、多摩地域最古の役場建築は？",
+    "choices": [
+      "旧府中町役場庁舎",
+      "旧府中駅舎",
+      "旧大國魂神社神門",
+      "旧府中尋常小学校"
+    ],
+    "answer": 0,
+    "explanation": "<strong>旧府中町役場庁舎</strong>は大正10年（1921年）に完成した洋風建築の町役場。多摩地域に現存する貴重な役場建築で、東京都指定有形文化財。郷土の森博物館内に移築されています。",
+    "keyapi": "大正デモクラシーの香りが漂う、都文化財第1号だよ〜🏛️",
+    "source": "history",
+    "spots": [
+      "kyu-yakuba"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "府中市美好町にある江戸期の名家住宅で都指定文化財は？",
+    "choices": [
+      "内藤家住宅",
+      "本田家住宅",
+      "三岡家住宅",
+      "村野家住宅"
+    ],
+    "answer": 0,
+    "explanation": "<strong>内藤家住宅</strong>は府中市美好町にある江戸期の名家住宅で、都指定有形文化財に指定されています。",
+    "keyapi": "江戸時代の名家のお屋敷が残っているなんてすごいね〜🏯",
+    "source": "history",
+    "spots": [
+      "naitoke"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 1,
+    "question": "昭和62年（1987年）に開館した、野外を含めた森全体が博物館の施設は？",
+    "choices": [
+      "府中市郷土の森博物館",
+      "府中市美術館",
+      "ふるさと府中歴史館",
+      "府中市民博物館"
+    ],
+    "answer": 0,
+    "explanation": "<strong>府中市郷土の森博物館</strong>は1987年4月に開館。野外を含めた森全体が博物館で、プラネタリウムも併設されています。",
+    "keyapi": "博物館もプラネタリウムも梅園もある、府中の自然と歴史の宝庫〜🏛️",
+    "source": "museum",
+    "spots": [
+      "kyodo-museum"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "府中の森公園内にあり、毎年「春の江戸絵画まつり」を開催する美術館は？",
+    "choices": [
+      "府中市美術館",
+      "府中近代美術館",
+      "東京府中美術館",
+      "府中現代アート館"
+    ],
+    "answer": 0,
+    "explanation": "<strong>府中市美術館</strong>は府中の森公園内にあり、江戸絵画を中心とした特別展（春の江戸絵画まつり）で全国的に有名です。",
+    "keyapi": "江戸絵画の展示で全国から美術ファンが集まるよ〜🎨",
+    "source": "museum",
+    "spots": [
+      "fuchu-art-museum"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "大國魂神社の隣にある、府中の観光案内拠点は？",
+    "choices": [
+      "府中市観光情報センター",
+      "府中駅前案内所",
+      "ル・シーニュ案内所",
+      "郷土の森案内所"
+    ],
+    "answer": 0,
+    "explanation": "<strong>府中市観光情報センター</strong>は大國魂神社の隣にあり、観光マップやパンフ配布、案内スタッフが常駐しています。",
+    "keyapi": "道に迷ったらまずここに寄って、府中マップをもらおう〜ℹ️",
+    "source": "museum",
+    "spots": [
+      "kankou-center"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "武蔵府中熊野神社古墳の出土品を展示する公式施設は？",
+    "choices": [
+      "国史跡 武蔵府中熊野神社古墳 展示館",
+      "府中市考古資料館",
+      "熊野神社宝物殿",
+      "西府史跡資料館"
+    ],
+    "answer": 0,
+    "explanation": "<strong>国史跡 武蔵府中熊野神社古墳 展示館</strong>は古墳の出土品や上円下方墳の構造を紹介する公式展示館です。",
+    "keyapi": "古墳のことを詳しく学べる、隠れた名スポット〜🏛️",
+    "source": "museum",
+    "spots": [
+      "kumano-tenji"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 3,
+    "question": "府中市浅間町にある、市民の学びの拠点施設は？",
+    "choices": [
+      "府中市生涯学習センター",
+      "府中市民会館",
+      "府中文化会館",
+      "ふちゅう市民館"
+    ],
+    "answer": 0,
+    "explanation": "<strong>府中市生涯学習センター</strong>は浅間町1丁目7番地にある、市民の学習・スポーツ・交流の拠点施設です。",
+    "keyapi": "色んな講座やイベントが開かれているよ〜📚",
+    "source": "museum",
+    "spots": [
+      "shogai-gakushu"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 2,
+    "question": "府中市是政6-22にある、「サンゴリアス」の本拠地となるスポーツセンターは？",
+    "choices": [
+      "サントリー府中スポーツセンター",
+      "東芝府中グラウンド",
+      "府中ラグビー場",
+      "味の素スタジアム"
+    ],
+    "answer": 0,
+    "explanation": "<strong>サントリー府中スポーツセンター</strong>は府中市是政6-22にあり、東京サントリーサンゴリアスの練習グラウンドとして使われています。「ラグビーのまち府中」を代表するチームの一つ。",
+    "keyapi": "府中はラグビー2強の街、サンゴリアスの本拠地だよ〜🏉",
+    "source": "sports",
+    "spots": [
+      "suntory-rugby"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 2,
+    "question": "JR北府中駅近くにグラウンドがあるラグビーチームは？",
+    "choices": [
+      "東芝ブレイブルーパス東京",
+      "サントリーサンゴリアス",
+      "パナソニックワイルドナイツ",
+      "ヤマハジュビロ"
+    ],
+    "answer": 0,
+    "explanation": "<strong>東芝ブレイブルーパス東京</strong>はJR北府中駅近くにグラウンドを構えるラグビーチーム。府中のラグビー文化を支える存在です。",
+    "keyapi": "東芝とサントリー、府中のラグビー2強だ〜🏉",
+    "source": "sports",
+    "spots": [
+      "toshiba-rugby"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 3,
+    "question": "府中駅北口にあるラグビーファン交流拠点は？",
+    "choices": [
+      "183 FUCHU fan zone",
+      "府中ラグビー館",
+      "ケヤキラグビーカフェ",
+      "府中スポーツ交流館"
+    ],
+    "answer": 0,
+    "explanation": "<strong>183 FUCHU fan zone</strong>は府中駅北口にあるラグビー応援の交流拠点。試合の日には多くのファンが集います。",
+    "keyapi": "ラグビー観戦前後に立ち寄りたい、ファンの聖地〜🏉",
+    "source": "sports",
+    "spots": [
+      "183-fanzone"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "府中市是政にある、別名「水の宝石箱」と称される競艇場は？",
+    "choices": [
+      "ボートレース多摩川",
+      "平和島競艇場",
+      "江戸川競艇場",
+      "戸田競艇場"
+    ],
+    "answer": 0,
+    "explanation": "<strong>ボートレース多摩川</strong>は府中市是政4-11にある競艇場。穏やかな水面で「水の宝石箱」とも呼ばれます。",
+    "keyapi": "穏やかな水面でレースが楽しめる場所だよ〜🚤",
+    "source": "sports",
+    "spots": [
+      "tamagawa-boatrace"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 3,
+    "question": "府中市南町にある、釣り愛好家に人気の専門池は？",
+    "choices": [
+      "府中へら鮒センター",
+      "府中釣り公園",
+      "南町釣り場",
+      "府中フィッシングセンター"
+    ],
+    "answer": 0,
+    "explanation": "<strong>府中へら鮒センター</strong>は府中市南町にある、へら鮒釣りの専門池。釣り愛好家に親しまれています。",
+    "keyapi": "昔ながらの釣り堀文化が今も生きてる〜🎣",
+    "source": "sports",
+    "spots": [
+      "herafuna-center"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 3,
+    "question": "府中市と稲城市を多摩川で結ぶ、青と白の主塔が特徴の橋は？",
+    "choices": [
+      "是政橋",
+      "関戸橋",
+      "多摩水道橋",
+      "稲城大橋"
+    ],
+    "answer": 0,
+    "explanation": "<strong>是政橋</strong>は多摩川に架かる全長約401mの3径間連続合成桁斜張橋。青と白の主塔が特徴で、府中市と稲城市を結びます。",
+    "keyapi": "青と白のコントラストがキレイな橋だよ〜🌉",
+    "source": "spot",
+    "spots": [
+      "koremasabashi"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 3,
+    "question": "JR北府中駅前にある、鉄道車両も製造する大手企業の事業所は？",
+    "choices": [
+      "東芝府中事業所",
+      "日立府中事業所",
+      "NEC府中事業所",
+      "三菱府中事業所"
+    ],
+    "answer": 0,
+    "explanation": "<strong>東芝府中事業所</strong>は鉄道車両など重電製品の主要拠点。JR北府中駅は東芝従業員のために設置されたとも言われます。",
+    "keyapi": "北府中駅はもともと東芝の工場のための駅だったんだ〜🏭",
+    "source": "factory",
+    "spots": [
+      "toshiba-factory"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 3,
+    "question": "NECの研究開発・製造拠点として知られる、府中市の大規模事業所は？",
+    "choices": [
+      "NEC府中事業所",
+      "日立府中",
+      "東芝府中",
+      "Sony府中"
+    ],
+    "answer": 0,
+    "explanation": "<strong>NEC府中事業所</strong>はNECの研究開発・製造拠点で、府中市北部に位置します。",
+    "keyapi": "府中は意外と大企業が集まる街なんだよ〜🏭",
+    "source": "factory",
+    "spots": [
+      "ngk-factory"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 3,
+    "question": "府中市内にある、多目的ホールの名称は？",
+    "choices": [
+      "ひばりホール",
+      "府中こもれびホール",
+      "ケヤキホール",
+      "大國魂ホール"
+    ],
+    "answer": 0,
+    "explanation": "<strong>ひばりホール</strong>は府中市立中央文化センター内にある160席の多目的ホール。府中駅北側桜通り沿い。",
+    "keyapi": "様々な催しが開かれる、市民の文化拠点〜🎤",
+    "source": "gourmet",
+    "spots": [
+      "hibari-hall"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 1,
+    "question": "府中駅南口の大型ショッピングモールの名前は？",
+    "choices": [
+      "府中フォーリス",
+      "ル・シーニュ",
+      "府中サティ",
+      "府中マルイ"
+    ],
+    "answer": 0,
+    "explanation": "<strong>府中フォーリス</strong>は府中駅南口の大型商業施設。グルメ・ファッション・サービスが揃います。",
+    "keyapi": "駅前のお買い物といえばフォーリス〜🛍️",
+    "source": "gourmet",
+    "spots": [
+      "foris"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 2,
+    "question": "府中駅前にある、「縄文の湯」を2024年にリニューアルした天然温泉施設は？",
+    "choices": [
+      "RAKU SPA Station 府中",
+      "府中極楽湯",
+      "府中天然温泉",
+      "ケヤキ温泉"
+    ],
+    "answer": 0,
+    "explanation": "<strong>RAKU SPA Station 府中</strong>は旧「縄文の湯」を2024年12月に極楽湯がリニューアルした天然温泉施設。黒湯とサウナが楽しめます。",
+    "keyapi": "駅から徒歩2分で行ける、天然温泉「黒湯」だよ〜♨️",
+    "source": "gourmet",
+    "spots": [
+      "rakuspa"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 3,
+    "question": "府中駅前にある大型書店チェーンは？",
+    "choices": [
+      "TSUTAYA 府中駅前店",
+      "ブックオフ府中",
+      "紀伊國屋府中",
+      "蔦屋家電府中"
+    ],
+    "answer": 0,
+    "explanation": "<strong>TSUTAYA 府中駅前店</strong>は府中駅から徒歩1分の大型書店。書籍・雑誌・コミックなどが揃います。",
+    "keyapi": "駅前で本を探すならここ〜📚",
+    "source": "gourmet",
+    "spots": [
+      "tsutaya"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 3,
+    "question": "京王線府中駅直結の、生活雑貨・文房具の専門店は？",
+    "choices": [
+      "京王アートマン府中店",
+      "ロフト府中",
+      "東急ハンズ府中",
+      "無印良品府中"
+    ],
+    "answer": 0,
+    "explanation": "<strong>京王アートマン府中店</strong>は京王線府中駅直結の生活雑貨と文房具の専門店。",
+    "keyapi": "駅から濡れずに行けるのが便利〜🛍️",
+    "source": "gourmet",
+    "spots": [
+      "keio-artman"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 3,
+    "question": "府中市にある観光農園で、春のいちご狩りが楽しめるのは？",
+    "choices": [
+      "府中いちご狩り園",
+      "府中ベリー園",
+      "府中観光ファーム",
+      "府中フルーツパーク"
+    ],
+    "answer": 0,
+    "explanation": "<strong>府中いちご狩り園</strong>では春にいちご狩りが楽しめます。",
+    "keyapi": "甘くて大きないちごを摘み取れるよ〜🍓",
+    "source": "gourmet",
+    "spots": [
+      "ichigo-gari"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 3,
+    "question": "高架式栽培でいちご狩りを楽しめる、府中市の新しい施設は？",
+    "choices": [
+      "空飛ぶいちご東京",
+      "府中エアーストロベリー",
+      "ハイブリッドベリー府中",
+      "府中スカイベリー"
+    ],
+    "answer": 0,
+    "explanation": "<strong>空飛ぶいちご東京</strong>は高架式栽培の最新いちご狩り施設で、立ったまま楽しめるのが特徴です。",
+    "keyapi": "屈まなくていいから腰に優しい〜🍓",
+    "source": "gourmet",
+    "spots": [
+      "sora-tobu-ichigo"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "JR南武線と武蔵野線が交わり、東京競馬場直結の駅は？",
+    "choices": [
+      "JR府中本町駅",
+      "JR北府中駅",
+      "JR西府駅",
+      "JR分倍河原駅"
+    ],
+    "answer": 0,
+    "explanation": "<strong>JR府中本町駅</strong>はJR南武線と武蔵野線が交わる結節駅。東京競馬場と直結する地下通路があります。",
+    "keyapi": "競馬の日には多くの人で賑わう駅〜🚉",
+    "source": "station",
+    "spots": [
+      "fuchu-honmachi-station"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 3,
+    "question": "東芝府中事業所のために設置されたとされる、JR武蔵野線の駅は？",
+    "choices": [
+      "JR北府中駅",
+      "JR西府駅",
+      "JR府中本町駅",
+      "JR是政駅"
+    ],
+    "answer": 0,
+    "explanation": "<strong>JR北府中駅</strong>はJR武蔵野線の駅で、東芝府中事業所の最寄り駅。歴史的にも東芝従業員のために設置された経緯があります。",
+    "keyapi": "東芝の社員さんが多く使う駅だよ〜🚉",
+    "source": "station",
+    "spots": [
+      "kita-fuchu-station"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 3,
+    "question": "武蔵府中熊野神社古墳の最寄り駅となる、JR南武線の駅は？",
+    "choices": [
+      "JR西府駅",
+      "JR谷保駅",
+      "JR矢野口駅",
+      "JR南多摩駅"
+    ],
+    "answer": 0,
+    "explanation": "<strong>JR西府駅</strong>はJR南武線の駅で、武蔵府中熊野神社古墳の最寄り。比較的新しい駅です。",
+    "keyapi": "古墳と展示館を訪れる時はここ〜🚉",
+    "source": "station",
+    "spots": [
+      "nishifu-station"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "府中の森公園と芸術劇場の最寄りとなる、京王線の駅は？",
+    "choices": [
+      "東府中駅",
+      "府中競馬正門前駅",
+      "多磨霊園駅",
+      "武蔵野台駅"
+    ],
+    "answer": 0,
+    "explanation": "<strong>東府中駅</strong>は京王線・京王競馬場線の駅。府中の森公園・府中市美術館・府中の森芸術劇場へのアクセス駅です。",
+    "keyapi": "芸術や公園を楽しむなら東府中駅〜🚉",
+    "source": "station",
+    "spots": [
+      "higashi-fuchu"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "東京競馬場と直結する、京王競馬場線の駅は？",
+    "choices": [
+      "府中競馬正門前駅",
+      "東府中駅",
+      "府中駅",
+      "分倍河原駅"
+    ],
+    "answer": 0,
+    "explanation": "<strong>府中競馬正門前駅</strong>は京王競馬場線の終点で、東京競馬場の正門と直結。土日のG1開催日は大変な賑わいに。",
+    "keyapi": "駅出てすぐ競馬場、便利の極み〜🐎",
+    "source": "station",
+    "spots": [
+      "keibajo-station"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 3,
+    "question": "日本初の公園墓地・多磨霊園の最寄りとなる、京王線の駅は？",
+    "choices": [
+      "多磨霊園駅",
+      "東府中駅",
+      "武蔵野台駅",
+      "白糸台駅"
+    ],
+    "answer": 0,
+    "explanation": "<strong>多磨霊園駅</strong>は京王線の駅で、多磨霊園への玄関口。所在地は府中市清水が丘3-26-11。",
+    "keyapi": "霊園に行く時もここから歩けるよ〜🚉",
+    "source": "station",
+    "spots": [
+      "tamareien-station"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 3,
+    "question": "西武多摩川線の駅で、武蔵野の森公園に近いのは？",
+    "choices": [
+      "多磨駅",
+      "白糸台駅",
+      "是政駅",
+      "新小金井駅"
+    ],
+    "answer": 0,
+    "explanation": "<strong>西武多磨駅</strong>は西武多摩川線の駅。武蔵野の森公園や警察大学校への最寄り駅です。",
+    "keyapi": "京王線とは別の「多磨」駅、間違えやすいね〜🚉",
+    "source": "station",
+    "spots": [
+      "tama-station"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 3,
+    "question": "白糸台古墳群の最寄りとなる、西武多摩川線の駅は？",
+    "choices": [
+      "白糸台駅",
+      "多磨駅",
+      "是政駅",
+      "競艇場前駅"
+    ],
+    "answer": 0,
+    "explanation": "<strong>西武白糸台駅</strong>は西武多摩川線の駅で、白糸台古墳群の最寄り駅です。",
+    "keyapi": "古墳めぐりの起点にしてね〜🚉",
+    "source": "station",
+    "spots": [
+      "shiraito-station"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 3,
+    "question": "府中市宮西町にある時宗の寺院で、毎月23日に日限子育地蔵尊のご縁日が開かれるのは？",
+    "choices": [
+      "称名寺",
+      "妙光院",
+      "安養寺",
+      "高安寺"
+    ],
+    "answer": 0,
+    "explanation": "<strong>称名寺（しょうみょうじ）</strong>は府中市宮西町にある時宗の寺院。寛元3年（1245年）に道阿上人が開山したと伝わり、境内の日限子育地蔵尊は近隣の信仰を集めています。",
+    "keyapi": "子育てを見守る、優しいお地蔵さんがいるお寺だよ〜🛕",
+    "source": "shrine",
+    "spots": [
+      "shomyoji"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "調布飛行場周辺、府中市と調布市にまたがる広大な都立公園は？",
+    "choices": [
+      "武蔵野の森公園",
+      "府中の森公園",
+      "郷土の森公園",
+      "都立武蔵野公園"
+    ],
+    "answer": 0,
+    "explanation": "<strong>武蔵野の森公園</strong>は調布飛行場に隣接する大規模な都立公園で、修景池や広い芝生広場が魅力。",
+    "keyapi": "飛行機の発着が見られて、空が広い公園〜✈️",
+    "source": "spot",
+    "spots": [
+      "musashino-no-mori-park"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 2,
+    "question": "江戸時代、府中宿の旧甲州街道と府中街道の交差点に設置されていた、公共掲示板の遺構は？",
+    "choices": [
+      "高札場",
+      "府中辻",
+      "本陣跡",
+      "名残石"
+    ],
+    "answer": 0,
+    "explanation": "<strong>高札場</strong>は江戸時代の公共掲示板。府中市内の旧甲州街道交差点にあり、東京都の旧跡に指定されています。",
+    "keyapi": "江戸時代のお触書が貼られた歴史スポット〜📜",
+    "source": "history",
+    "spots": [
+      "kosatsuba"
+    ]
+  },
+  {
+    "category": "history",
+    "catLabel": "歴史",
+    "difficulty": 1,
+    "question": "大國魂神社に隣接する、府中の歴史を映像と展示で紹介する施設は？",
+    "choices": [
+      "ふるさと府中歴史館",
+      "府中市郷土の森博物館",
+      "府中市美術館",
+      "府中市観光情報センター"
+    ],
+    "answer": 0,
+    "explanation": "<strong>ふるさと府中歴史館</strong>は大國魂神社の隣にあり、府中の歴史を多くの映像と展示で学べる施設です。",
+    "keyapi": "無料で府中の歴史を学べる、おすすめスポット〜📚",
+    "source": "museum",
+    "spots": [
+      "furusato-rekishi"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "郷土の森博物館内にある、星空を投映する施設は？",
+    "choices": [
+      "プラネタリウム",
+      "天文台",
+      "宇宙博物館",
+      "星空シアター"
+    ],
+    "answer": 0,
+    "explanation": "<strong>郷土の森プラネタリウム</strong>は最新鋭のハイブリッド・プラネタリウムで、星空や宇宙を楽しめます。",
+    "keyapi": "博物館に来たら星空も楽しんでね〜🌌",
+    "source": "museum",
+    "spots": [
+      "planetarium"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 1,
+    "question": "FC東京と東京ヴェルディがホームスタジアムにしている、府中市の隣接地にある競技場は？",
+    "choices": [
+      "味の素スタジアム",
+      "東京ドーム",
+      "国立競技場",
+      "西武ドーム"
+    ],
+    "answer": 0,
+    "explanation": "<strong>味の素スタジアム</strong>はJ1リーグのFC東京と東京ヴェルディが本拠地とする多目的スタジアム。府中市東部に近接しています。",
+    "keyapi": "Jリーグの試合観戦で府中から歩いて行ける距離〜⚽",
+    "source": "sports",
+    "spots": [
+      "ajinomoto-stadium"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 3,
+    "question": "府中駅直結の複合商業施設「くるる府中」2階広場にある、誰でも自由に演奏できるピアノは？",
+    "choices": [
+      "ストリートピアノ",
+      "共有ピアノ",
+      "フリーピアノ",
+      "駅ピアノ"
+    ],
+    "answer": 0,
+    "explanation": "<strong>くるる府中のストリートピアノ</strong>は京王線府中駅南口直結の「くるる府中」2階中央広場に設置。演奏可能時間は10:00〜20:00、アップライトピアノを設置。誰でも無料で演奏できます。",
+    "keyapi": "くるるの吹き抜けに響く音色が素敵だよ〜🎹",
+    "source": "gourmet",
+    "spots": [
+      "street-piano"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 1,
+    "question": "府中の森公園に隣接する、収容人数2,000名超の「どりーむホール」を擁する文化施設は？",
+    "choices": [
+      "府中の森芸術劇場",
+      "府中市民会館",
+      "府中ホール",
+      "ル・シーニュホール"
+    ],
+    "answer": 0,
+    "explanation": "<strong>府中の森芸術劇場</strong>は1991年開館。約2,027人収容の「どりーむホール」、パイプオルガン付き「ウィーンホール」など複数のホールを備えます。",
+    "keyapi": "オペラもバンドもクラシックも、なんでも楽しめる〜🎭",
+    "source": "gourmet",
+    "spots": [
+      "fuchu-mori-gekijo"
+    ]
+  },
+  {
+    "category": "gourmet",
+    "catLabel": "文化",
+    "difficulty": 3,
+    "question": "京王線府中駅南口直結のTOHOシネマズを内包する複合商業施設は？",
+    "choices": [
+      "くるる府中",
+      "ミッテン府中",
+      "ル・シーニュ",
+      "府中フォーリス"
+    ],
+    "answer": 0,
+    "explanation": "<strong>くるる府中</strong>は2005年開業の府中駅南口直結の複合商業施設。TOHOシネマズやタイトーステーションを含み、2階にはストリートピアノスポットもあります。",
+    "keyapi": "ペデストリアンデッキで雨に濡れずに行けるよ〜☘️",
+    "source": "gourmet",
+    "spots": [
+      "kururu"
+    ]
+  },
+  {
+    "category": "spot",
+    "catLabel": "名所",
+    "difficulty": 2,
+    "question": "西武多摩川線の終点で、多摩川に近い府中市の駅は？",
+    "choices": [
+      "是政駅",
+      "白糸台駅",
+      "多磨駅",
+      "新小金井駅"
+    ],
+    "answer": 0,
+    "explanation": "<strong>是政駅</strong>は西武多摩川線の終点。府中市是政にあり、多摩川や是政橋・競艇場が徒歩圏内です。",
+    "keyapi": "西武多摩川線の終点、ここから多摩川散歩へ〜🚉",
+    "source": "station",
+    "spots": [
+      "koremasa-station"
+    ]
   }
-,
-  {"category": "history", "catLabel": "歴史", "difficulty": 2, "question": "大國魂神社の南隣にある真言宗豊山派の寺院は？", "choices": ["妙光院", "延暦寺", "本願寺", "清水寺"], "answer": 0, "explanation": "<strong>妙光院（みょうこういん）</strong>は大國魂神社の南側に位置する真言宗豊山派の寺院。山号は本覺山。安養寺とともに府中市本町に並んでいます。", "keyapi": "知っている人だけ知ってる、静かなお寺だよ〜🌿", "source": "sando", "spots": ["myokoin"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 2, "question": "大國魂神社のすぐ南に妙光院と並んで建つ天台宗の寺院は？", "choices": ["安養寺", "高安寺", "金剛寺", "円覚寺"], "answer": 0, "explanation": "<strong>安養寺（あんようじ）</strong>は天台宗の寺院で、山号は叡光山。妙光院とともに大國魂神社南側の歴史的な寺院群を成しています。", "keyapi": "妙光院とお隣どうしだよ〜🛕", "source": "shrine", "spots": ["anyoji"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 3, "question": "府中競馬正門前駅近くにある「目の薬師様」として知られる寺は？", "choices": ["普門寺", "観音寺", "薬師寺", "仁王寺"], "answer": 0, "explanation": "<strong>普門寺</strong>は妙光院の末寺で真言宗豊山派。薬師徳上人が眼病の療館文を上げたとされ、「目の薬師様」として信仰されています。毎年9月12日には「お目玉」をお供えする縁日が開かれます。", "keyapi": "「お目玉」のお供えものお下りをいただくと、眼病がよくなるとされるよ〜👁️", "source": "shrine", "spots": ["fumonji"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 2, "question": "府中市西府町にある熊野神社の境内には何が保存されている？", "choices": ["上円下方墳", "三重塔", "古井戸", "巨石"], "answer": 0, "explanation": "<strong>武蔵府中熊野神社古墳</strong>は7世紀中頃から後半の上円下方墳で、国の史跡。展示館も併設されています。", "keyapi": "古墳の上に神社が建ってる、めずらしいパターンだよ〜⛰️", "source": "shrine", "spots": ["kumanojinja"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 1, "question": "府中の森芸術劇場に隣接する、約17ヘクタールの都立公園は？", "choices": ["府中の森公園", "郷土の森公園", "武蔵野公園", "浅間山公園"], "answer": 0, "explanation": "<strong>府中の森公園</strong>は1991年開園の都立公園。約17ヘクタールの広大な敷地に芸術劇場・美術館などを内包します。", "keyapi": "芸術劇場や美術館があって、お散歩も楽しい〜🌳", "source": "spot", "spots": ["fuchu-no-mori-park"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 2, "question": "府中市と小金井市にまたがる、BBQ場のある都立公園は？", "choices": ["都立武蔵野公園", "府中の森公園", "郷土の森公園", "浅間山公園"], "answer": 0, "explanation": "<strong>都立武蔵野公園</strong>は雑木林や原っぱ、BBQ場、野球場などがある府中市と小金井市にまたがる都立公園です。", "keyapi": "バーベキューもできて、ファミリーに大人気〜🍖", "source": "spot", "spots": ["musashino-park"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 2, "question": "春になると桜並木のトンネルが楽しめる、府中の名所通りは？", "choices": ["桜通り・公園通り", "ケヤキ通り", "欅道", "梅園街道"], "answer": 0, "explanation": "<strong>府中桜通り・公園通り</strong>は春に桜並木のトンネルが楽しめる、府中市民にとっての桜の名所です。", "keyapi": "春になるとピンクのトンネルになるよ〜🌸", "source": "spot", "spots": ["sakura-dori"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 2, "question": "大正12年（1923年）に開園した、日本初の公園墓地は？", "choices": ["多磨霊園", "青山霊園", "染井霊園", "小金井公園"], "answer": 0, "explanation": "<strong>多磨霊園</strong>は大正12年（1923年）に開園した日本初の公園墓地。約132万㎡の広大な敷地で、桜の名所としても知られます。", "keyapi": "日本で最初の公園墓地で、桜の季節がとってもキレイなんだ〜🌸", "source": "spot", "spots": ["tamareien"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 3, "question": "府中市内の市民憩いの公園で、JR北府中駅近くにあるのは？", "choices": ["すずかけ公園", "府中公園", "本宿公園", "清水が丘公園"], "answer": 0, "explanation": "<strong>すずかけ公園</strong>はJR北府中駅近くの市民公園です。", "keyapi": "地元の人にお馴染みの憩いスポットだよ〜🌳", "source": "spot", "spots": ["suzukake-park"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 3, "question": "府中駅から徒歩10分、寿町にある中央公園は？", "choices": ["寿中央公園", "府中公園", "桜通り公園", "新町公園"], "answer": 0, "explanation": "<strong>寿中央公園</strong>は府中駅から徒歩約10分、寿町2丁目にある住宅街の中央公園です。", "keyapi": "駅から歩ける距離にあるよ〜🌳", "source": "spot", "spots": ["kotobuki-park"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 3, "question": "国分寺崖線上にある府中市の遺跡公園は？", "choices": ["武蔵台遺跡公園", "白糸台遺跡公園", "高倉古墳公園", "府中遺跡公園"], "answer": 0, "explanation": "<strong>武蔵台遺跡公園</strong>は府中市武蔵台にある遺跡を保存した公園です。", "keyapi": "古代の暮らしが偲ばれる、ロマンあふれる公園〜🪨", "source": "history", "spots": ["musashidai-iseki-park"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 3, "question": "是政駅近くの多摩川沿いに広がる緑道は？", "choices": ["是政緑地", "府中緑地", "本町緑道", "清水緑道"], "answer": 0, "explanation": "<strong>是政緑地</strong>は多摩川沿いに広がる緑道で、サイクリングや散策に最適です。", "keyapi": "川風が気持ちいい緑の道だよ〜🌿", "source": "spot", "spots": ["koremasa-ryokuchi"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 2, "question": "府中本町駅に隣接する、国司館と家康御殿の跡を整備した史跡は？", "choices": ["国司館と家康御殿史跡広場", "府中御殿史跡", "武蔵国府跡", "府中本町遺跡"], "answer": 0, "explanation": "<strong>国司館と家康御殿史跡広場</strong>は、古代武蔵国府の国司館と、徳川家康が利用した府中御殿の跡を整備した史跡広場です。", "keyapi": "府中本町駅の真横にある、古代と江戸が交わる場所〜🏯", "source": "history", "spots": ["kokufu-yakata"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 2, "question": "7世紀中頃の上円下方墳で、国指定史跡となっている府中市の古墳は？", "choices": ["武蔵府中熊野神社古墳", "白糸台古墳", "高倉塚古墳", "船形古墳"], "answer": 0, "explanation": "<strong>武蔵府中熊野神社古墳</strong>は7世紀中頃の上円下方墳。2005年に国の史跡に指定され、展示館も併設。古代日本の謎を秘めた重要遺跡です。", "keyapi": "上が円、下が四角という珍しい形のお墓だよ〜⛰️", "source": "history", "spots": ["kumano-kofun"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 2, "question": "分倍河原駅近くの高倉古墳群の中心古墳は？", "choices": ["高倉塚古墳", "白糸台古墳", "熊野古墳", "御殿山古墳"], "answer": 0, "explanation": "<strong>高倉塚古墳</strong>は府中市分梅町にあり、多摩川左岸の台地に広がる高倉古墳群の中心となる直後約20mの円墳。市指定史跡です。", "keyapi": "分倍河原駅から歩いてすぐ、古墳がいっぱい〜🪨", "source": "history", "spots": ["takakura-kofun"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 3, "question": "府中市白糸台から調布市境にかけて広がる、多摩川左岸域の古墳群は？", "choices": ["白糸台古墳群", "高倉古墳群", "武蔵台古墳群", "西府古墳群"], "answer": 0, "explanation": "<strong>白糸台古墳群</strong>は府中市白糸台から調布市境にかけて広がる古墳群。多摩川左岸域に存在し、これまでに複数の古墳が確認されています。", "keyapi": "多摩川を見下ろす古代人たちの遺跡だね〜⛰️", "source": "history", "spots": ["shiraito-kofun"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 3, "question": "江戸時代の街道に設置された一里塚で、府中市多磨霊園駅近くにあるのは？", "choices": ["甲州街道常久一里塚", "府中宿一里塚", "本町一里塚", "白糸台一里塚"], "answer": 0, "explanation": "<strong>甲州街道常久一里塚</strong>は江戸時代の街道整備で築かれた里程標。府中市常久2丁目にあります。", "keyapi": "江戸時代のマイルストーンだね〜🗿", "source": "history", "spots": ["tsunehisa-ichirizuka"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 2, "question": "1964年東京オリンピックの競歩種目の折り返し地点を記念する碑は？", "choices": ["オリンピック競歩折返記念碑", "東京五輪マラソン記念碑", "府中オリンピック碑", "五輪折返地点"], "answer": 0, "explanation": "<strong>オリンピック競歩折返記念碑</strong>は1964年東京オリンピックの競歩競技の折り返し地点を記念する碑。緑町にあります。", "keyapi": "1964年のオリンピックの歴史が刻まれてる〜🏃", "source": "history", "spots": ["olympic-kyoho"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 3, "question": "競馬の街・府中が建てた、馬の供養のための塔は？", "choices": ["馬霊塔", "馬頭観音", "祠塚", "競馬碑"], "answer": 0, "explanation": "<strong>馬霊塔（ばれいとう）</strong>は競馬で活躍した馬たちの霊を慰めるための供養塔。府中本町近くにあります。", "keyapi": "競馬の街ならではの、馬への感謝の塔だね〜🐎", "source": "history", "spots": ["bareito"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 1, "question": "分倍河原駅前にある銅像は誰の像？", "choices": ["新田義貞", "足利尊氏", "源頼朝", "北条時宗"], "answer": 0, "explanation": "<strong>新田義貞公之像</strong>は分倍河原の戦いで鎌倉幕府を破った武将・新田義貞の銅像。分倍河原駅前にあります。", "keyapi": "分倍河原駅で待ち合わせに使われる、有名な銅像〜🗿", "source": "history", "spots": ["nitta-zo"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 3, "question": "郷土の森博物館内に移築された、江戸後期の長屋門は？", "choices": ["旧三岡家長屋門", "旧府中役場庁舎", "旧内藤家長屋門", "旧府中宿本陣"], "answer": 0, "explanation": "<strong>旧三岡家長屋門</strong>は江戸後期の文斿12年（1829年）築とわかる、旧是政村の村役人を務めた三岡家分家の長屋門。郷土の森博物館内に移築保存され、都指定有形文化財です。", "keyapi": "江戸時代のお屋敷の正面玄関が残っているよ〜🏯", "source": "history", "spots": ["mitoshima-nagayamon"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 3, "question": "郷土の森博物館内に保存されている、多摩地域最古の役場建築は？", "choices": ["旧府中町役場庁舎", "旧府中駅舎", "旧大國魂神社神門", "旧府中尋常小学校"], "answer": 0, "explanation": "<strong>旧府中町役場庁舎</strong>は大正10年（1921年）に完成した洋風建築の町役場。多摩地域に現存する最古の役場建築で、東京都指定有形文化財第1号。郷土の森博物館内に移築されています。", "keyapi": "大正デモクラシーの香りが漂う、都文化財第1号だよ〜🏛️", "source": "history", "spots": ["kyu-yakuba"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 3, "question": "府中市美好町にある江戸期の名家住宅で都指定文化財は？", "choices": ["内藤家住宅", "本田家住宅", "三岡家住宅", "村野家住宅"], "answer": 0, "explanation": "<strong>内藤家住宅</strong>は府中市美好町にある江戸期の名家住宅で、都指定有形文化財に指定されています。", "keyapi": "江戸時代の名家のお屋敷が残っているなんてすごいね〜🏯", "source": "history", "spots": ["naitoke"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 1, "question": "昭和62年（1987年）に開館した、野外を含めた森全体が博物館の施設は？", "choices": ["府中市郷土の森博物館", "府中市美術館", "ふるさと府中歴史館", "府中市民博物館"], "answer": 0, "explanation": "<strong>府中市郷土の森博物館</strong>は1987年4月に開館。野外を含めた森全体が博物館で、プラネタリウムも併設されています。", "keyapi": "博物館もプラネタリウムも梅園もある、府中の自然と歴史の宝庫〜🏛️", "source": "museum", "spots": ["kyodo-museum"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 2, "question": "府中の森公園内にあり、毎年「春の江戸絵画まつり」を開催する美術館は？", "choices": ["府中市美術館", "府中近代美術館", "東京府中美術館", "府中現代アート館"], "answer": 0, "explanation": "<strong>府中市美術館</strong>は府中の森公園内にあり、江戸絵画を中心とした特別展（春の江戸絵画まつり）で全国的に有名です。", "keyapi": "江戸絵画の展示で全国から美術ファンが集まるよ〜🎨", "source": "museum", "spots": ["fuchu-art-museum"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 2, "question": "大國魂神社の隣にある、府中の観光案内拠点は？", "choices": ["府中市観光情報センター", "府中駅前案内所", "ル・シーニュ案内所", "郷土の森案内所"], "answer": 0, "explanation": "<strong>府中市観光情報センター</strong>は大國魂神社の隣にあり、観光マップやパンフ配布、案内スタッフが常駐しています。", "keyapi": "道に迷ったらまずここに寄って、府中マップをもらおう〜ℹ️", "source": "museum", "spots": ["kankou-center"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 3, "question": "武蔵府中熊野神社古墳の出土品を展示する公式施設は？", "choices": ["国史跡 武蔵府中熊野神社古墳 展示館", "府中市考古資料館", "熊野神社宝物殿", "西府史跡資料館"], "answer": 0, "explanation": "<strong>国史跡 武蔵府中熊野神社古墳 展示館</strong>は古墳の出土品や上円下方墳の構造を紹介する公式展示館です。", "keyapi": "古墳のことを詳しく学べる、隠れた名スポット〜🏛️", "source": "museum", "spots": ["kumano-tenji"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 3, "question": "府中市浅間町にある、市民の学びの拠点施設は？", "choices": ["府中市生涯学習センター", "府中市民会館", "府中文化会館", "ふちゅう市民館"], "answer": 0, "explanation": "<strong>府中市生涯学習センター</strong>は浅間町1丁目7番地にある、市民の学習・スポーツ・交流の拠点施設です。", "keyapi": "色んな講座やイベントが開かれているよ〜📚", "source": "museum", "spots": ["shogai-gakushu"]},
-  {"category": "gourmet", "catLabel": "文化", "difficulty": 2, "question": "府中市是政6-22にある、「サンゴリアス」の本拠地となるスポーツセンターは？", "choices": ["サントリー府中スポーツセンター", "東芝府中グラウンド", "府中ラグビー場", "味の素スタジアム"], "answer": 0, "explanation": "<strong>サントリー府中スポーツセンター</strong>は府中市是政6-22にあり、東京サントリーサンゴリアスの練習グラウンドとして使われています。「ラグビーのまち府中」を代表するチームの一つ。", "keyapi": "府中はラグビー2強の街、サンゴリアスの本拠地だよ〜🏉", "source": "sports", "spots": ["suntory-rugby"]},
-  {"category": "gourmet", "catLabel": "文化", "difficulty": 2, "question": "JR北府中駅近くにグラウンドがあるラグビーチームは？", "choices": ["東芝ブレイブルーパス東京", "サントリーサンゴリアス", "パナソニックワイルドナイツ", "ヤマハジュビロ"], "answer": 0, "explanation": "<strong>東芝ブレイブルーパス東京</strong>はJR北府中駅近くにグラウンドを構えるラグビーチーム。府中のラグビー文化を支える存在です。", "keyapi": "東芝とサントリー、府中のラグビー2強だ〜🏉", "source": "sports", "spots": ["toshiba-rugby"]},
-  {"category": "gourmet", "catLabel": "文化", "difficulty": 3, "question": "府中駅北口にあるラグビーファン交流拠点は？", "choices": ["183 FUCHU fan zone", "府中ラグビー館", "ケヤキラグビーカフェ", "府中スポーツ交流館"], "answer": 0, "explanation": "<strong>183 FUCHU fan zone</strong>は府中駅北口にあるラグビー応援の交流拠点。試合の日には多くのファンが集います。", "keyapi": "ラグビー観戦前後に立ち寄りたい、ファンの聖地〜🏉", "source": "sports", "spots": ["183-fanzone"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 2, "question": "府中市是政にある、別名「水の宝石箱」と称される競艇場は？", "choices": ["ボートレース多摩川", "平和島競艇場", "江戸川競艇場", "戸田競艇場"], "answer": 0, "explanation": "<strong>ボートレース多摩川</strong>は府中市是政4-11にある競艇場。穏やかな水面で「水の宝石箱」とも呼ばれます。", "keyapi": "穏やかな水面でレースが楽しめる場所だよ〜🚤", "source": "sports", "spots": ["tamagawa-boatrace"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 3, "question": "府中市南町にある、釣り愛好家に人気の専門池は？", "choices": ["府中へら鮒センター", "府中釣り公園", "南町釣り場", "府中フィッシングセンター"], "answer": 0, "explanation": "<strong>府中へら鮒センター</strong>は府中市南町にある、へら鮒釣りの専門池。釣り愛好家に親しまれています。", "keyapi": "昔ながらの釣り堀文化が今も生きてる〜🎣", "source": "sports", "spots": ["herafuna-center"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 3, "question": "府中市と稲城市を多摩川で結ぶ、青と白の主塔が特徴の橋は？", "choices": ["是政橋", "関戸橋", "多摩水道橋", "稲城大橋"], "answer": 0, "explanation": "<strong>是政橋</strong>は多摩川に架かる全長約401mの3径間連続合成桁斜張橋。青と白の主塔が特徴で、府中市と稲城市を結びます。", "keyapi": "青と白のコントラストがキレイな橋だよ〜🌉", "source": "spot", "spots": ["koremasabashi"]},
-  {"category": "gourmet", "catLabel": "文化", "difficulty": 3, "question": "JR北府中駅前にある、鉄道車両も製造する大手企業の事業所は？", "choices": ["東芝府中事業所", "日立府中事業所", "NEC府中事業所", "三菱府中事業所"], "answer": 0, "explanation": "<strong>東芝府中事業所</strong>は鉄道車両など重電製品の主要拠点。JR北府中駅は東芝従業員のために設置されたとも言われます。", "keyapi": "北府中駅はもともと東芝の工場のための駅だったんだ〜🏭", "source": "factory", "spots": ["toshiba-factory"]},
-  {"category": "gourmet", "catLabel": "文化", "difficulty": 3, "question": "NECの研究開発・製造拠点として知られる、府中市の大規模事業所は？", "choices": ["NEC府中事業所", "日立府中", "東芝府中", "Sony府中"], "answer": 0, "explanation": "<strong>NEC府中事業所</strong>はNECの研究開発・製造拠点で、府中市北部に位置します。", "keyapi": "府中は意外と大企業が集まる街なんだよ〜🏭", "source": "factory", "spots": ["ngk-factory"]},
-  {"category": "gourmet", "catLabel": "文化", "difficulty": 3, "question": "府中市内にある、多目的ホールの名称は？", "choices": ["ひばりホール", "府中こもれびホール", "ケヤキホール", "大國魂ホール"], "answer": 0, "explanation": "<strong>ひばりホール（アンフィニシアター東京府中）</strong>は府中の多目的ホール施設です。", "keyapi": "様々な催しが開かれる、市民の文化拠点〜🎤", "source": "gourmet", "spots": ["hibari-hall"]},
-  {"category": "gourmet", "catLabel": "文化", "difficulty": 1, "question": "府中駅南口の大型ショッピングモールの名前は？", "choices": ["府中フォーリス", "ル・シーニュ", "府中サティ", "府中マルイ"], "answer": 0, "explanation": "<strong>府中フォーリス</strong>は府中駅南口の大型商業施設。グルメ・ファッション・サービスが揃います。", "keyapi": "駅前のお買い物といえばフォーリス〜🛍️", "source": "gourmet", "spots": ["foris"]},
-  {"category": "gourmet", "catLabel": "文化", "difficulty": 2, "question": "府中駅前にある、「縄文の湯」を2024年にリニューアルした天然温泉施設は？", "choices": ["RAKU SPA Station 府中", "府中極楽湯", "府中天然温泉", "ケヤキ温泉"], "answer": 0, "explanation": "<strong>RAKU SPA Station 府中</strong>は旧「縄文の湯」を2024年12月に極楽湯がリニューアルした天然温泉施設。黒湯とサウナが楽しめます。", "keyapi": "駅から徒歩2分で行ける、天然温泉「黒湯」だよ〜♨️", "source": "gourmet", "spots": ["rakuspa"]},
-  {"category": "gourmet", "catLabel": "文化", "difficulty": 3, "question": "府中駅前にある大型書店チェーンは？", "choices": ["TSUTAYA 府中駅前店", "ブックオフ府中", "紀伊國屋府中", "蔦屋家電府中"], "answer": 0, "explanation": "<strong>TSUTAYA 府中駅前店</strong>は府中駅から徒歩1分の大型書店。書籍・雑誌・コミックなどが揃います。", "keyapi": "駅前で本を探すならここ〜📚", "source": "gourmet", "spots": ["tsutaya"]},
-  {"category": "gourmet", "catLabel": "文化", "difficulty": 3, "question": "京王線府中駅直結の、生活雑貨・文房具の専門店は？", "choices": ["京王アートマン府中店", "ロフト府中", "東急ハンズ府中", "無印良品府中"], "answer": 0, "explanation": "<strong>京王アートマン府中店</strong>は京王線府中駅直結の生活雑貨と文房具の専門店。", "keyapi": "駅から濡れずに行けるのが便利〜🛍️", "source": "gourmet", "spots": ["keio-artman"]},
-  {"category": "gourmet", "catLabel": "文化", "difficulty": 3, "question": "府中市にある観光農園で、春のいちご狩りが楽しめるのは？", "choices": ["府中いちご狩り園", "府中ベリー園", "府中観光ファーム", "府中フルーツパーク"], "answer": 0, "explanation": "<strong>府中いちご狩り園</strong>では春にいちご狩りが楽しめます。", "keyapi": "甘くて大きないちごを摘み取れるよ〜🍓", "source": "gourmet", "spots": ["ichigo-gari"]},
-  {"category": "gourmet", "catLabel": "文化", "difficulty": 3, "question": "高架式栽培でいちご狩りを楽しめる、府中市の新しい施設は？", "choices": ["空飛ぶいちご東京", "府中エアーストロベリー", "ハイブリッドベリー府中", "府中スカイベリー"], "answer": 0, "explanation": "<strong>空飛ぶいちご東京</strong>は高架式栽培の最新いちご狩り施設で、立ったまま楽しめるのが特徴です。", "keyapi": "屈まなくていいから腰に優しい〜🍓", "source": "gourmet", "spots": ["sora-tobu-ichigo"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 2, "question": "JR南武線と武蔵野線が交わり、東京競馬場直結の駅は？", "choices": ["JR府中本町駅", "JR北府中駅", "JR西府駅", "JR分倍河原駅"], "answer": 0, "explanation": "<strong>JR府中本町駅</strong>はJR南武線と武蔵野線が交わる結節駅。東京競馬場と直結する地下通路があります。", "keyapi": "競馬の日には多くの人で賑わう駅〜🚉", "source": "station", "spots": ["fuchu-honmachi-station"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 3, "question": "東芝府中事業所のために設置されたとされる、JR武蔵野線の駅は？", "choices": ["JR北府中駅", "JR西府駅", "JR府中本町駅", "JR是政駅"], "answer": 0, "explanation": "<strong>JR北府中駅</strong>はJR武蔵野線の駅で、東芝府中事業所の最寄り駅。歴史的にも東芝従業員のために設置された経緯があります。", "keyapi": "東芝の社員さんが多く使う駅だよ〜🚉", "source": "station", "spots": ["kita-fuchu-station"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 3, "question": "武蔵府中熊野神社古墳の最寄り駅となる、JR南武線の駅は？", "choices": ["JR西府駅", "JR谷保駅", "JR矢野口駅", "JR南多摩駅"], "answer": 0, "explanation": "<strong>JR西府駅</strong>はJR南武線の駅で、武蔵府中熊野神社古墳の最寄り。比較的新しい駅です。", "keyapi": "古墳と展示館を訪れる時はここ〜🚉", "source": "station", "spots": ["nishifu-station"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 2, "question": "府中の森公園と芸術劇場の最寄りとなる、京王線の駅は？", "choices": ["東府中駅", "府中競馬正門前駅", "多磨霊園駅", "武蔵野台駅"], "answer": 0, "explanation": "<strong>東府中駅</strong>は京王線・京王競馬場線の駅。府中の森公園・府中市美術館・府中の森芸術劇場へのアクセス駅です。", "keyapi": "芸術や公園を楽しむなら東府中駅〜🚉", "source": "station", "spots": ["higashi-fuchu"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 2, "question": "東京競馬場と直結する、京王競馬場線の駅は？", "choices": ["府中競馬正門前駅", "東府中駅", "府中駅", "分倍河原駅"], "answer": 0, "explanation": "<strong>府中競馬正門前駅</strong>は京王競馬場線の終点で、東京競馬場の正門と直結。土日のG1開催日は大変な賑わいに。", "keyapi": "駅出てすぐ競馬場、便利の極み〜🐎", "source": "station", "spots": ["keibajo-station"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 3, "question": "日本初の公園墓地・多磨霊園の最寄りとなる、京王線の駅は？", "choices": ["多磨霊園駅", "東府中駅", "武蔵野台駅", "白糸台駅"], "answer": 0, "explanation": "<strong>多磨霊園駅</strong>は京王線の駅で、多磨霊園への玄関口。ボートレース多摩川行きのシャトルバス発着地点でもあります。", "keyapi": "霊園に行く時もここから歩けるよ〜🚉", "source": "station", "spots": ["tamareien-station"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 3, "question": "西武多摩川線の駅で、武蔵野の森公園に近いのは？", "choices": ["多磨駅", "白糸台駅", "是政駅", "新小金井駅"], "answer": 0, "explanation": "<strong>西武多磨駅</strong>は西武多摩川線の駅。武蔵野の森公園や警察大学校への最寄り駅です。", "keyapi": "京王線とは別の「多磨」駅、間違えやすいね〜🚉", "source": "station", "spots": ["tama-station"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 3, "question": "白糸台古墳群の最寄りとなる、西武多摩川線の駅は？", "choices": ["白糸台駅", "多磨駅", "是政駅", "競艇場前駅"], "answer": 0, "explanation": "<strong>西武白糸台駅</strong>は西武多摩川線の駅で、白糸台古墳群の最寄り駅です。", "keyapi": "古墳めぐりの起点にしてね〜🚉", "source": "station", "spots": ["shiraito-station"]}
-,
-  {"category": "history", "catLabel": "歴史", "difficulty": 3, "question": "府中市宮西町にある時宗の寺院で、毎月23日に日限子育地蔵尊のご縁日が開かれるのは？", "choices": ["称名寺", "妙光院", "安養寺", "高安寺"], "answer": 0, "explanation": "<strong>称名寺（しょうみょうじ）</strong>は府中市宮西町にある時宗の寺院。寛元3年（1245年）に道阿上人が開山したと伝わり、境内の日限子育地蔵尊は近隣の信仰を集めています。", "keyapi": "子育てを見守る、優しいお地蔵さんがいるお寺だよ〜🛕", "source": "shrine", "spots": ["shomyoji"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 2, "question": "調布飛行場周辺、府中市と調布市にまたがる広大な都立公園は？", "choices": ["武蔵野の森公園", "府中の森公園", "郷土の森公園", "都立武蔵野公園"], "answer": 0, "explanation": "<strong>武蔵野の森公園</strong>は調布飛行場に隣接する大規模な都立公園で、修景池や広い芝生広場が魅力。", "keyapi": "飛行機の発着が見られて、空が広い公園〜✈️", "source": "spot", "spots": ["musashino-no-mori-park"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 2, "question": "江戸時代、府中宿の旧甲州街道と府中街道の交差点に設置されていた、公共掲示板の遺構は？", "choices": ["高札場", "府中辻", "本陣跡", "名残石"], "answer": 0, "explanation": "<strong>高札場</strong>は江戸時代の公共掲示板。府中市内の旧甲州街道交差点にあり、東京都の旧跡に指定されています。", "keyapi": "江戸時代のお触書が貼られた歴史スポット〜📜", "source": "history", "spots": ["kosatsuba"]},
-  {"category": "history", "catLabel": "歴史", "difficulty": 1, "question": "大國魂神社に隣接する、府中の歴史を映像と展示で紹介する施設は？", "choices": ["ふるさと府中歴史館", "府中市郷土の森博物館", "府中市美術館", "府中市観光情報センター"], "answer": 0, "explanation": "<strong>ふるさと府中歴史館</strong>は大國魂神社の隣にあり、府中の歴史を多くの映像と展示で学べる施設です。", "keyapi": "無料で府中の歴史を学べる、おすすめスポット〜📚", "source": "museum", "spots": ["furusato-rekishi"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 2, "question": "郷土の森博物館内にある、星空を投映する施設は？", "choices": ["プラネタリウム", "天文台", "宇宙博物館", "星空シアター"], "answer": 0, "explanation": "<strong>郷土の森プラネタリウム</strong>は最新鋭のハイブリッド・プラネタリウムで、星空や宇宙を楽しめます。", "keyapi": "博物館に来たら星空も楽しんでね〜🌌", "source": "museum", "spots": ["planetarium"]},
-  {"category": "gourmet", "catLabel": "文化", "difficulty": 1, "question": "FC東京と東京ヴェルディがホームスタジアムにしている、府中市の隣接地にある競技場は？", "choices": ["味の素スタジアム", "東京ドーム", "国立競技場", "西武ドーム"], "answer": 0, "explanation": "<strong>味の素スタジアム</strong>はJ1リーグのFC東京と東京ヴェルディが本拠地とする多目的スタジアム。府中市東部に近接しています。", "keyapi": "Jリーグの試合観戦で府中から歩いて行ける距離〜⚽", "source": "sports", "spots": ["ajinomoto-stadium"]},
-  {"category": "gourmet", "catLabel": "文化", "difficulty": 3, "question": "府中駅直結の複合商業施設「くるる府中」2階広場にある、誰でも自由に演奏できるピアノは？", "choices": ["ストリートピアノ", "共有ピアノ", "フリーピアノ", "駅ピアノ"], "answer": 0, "explanation": "<strong>くるる府中のストリートピアノ</strong>は京王線府中駅南口直結の「くるる府中」2階中央広場に設置。演奏可能時間は10:00〜20:00、アップライトピアノを設置。誰でも無料で演奏できます。", "keyapi": "くるるの吹き抜けに響く音色が素敵だよ〜🎹", "source": "gourmet", "spots": ["street-piano"]},
-  {"category": "gourmet", "catLabel": "文化", "difficulty": 1, "question": "府中の森公園に隣接する、収容人数2,000名超の「どりーむホール」を擁する文化施設は？", "choices": ["府中の森芸術劇場", "府中市民会館", "府中ホール", "ル・シーニュホール"], "answer": 0, "explanation": "<strong>府中の森芸術劇場</strong>は1991年開館。約2,027人収容の「どりーむホール」、パイプオルガン付き「ウィーンホール」など複数のホールを備えます。", "keyapi": "オペラもバンドもクラシックも、なんでも楽しめる〜🎭", "source": "gourmet", "spots": ["fuchu-mori-gekijo"]},
-  {"category": "gourmet", "catLabel": "文化", "difficulty": 3, "question": "京王線府中駅南口直結のTOHOシネマズを内包する複合商業施設は？", "choices": ["くるる府中", "ミッテン府中", "ル・シーニュ", "府中フォーリス"], "answer": 0, "explanation": "<strong>くるる府中</strong>は2005年開業の府中駅南口直結の複合商業施設。TOHOシネマズやタイトーステーションを含み、2階にはストリートピアノスポットもあります。", "keyapi": "ペデストリアンデッキで雨に濡れずに行けるよ〜☘️", "source": "gourmet", "spots": ["art-beans"]},
-  {"category": "spot", "catLabel": "名所", "difficulty": 2, "question": "西武多摩川線の終点で、多摩川に近い府中市の駅は？", "choices": ["是政駅", "白糸台駅", "多磨駅", "新小金井駅"], "answer": 0, "explanation": "<strong>是政駅</strong>は西武多摩川線の終点。府中市是政にあり、多摩川や是政橋・競艇場が徒歩圏内です。", "keyapi": "西武多摩川線の終点、ここから多摩川散歩へ〜🚉", "source": "station", "spots": ["koremasa-station"]}
 ];
 
 // 画像URL（外部CDN参照）
@@ -5094,6 +7218,12 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-open-map').addEventListener('click', openMapScreen);
   document.getElementById('btn-map-back').addEventListener('click', () => showScreen('screen-start'));
   document.getElementById('btn-reset-visits').addEventListener('click', resetVisits);
+
+  // リスト/地図切替トグル
+  const tglList = document.getElementById('toggle-view-list');
+  const tglMap = document.getElementById('toggle-view-map');
+  if (tglList) tglList.addEventListener('click', () => switchMapView('list'));
+  if (tglMap) tglMap.addEventListener('click', () => switchMapView('map'));
   document.getElementById('btn-back-to-top').addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
@@ -6640,6 +8770,189 @@ function buildFeedbackUrl(questionNumber) {
    お出かけスポット機能
    ============================================================ */
 
+/* ============================================================
+   お出かけマップ（Leaflet 実マップ版）
+   — 78スポットの緯度経度を事前ジオコーディング済み
+   ============================================================ */
+
+const SPOT_COORDS = {"ookunitama":{"lat":35.669147,"lng":139.479401},"takaanji":{"lat":35.669476,"lng":139.473419},"myokoin":{"lat":35.665943,"lng":139.480011},"anyoji":{"lat":35.665127,"lng":139.480347},"fumonji":{"lat":35.667957,"lng":139.483688},"shomyoji":{"lat":35.671528,"lng":139.478241},"kumanojinja":{"lat":35.674881,"lng":139.456924},"keyaki-namiki":{"lat":35.6705,"lng":139.48},"kazenomichi":{"lat":35.655331,"lng":139.485397},"sengenyama":{"lat":35.6795,"lng":139.498},"kyodonomori-park":{"lat":35.656895,"lng":139.473511},"fuchu-no-mori-park":{"lat":35.67701,"lng":139.492386},"musashino-park":{"lat":35.69156,"lng":139.50644},"musashino-no-mori-park":{"lat":35.6815,"lng":139.524},"sakura-dori":{"lat":35.675373,"lng":139.478683},"tamareien":{"lat":35.6902,"lng":139.5185},"suzukake-park":{"lat":35.67522,"lng":139.46978},"kotobuki-park":{"lat":35.6738,"lng":139.477},"musashidai-iseki-park":{"lat":35.693233,"lng":139.465515},"tama-shinsui":{"lat":35.652061,"lng":139.502884},"koremasa-ryokuchi":{"lat":35.655331,"lng":139.485397},"bubaigawara":{"lat":35.663151,"lng":139.46347},"kosatsuba":{"lat":35.6689,"lng":139.4773},"musashi-kokufu":{"lat":35.669,"lng":139.4805},"kokufu-yakata":{"lat":35.66672,"lng":139.4771},"kumano-kofun":{"lat":35.6749,"lng":139.4569},"takakura-kofun":{"lat":35.667377,"lng":139.465897},"shiraito-kofun":{"lat":35.671,"lng":139.512},"tsunehisa-ichirizuka":{"lat":35.66758,"lng":139.5005},"olympic-kyoho":{"lat":35.672794,"lng":139.48468},"bareito":{"lat":35.6688,"lng":139.4795},"nitta-zo":{"lat":35.66315,"lng":139.46347},"mitoshima-nagayamon":{"lat":35.65689,"lng":139.47351},"kyu-yakuba":{"lat":35.65689,"lng":139.47351},"naitoke":{"lat":35.6648,"lng":139.4609},"kyodo-museum":{"lat":35.656895,"lng":139.473511},"fuchu-art-museum":{"lat":35.67701,"lng":139.492386},"furusato-rekishi":{"lat":35.6692,"lng":139.479},"kankou-center":{"lat":35.669147,"lng":139.479401},"jra-museum":{"lat":35.66225,"lng":139.48556},"kumano-tenji":{"lat":35.6749,"lng":139.4569},"planetarium":{"lat":35.65689,"lng":139.47351},"shogai-gakushu":{"lat":35.678925,"lng":139.496475},"tokyo-keiba":{"lat":35.66225,"lng":139.48556},"ajinomoto-stadium":{"lat":35.66367,"lng":139.5289},"suntory-rugby":{"lat":35.65193,"lng":139.4887},"toshiba-rugby":{"lat":35.68154,"lng":139.46318},"183-fanzone":{"lat":35.67165,"lng":139.4801},"tamagawa-boatrace":{"lat":35.65802,"lng":139.49707},"herafuna-center":{"lat":35.659374,"lng":139.466904},"koremasabashi":{"lat":35.6525,"lng":139.48797},"suntory-factory":{"lat":35.6607,"lng":139.4801},"toshiba-factory":{"lat":35.6807,"lng":139.463},"ngk-factory":{"lat":35.667,"lng":139.455},"sando":{"lat":35.6695,"lng":139.4794},"street-piano":{"lat":35.67147,"lng":139.48103},"kururu":{"lat":35.671464,"lng":139.480927},"fuchu-mori-gekijo":{"lat":35.673431,"lng":139.492874},"hibari-hall":{"lat":35.674,"lng":139.482},"le-signe":{"lat":35.67123,"lng":139.481461},"foris":{"lat":35.670776,"lng":139.479736},"bussankan":{"lat":35.655952,"lng":139.473999},"rakuspa":{"lat":35.671482,"lng":139.478882},"tsutaya":{"lat":35.672947,"lng":139.479797},"keio-artman":{"lat":35.672462,"lng":139.479797},"ichigo-gari":{"lat":35.670807,"lng":139.46492},"sora-tobu-ichigo":{"lat":35.667503,"lng":139.460129},"fuchu-station":{"lat":35.671974,"lng":139.479385},"bubai-station":{"lat":35.668827,"lng":139.468979},"koremasa-station":{"lat":35.656197,"lng":139.489349},"fuchu-honmachi-station":{"lat":35.66703,"lng":139.476944},"kita-fuchu-station":{"lat":35.680828,"lng":139.471863},"nishifu-station":{"lat":35.670486,"lng":139.459213},"higashi-fuchu":{"lat":35.66765,"lng":139.496},"keibajo-station":{"lat":35.668331,"lng":139.485535},"tamareien-station":{"lat":35.66603,"lng":139.50332},"tama-station":{"lat":35.67672,"lng":139.51711},"shiraito-station":{"lat":35.67203,"lng":139.50855}};
+
+let leafletMap = null;
+let leafletMarkers = {};
+
+function initLeafletMap() {
+  if (typeof L === 'undefined') {
+    console.warn('Leaflet not loaded yet');
+    return false;
+  }
+  if (leafletMap) return true;
+
+  // 府中市中央を初期表示
+  leafletMap = L.map('leaflet-map', {
+    center: [35.668, 139.484],
+    zoom: 14,
+    minZoom: 12,
+    maxZoom: 18,
+    zoomControl: true,
+    attributionControl: true
+  });
+
+  // 府中市のだいたいの範囲に制限
+  const fuchuBounds = L.latLngBounds([35.635, 139.430], [35.700, 139.535]);
+  leafletMap.setMaxBounds(fuchuBounds.pad(0.1));
+
+  // OpenStreetMap タイル
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 19
+  }).addTo(leafletMap);
+
+  return true;
+}
+
+function buildPopupHTML(spotId, spot, visited) {
+  const mapsQuery = encodeURIComponent(spot.mapsQuery || spot.name || '');
+  const station = spot.nearestStation ? '🚇 ' + spot.nearestStation : '';
+  const visitedTag = visited ? '<span class="fp-visited-tag">☆訪問済</span>' : '';
+  const visitBtn = visited
+    ? '<button class="fp-btn fp-btn-unvisit" onclick="toggleVisitFromMap(\'' + spotId + '\')">訪問を取り消す</button>'
+    : '<button class="fp-btn fp-btn-visit" onclick="toggleVisitFromMap(\'' + spotId + '\')">✓ 訪問した</button>';
+  return '<div class="fc-popup">' +
+    '<div class="fp-title">' + (spot.icon || '📍') + '<span>' + (spot.name || spotId) + '</span>' + visitedTag + '</div>' +
+    (station ? '<div class="fp-station">' + station + '</div>' : '') +
+    '<div class="fp-actions">' +
+      '<a class="fp-btn fp-btn-map" href="https://www.google.com/maps/search/?api=1&query=' + mapsQuery + '" target="_blank" rel="noopener">🗺️ Googleマップ</a>' +
+      visitBtn +
+    '</div>' +
+  '</div>';
+}
+
+function renderLeafletMarkers() {
+  if (!leafletMap) return;
+  const visits = getVisitedSpots();
+
+  // 既存マーカーをクリア
+  Object.values(leafletMarkers).forEach(m => leafletMap.removeLayer(m));
+  leafletMarkers = {};
+
+  Object.keys(SPOTS).forEach(spotId => {
+    const coords = SPOT_COORDS[spotId];
+    if (!coords || coords.lat == null || coords.lng == null) return;
+    const spot = SPOTS[spotId];
+    const visited = !!visits[spotId];
+
+    const html = '<div class="fc-marker' + (visited ? ' visited' : '') + '">' +
+                 '<span class="fc-marker-inner">' + (visited ? '☆' : (spot.icon || '●')) + '</span></div>';
+    const icon = L.divIcon({
+      className: 'fc-marker-wrap',
+      html: html,
+      iconSize: visited ? [34, 34] : [30, 30],
+      iconAnchor: visited ? [17, 34] : [15, 30],
+      popupAnchor: [0, -28]
+    });
+    const marker = L.marker([coords.lat, coords.lng], { icon: icon, title: spot.name })
+                    .addTo(leafletMap);
+    marker.bindPopup(buildPopupHTML(spotId, spot, visited), { closeButton: true, maxWidth: 280 });
+    leafletMarkers[spotId] = marker;
+  });
+}
+
+// ポップアップから訪問トグル
+function toggleVisitFromMap(spotId) {
+  const visits = getVisitedSpots();
+  const wasVisited = !!visits[spotId];
+  visits[spotId] = !wasVisited;
+  if (!visits[spotId]) delete visits[spotId];
+  saveVisitedSpots(visits);
+
+  // マーカーとポップアップを再描画
+  renderLeafletMarkers();
+  // 達成状況カードとスタンプラリーカードをリアルタイム更新
+  if (typeof updateMapScreenStatsOnly === 'function') {
+    updateMapScreenStatsOnly();
+  } else {
+    // フォールバック: マップ画面全体を再描画したいが、リストはソートされるため重いので個別更新
+    const visitedIds = Object.keys(visits).filter(k => visits[k]);
+    const total = Object.keys(SPOTS).length;
+    const count = visitedIds.length;
+    const rate = count / total;
+    const pcCount = document.getElementById('pc-count');
+    const pcBar = document.getElementById('pc-bar');
+    const stampCount = document.getElementById('stamp-count');
+    const stampBar = document.getElementById('stamp-bar-fill');
+    if (pcCount) pcCount.textContent = count;
+    if (pcBar) pcBar.style.width = (rate * 100) + '%';
+    if (stampCount) stampCount.textContent = count;
+    if (stampBar) stampBar.style.width = (rate * 100) + '%';
+    // マイルストーン表示更新
+    [10, 25, 50, 78].forEach(n => {
+      const el = document.getElementById('milestone-' + n);
+      if (el) {
+        if (count >= n) el.classList.add('achieved');
+        else el.classList.remove('achieved');
+      }
+    });
+  }
+  if (typeof updateTopMapButton === 'function') updateTopMapButton();
+  // 達成トースト（新規訪問時のみ）
+  if (!wasVisited) {
+    const newCount = Object.keys(visits).filter(k => visits[k]).length;
+    if (typeof showAchievementToast === 'function') {
+      if (newCount === 10) showAchievementToast('🌱 10スポット達成！探検者バッジ獲得！');
+      else if (newCount === 25) showAchievementToast('🌸 25スポット達成！もうすぐ中盤！');
+      else if (newCount === 50) showAchievementToast('🌿 50スポット達成！府中マスター後あと一歩！');
+      else if (newCount === 78) showAchievementToast('🏆 全制覇達成！府中コンプリート！');
+    }
+  }
+  // ポップアップを開き直す
+  const m = leafletMarkers[spotId];
+  if (m) setTimeout(() => m.openPopup(), 50);
+}
+
+// リスト/地図切替
+function switchMapView(mode) {
+  const listBtn = document.getElementById('toggle-view-list');
+  const mapBtn = document.getElementById('toggle-view-map');
+  const mapContainer = document.getElementById('leaflet-map-container');
+  const spotsList = document.getElementById('spots-list');
+  if (!listBtn || !mapBtn || !mapContainer || !spotsList) return;
+
+  if (mode === 'map') {
+    listBtn.classList.remove('active');
+    mapBtn.classList.add('active');
+    spotsList.style.display = 'none';
+    mapContainer.classList.add('active');
+    // 初期化（Leaflet読み込み待ち）
+    const tryInit = (retries) => {
+      if (typeof L === 'undefined') {
+        if (retries > 0) setTimeout(() => tryInit(retries - 1), 200);
+        return;
+      }
+      const ok = initLeafletMap();
+      if (ok) {
+        setTimeout(() => {
+          leafletMap.invalidateSize();
+          renderLeafletMarkers();
+        }, 100);
+      }
+    };
+    tryInit(20);
+    if (leafletMap) {
+      setTimeout(() => {
+        leafletMap.invalidateSize();
+        renderLeafletMarkers();
+      }, 50);
+    }
+  } else {
+    listBtn.classList.add('active');
+    mapBtn.classList.remove('active');
+    spotsList.style.display = '';
+    mapContainer.classList.remove('active');
+  }
+  try { localStorage.setItem('fuchu-quiz-map-view', mode); } catch(e){}
+}
+
+
 // localStorage キー
 const VISITS_KEY = 'fuchu-quiz-visits';
 
@@ -6678,6 +8991,12 @@ function updateTopMapButton() {
 function openMapScreen() {
   renderMapScreen();
   showScreen('screen-map');
+  // 前回選んだ表示モードを復元（デフォルトはリスト）
+  let prefMode = 'list';
+  try { prefMode = localStorage.getItem('fuchu-quiz-map-view') || 'list'; } catch(e){}
+  if (typeof switchMapView === 'function') {
+    setTimeout(() => switchMapView(prefMode), 60);
+  }
 }
 
 // マップ画面をレンダリング
@@ -6834,6 +9153,10 @@ function toggleVisit(spotId) {
   // アニメーション付きでリレンダリング
   renderMapScreen();
   updateTopMapButton();
+  // 地図マーカーも同期（Leaflet 初期化済みの場合のみ）
+  if (typeof renderLeafletMarkers === 'function' && leafletMap) {
+    renderLeafletMarkers();
+  }
 
   // アチーブメントチェック
   if (!wasVisited) {
